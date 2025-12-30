@@ -6,9 +6,9 @@ lsblk
 cfdisk /dev/vda
 ```
 - gpt labels:
-1G type: EFI
-4G type: swap
-remaining space, type: Linux Filesystem
+-- 1G type: EFI
+-- 4G type: swap
+-- remaining space, type: Linux Filesystem
 ```
 mkfs.ext4 -L nixos /dev/vda3
 mkswap -L swap /dev/vda2
