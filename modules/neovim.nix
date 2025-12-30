@@ -1,6 +1,4 @@
-{ config, pkgs, lib, ...}
-
-{
+{ config, pkgs, lib, ...}: {
   # Install Neovim and dependencies
   home.packages = with pkgs; [
     # Tools required for Telescope
