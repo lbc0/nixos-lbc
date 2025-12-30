@@ -15,5 +15,6 @@
       nix-lbc = "Lbc's NixOS!";
     };
   };
+
   home.file.".config/qtile".source = ./config/qtile;
 }
