@@ -25,7 +25,7 @@ nixos-generate-config --root /mnt
 cd /mnt/etc/nixos/
 ```
 ## Clone the rest from this repo:
-```git clone git@github.com:lbc0/nixos-lbc.git```
+```git clone https://github.com/lbc0/nixos-lbc.git```
 
 # Install NixOS:
 ```
@@ -39,7 +39,7 @@ reboot
 # Dotfiles
 ```
 mkdir ~/nixos-dotfiles
-sudo cp -R /etc/nixos/* ~/nixos-dotfiles/.   # git clone git@github.com:lbc0/nixos-lbc.git
+sudo cp -R /etc/nixos/* ~/nixos-dotfiles/.   # git clone https://github.com/lbc0/nixos-lbc.git
 # verify the ownership and permissions: sudo chown -R lbc:users ~/nixos-dotfiles && 
 ```
 
