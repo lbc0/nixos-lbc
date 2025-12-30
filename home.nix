@@ -17,4 +17,5 @@
   };
 
   home.file.".config/qtile".source = ./config/qtile;
+  home.file.".config/nvim".source = ./config/nvim;
 }
