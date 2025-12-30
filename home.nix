@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./modules/neovim.nix
+  ];
+
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
   programs.git.enable = true;
@@ -11,4 +15,5 @@
       nix-lbc = "Lbc's NixOS!";
     };
   };
+  home.file.".config/qtile".source = ./config/qtile;
 }
