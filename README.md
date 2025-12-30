@@ -39,7 +39,7 @@ reboot
 # Dotfiles
 ```
 mkdir ~/nixos-dotfiles
-git clone git@github.com:lbc0/nixos-lbc.git
+sudo cp -R /etc/nixos/* ~/nixos-dotfiles/.   # git clone git@github.com:lbc0/nixos-lbc.git
 # verify the ownership and permissions: sudo chown -R lbc:users ~/nixos-dotfiles && 
 ```
 
