@@ -302,7 +302,7 @@
         "tooltipsEnabled": true
     },
     "wallpaper": {
-        "defaultWallpaper": "/nix/store/06358wwarrkbh64f1m6kii5xw6nv3asd-noctalia-shell-399ae2e42f2888327025a3cc5aa02364d0e6cadb/share/noctalia-shell/Assets/Wallpaper/noctalia.png",
+        "defaultWallpaper": "/home/lbc/nixos-dotfiles/walls/desktop.png",
         "directory": "/home/lbc/nixos-dotfiles/walls",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
