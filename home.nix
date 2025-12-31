@@ -8,6 +8,7 @@ let
     configs = {
         qtile = "qtile";
         nvim = "nvim";
+        niri = "niri";
     };
 in
 
