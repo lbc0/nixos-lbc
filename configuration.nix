@@ -31,12 +31,14 @@
   };
 
   programs.firefox.enable = true;
+  programs.niri.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim
     wget
     alacritty
     git
+    fuzzel
   ];
 
   fonts.packages = with pkgs; [
