@@ -47,6 +47,7 @@ in
     gcc
     fuzzel    # Wayland launcher
     swaybg    # Wayland wallpaper
+    brave
   ];
 }
 
