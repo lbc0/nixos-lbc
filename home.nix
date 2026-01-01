@@ -1,37 +1,35 @@
 { config, pkgs, ... }:
 
 let
-    dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
-    create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+  dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
+  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
-    # Standard .config/directory
-    configs = {
-        qtile = "qtile";
-        nvim = "nvim";
-        niri = "niri";
-    };
+  # Only relevant configs
+  configs = {
+    nvim = "nvim";
+    niri = "niri";
+  };
 in
-
 {
-  #imports = [
-  #  ./modules/neovim.nix
-  #];
-
+  # Basic Home Manager setup
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
-  programs.git.enable = true;
   home.stateVersion = "25.11";
+
+  # Git + shell
+  programs.git.enable = true;
+
   programs.bash = {
     enable = true;
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake ~/nixos-lbc#lbc";
+      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbc";
     };
     initExtra = ''
-      	  export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
-      	'';
+      export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
+    '';
   };
 
-  # Iterate over xdg configs and map them accordingly
+  # Dotfiles symlinks
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
       source = create_symlink "${dotfiles}/${subpath}";
@@ -39,6 +37,7 @@ in
     })
     configs;
 
+  # User packages (Wayland-friendly)
   home.packages = with pkgs; [
     neovim
     ripgrep
@@ -46,8 +45,8 @@ in
     nixpkgs-fmt
     nodejs
     gcc
-    rofi
-    xwallpaper
+    fuzzel    # Wayland launcher
+    swaybg    # Wayland wallpaper
   ];
-
 }
+

@@ -1,51 +1,50 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  # imports only the hardware config
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
+  # Time
   time.timeZone = "Africa/Casablanca";
 
+  # Display manager
   services.displayManager.ly.enable = true;
-  services.xserver = {
-    enable = true;
-    autoRepeatDelay = 200;
-    autoRepeatInterval = 35;
-    windowManager.qtile.enable = true;
-  };
 
+  # Wayland compositor
+  programs.niri.enable = true;
+
+  # User
   users.users.lbc = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    packages = with pkgs; [
-      tree
-    ];
   };
 
-  programs.niri.enable = true;
-
+  # System-wide packages (minimal)
   environment.systemPackages = with pkgs; [
     vim
     wget
-    brave
-    alacritty
     git
-    fuzzel
   ];
 
+  # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
 
+  # Nix settings
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.stateVersion = "25.11";
 
+  # NixOS versioning
+  system.stateVersion = "25.11";
 }
+
