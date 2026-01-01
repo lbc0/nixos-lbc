@@ -48,6 +48,7 @@ in
     fuzzel    # Wayland launcher
     swaybg    # Wayland wallpaper
     brave
+    alacritty
   ];
 }
 
