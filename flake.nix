@@ -9,22 +9,22 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
+  outputs = { self, nixpkgs, home-manager, ... }: {
+
     nixosConfigurations.lbc = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hosts/lbc
-        ./system/base.nix
-        ./system/wayland.nix
-        ./system/nix.nix
-
+        ./configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.lbc = import ./home/lbc;
+          home-manager.users.lbc = import ./home.nix;
+          home-manager.backupFileExtension = "backup";
         }
       ];
     };
+
   };
 }
+
