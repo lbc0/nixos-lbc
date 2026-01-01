@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-    dotfiles = "${config.home.homeDirectory}/nixos-dotfiles/config";
+    dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
     # Standard .config/directory
@@ -24,7 +24,7 @@ in
   programs.bash = {
     enable = true;
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#nixos-lbc";
+      nrs = "sudo nixos-rebuild switch --flake ~/nixos-lbc#lbc";
     };
     initExtra = ''
       	  export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
