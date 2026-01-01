@@ -49,6 +49,7 @@ in
     swaybg    # Wayland wallpaper
     brave
     alacritty
+    swaylock
   ];
 }
 
