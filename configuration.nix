@@ -36,6 +36,7 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
+    brave
     alacritty
     git
     fuzzel
