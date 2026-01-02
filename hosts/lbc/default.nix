@@ -4,7 +4,7 @@
   # imports only the hardware config
   imports = [
     ./hardware.nix
-    ./noctalia.nix
+    ./noctalia.nix  # Noctalia system package
   ];
 
   # Bootloader
@@ -15,14 +15,10 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
-  # --- Bluetooth ---
+  # Bluetooth & power
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true; # optional but strongly recommended
-
-  # --- Power profiles ---
+  services.blueman.enable = true;
   services.power-profiles-daemon.enable = true;
-
-  # --- Battery / power status ---
   services.upower.enable = true;
 
   # Time
@@ -40,7 +36,7 @@
     extraGroups = [ "wheel" ];
   };
 
-  # System-wide packages (minimal)
+  # System-wide packages
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -58,4 +54,3 @@
   # NixOS versioning
   system.stateVersion = "25.11";
 }
-
