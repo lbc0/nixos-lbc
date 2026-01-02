@@ -14,12 +14,12 @@
     nixosConfigurations.lbc = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./hosts/lbc
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.lbc = import ./home.nix;
+          home-manager.users.lbc = import ./home/lbc;
           home-manager.backupFileExtension = "backup";
         }
       ];

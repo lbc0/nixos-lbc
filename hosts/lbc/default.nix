@@ -3,7 +3,7 @@
 {
   # imports only the hardware config
   imports = [
-    ./hardware-configuration.nix
+    ./hardware.nix
   ];
 
   # Bootloader
