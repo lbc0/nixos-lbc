@@ -2,7 +2,7 @@
 
 {
   programs.niri = {
-    package = niri;  # Use the system-wide Niri package
+    package = pkgs.niri;  # Use the system-wide Niri package
     settings = {
       spawn-at-startup = [
         { command = [ "noctalia-shell" ]; }
