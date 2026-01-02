@@ -4,6 +4,7 @@
   # imports only the hardware config
   imports = [
     ./hardware.nix
+    ./noctalia.nix
   ];
 
   # Bootloader
@@ -14,13 +15,23 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
+  # --- Bluetooth ---
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true; # optional but strongly recommended
+
+  # --- Power profiles ---
+  services.power-profiles-daemon.enable = true;
+
+  # --- Battery / power status ---
+  services.upower.enable = true;
+
   # Time
   time.timeZone = "Africa/Casablanca";
 
   # Display manager
   services.displayManager.ly.enable = true;
 
-  # Wayland compositor
+  # Niri
   programs.niri.enable = true;
 
   # User

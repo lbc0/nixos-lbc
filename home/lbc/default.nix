@@ -10,7 +10,12 @@ let
     niri = "niri";
   };
 in
+
 {
+  imports = [
+    ./niri.nix
+  ];
+
   # Basic Home Manager setup
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
@@ -45,11 +50,6 @@ in
     nixpkgs-fmt
     nodejs
     gcc
-    fuzzel    # Wayland launcher
-    swaybg    # Wayland wallpaper
-    brave
-    alacritty
-    swaylock
   ];
 }
 
