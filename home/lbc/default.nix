@@ -6,8 +6,10 @@ let
 
   # Only relevant configs
   configs = {
-    nvim = "nvim";
+    # nvim = "nvim";
     niri = "niri";
+    # noctalia = "noctalia";
+    quickshell = "quickshell";
   };
 in
 
@@ -28,6 +30,8 @@ in
     enable = true;
     shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbc";
+      nac = "curl -k -X POST https://cportal.henceforth.co.ma:4100/wgcgi.cgi -H 'Content-Type: application/x-www-form-urlencoded' -d 'fw_username=a.lbouchouari&fw_password=KAli123   &fw_domain=henceforth.local&action=fw_logon&fw_logon_type=logon'";
+      autohidequickshell = "pgrep quickshell && pkill quickshell || quickshell";
     };
     initExtra = ''
       export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"

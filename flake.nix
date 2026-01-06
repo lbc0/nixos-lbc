@@ -13,13 +13,20 @@
 
     # Unstable only for Noctalia
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+
+    #noctalia = {
+    #  url = "github:noctalia-dev/noctalia-shell";
+    #  inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #};
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, noctalia, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, quickshell, ... }:
   {
     nixosConfigurations.lbc = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
