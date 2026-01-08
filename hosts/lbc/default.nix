@@ -4,7 +4,8 @@
   # imports only the hardware config
   imports = [
     ./hardware.nix
-    ./noctalia.nix  # Noctalia system package
+    ./sops.nix
+    # ./noctalia.nix  # Noctalia system package
   ];
 
   # Bootloader
