@@ -4,6 +4,7 @@
   # imports only the hardware config
   imports = [
     ./hardware.nix
+    ./sops.nix
     # ./noctalia.nix  # Noctalia system package
   ];
 
