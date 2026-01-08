@@ -9,10 +9,9 @@
   sops.defaultSopsFile = secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   
-  sops.age.keyFile = "secrets/.keys.txt";
+  sops.age.keyFile = "/home/lbc/nixos-lbc/.ignore/.keys.txt";
 
-  sops.secrets.example_key = { };
-  sops.secrets."myservice/my_subdir/my_secret" = {
-    owner = "lbc";
-  };
+  # importing my secrets
+  sops.secrets."cportal/username".owner = "lbc";
+  sops.secrets."cportal/password".owner = "lbc";
 }
