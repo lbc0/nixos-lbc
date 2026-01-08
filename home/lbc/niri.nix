@@ -10,6 +10,7 @@
     playerctl
     element-desktop
     quickshell
+    sops
     (writeShellScriptBin "qstoggle" ''
       pgrep quickshell && pkill quickshell || quickshell
     '')
