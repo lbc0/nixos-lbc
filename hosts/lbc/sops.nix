@@ -6,10 +6,10 @@
       inputs.sops-nix.nixosModules.sops
     ];
 
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.defaultSopsFile = secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
   
-  sops.age.keyFile = "~/nixos-lbc/.keys.txt";
+  sops.age.keyFile = "secrets/.keys.txt";
 
   sops.secrets.example_key = { };
   sops.secrets."myservice/my_subdir/my_secret" = {
