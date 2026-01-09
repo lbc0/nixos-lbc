@@ -49,7 +49,7 @@
           home-manager.nixosModules.home-manager
 
           {
-            networking.hostName = "lbc";
+            networking.hostName = "lbc-work";
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -76,7 +76,7 @@
           home-manager.nixosModules.home-manager
 
           {
-            networking.hostName = "lbc";
+            networking.hostName = "lbc-home";
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

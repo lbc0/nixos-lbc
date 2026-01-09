@@ -10,7 +10,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
-  networking.hostName = "lbc";
+  # networking.hostName = "lbc";
   networking.networkmanager.enable = true;
 
   # Bluetooth & power
