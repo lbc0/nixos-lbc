@@ -16,7 +16,7 @@
     '')
 
     (writeShellScriptBin "nac" ''
-      curl -k -X POST https://cportal.henceforth.co.ma:4100/wgcgi.cgi -H 'Content-Type: application/x-www-form-urlencoded' -d 'fw_username="$(cat /run/secrets/cportal/username)"&fw_password="$(cat /run/secrets/cportal/password)"&fw_domain=henceforth.local&action=fw_logon&fw_logon_type=logon'
+      curl -k -X POST  "$(cat /run/secrets/cportal/nac_url)"-H 'Content-Type: application/x-www-form-urlencoded' -d 'fw_username="$(cat /run/secrets/cportal/username)"&fw_password="$(cat /run/secrets/cportal/password)"&fw_domain="$(cat /run/secrets/cportal/fw_domain)"&action=fw_logon&fw_logon_type=logon'
     '')
   ];
 }
