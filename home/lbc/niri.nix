@@ -11,6 +11,7 @@
     element-desktop
     quickshell
     sops
+    tree
     (writeShellScriptBin "qstoggle" ''
       pgrep quickshell && pkill quickshell || quickshell
     '')
