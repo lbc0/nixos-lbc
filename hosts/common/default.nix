@@ -1,19 +1,16 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, host, ... }:
 
 {
-  # imports only the hardware config
-  imports = [
-    ./hardware.nix
-    ./sops.nix
-    # ./noctalia.nix  # Noctalia system package
-  ];
+  # imports
+  imports = ( if host == "work" then [ ../work/hardware.nix ] else [ ../home/hardware.nix ] )
+    ++ [ ./sops.nix ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
-  networking.hostName = "nixos";
+  networking.hostName = "lbc";
   networking.networkmanager.enable = true;
 
   # Bluetooth & power

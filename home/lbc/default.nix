@@ -8,7 +8,6 @@ let
   configs = {
     # nvim = "nvim";
     niri = "niri";
-    # noctalia = "noctalia";
     quickshell = "quickshell";
   };
 in
