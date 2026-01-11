@@ -1,10 +1,6 @@
 { config, lib, pkgs, host, ... }:
 
 {
-  # imports
-  imports = ( if host == "work" then [ ../work/hardware.nix ] else [ ../home/hardware.nix ] )
-    ++ [ ./sops.nix ];
-
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

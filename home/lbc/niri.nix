@@ -4,7 +4,7 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbc-work";
+      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbch";
       };
     };
 

@@ -34,22 +34,21 @@
   {
     nixosConfigurations = {
 
-      lbc-work = nixpkgs.lib.nixosSystem {
+      lbcw = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         specialArgs = {
           inherit inputs;
-          host = "work";
         };
 
         modules = [
-          ./hosts/common/default.nix
+          ./hosts/work.nix
 
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
 
           {
-            networking.hostName = "lbc-work";
+            networking.hostName = "lbcw";
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -61,22 +60,21 @@
         ];
       };
 
-      lbc-home = nixpkgs.lib.nixosSystem {
+      lbch = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         specialArgs = {
           inherit inputs;
-          host = "home";
         };
 
         modules = [
-          ./hosts/common/default.nix
+          ./hosts/home.nix
 
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
 
           {
-            networking.hostName = "lbc-home";
+            networking.hostName = "lbch";
 
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;

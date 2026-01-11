@@ -23,7 +23,14 @@ in
   home.stateVersion = "25.11";
 
   # Git + shell
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+  
+    settings.user = {
+      name  = "lbc0";
+      email = "lbouchouari0@gmail.com";
+    };
+  };
 
   programs.bash = {
     enable = true;
