@@ -517,4 +517,7 @@ binds {
 
     // Show/Hide quickshell
     Mod+B { spawn "qstoggle"; }
+
+    // Shutdown
+    Mod+Alt+X { spawn "shutdown" "now"; }
 }
