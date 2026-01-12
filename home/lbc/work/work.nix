@@ -4,25 +4,11 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbch";
-      };
+      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
     };
+  };
 
   home.packages = with pkgs; [
-    fuzzel
-    alacritty
-    swaybg
-    swaylock
-    brave
-    playerctl
-    element-desktop
-    quickshell
-    sops
-    tree
-    (writeShellScriptBin "qstoggle" ''
-      pgrep quickshell && pkill quickshell || quickshell
-    '')
-
     (writeShellScriptBin "nac" ''
       curl -k -X POST "$(cat /run/secrets/cportal/nac_url)" \
         -H "Content-Type: application/x-www-form-urlencoded" \

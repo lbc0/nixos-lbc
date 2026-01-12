@@ -53,7 +53,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.lbc = import ./home/lbc/default.nix;
+            home-manager.users.lbc = import ./home/lbc/work.nix;
 
             home-manager.backupFileExtension = "backup";
           }
@@ -79,7 +79,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.lbc = import ./home/lbc/default.nix;
+            home-manager.users.lbc = import ./home/lbc/home.nix;
 
             home-manager.backupFileExtension = "backup";
           }

@@ -13,10 +13,6 @@ let
 in
 
 {
-  imports = [
-    ./niri.nix
-  ];
-
   # Basic Home Manager setup
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
@@ -55,6 +51,19 @@ in
     nixpkgs-fmt
     nodejs
     gcc
+    fuzzel
+    alacritty
+    swaybg
+    swaylock
+    brave
+    playerctl
+    element-desktop
+    quickshell
+    sops
+    tree
+    (writeShellScriptBin "qstoggle" ''
+      pgrep quickshell && pkill quickshell || quickshell
+    '')
   ];
 }
 
