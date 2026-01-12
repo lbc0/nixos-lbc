@@ -35,6 +35,7 @@
     vim
     wget
     git
+    gnome-keyring
   ];
 
   # Fonts
