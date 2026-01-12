@@ -32,23 +32,60 @@
 
   outputs = inputs@{ self, nixpkgs, sops-nix, home-manager, quickshell, ... }:
   {
-    nixosConfigurations.lbc = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+    nixosConfigurations = {
 
-      # Needed so noctalia.nix can access inputs
-      specialArgs = { inherit inputs; };
+      lbcw = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
 
-      modules = [
-        ./hosts/lbc
-        sops-nix.nixosModules.sops
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.lbc = import ./home/lbc;
-          home-manager.backupFileExtension = "backup";
-        }
-      ];
+        specialArgs = {
+          inherit inputs;
+        };
+
+        modules = [
+          ./hosts/work.nix
+
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+
+          {
+            networking.hostName = "lbcw";
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.lbc = import ./home/lbc/work.nix;
+
+            home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
+
+      lbch = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        specialArgs = {
+          inherit inputs;
+        };
+
+        modules = [
+          ./hosts/home.nix
+
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+
+          {
+            networking.hostName = "lbch";
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.lbc = import ./home/lbc/home.nix;
+
+            home-manager.backupFileExtension = "backup";
+          }
+        ];
+      };
+
     };
   };
 }

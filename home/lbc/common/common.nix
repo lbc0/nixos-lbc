@@ -8,31 +8,28 @@ let
   configs = {
     # nvim = "nvim";
     niri = "niri";
-    # noctalia = "noctalia";
     quickshell = "quickshell";
   };
 in
 
 {
-  imports = [
-    ./niri.nix
-  ];
-
   # Basic Home Manager setup
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
   home.stateVersion = "25.11";
 
   # Git + shell
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+  
+    settings.user = {
+      name  = "lbc0";
+      email = "lbouchouari0@gmail.com";
+    };
+  };
 
   programs.bash = {
     enable = true;
-    shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbc";
-      nac = "curl -k -X POST https://cportal.henceforth.co.ma:4100/wgcgi.cgi -H 'Content-Type: application/x-www-form-urlencoded' -d 'fw_username=a.lbouchouari&fw_password=KAli123   &fw_domain=henceforth.local&action=fw_logon&fw_logon_type=logon'";
-      autohidequickshell = "pgrep quickshell && pkill quickshell || quickshell";
-    };
     initExtra = ''
       export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
     '';
@@ -54,6 +51,19 @@ in
     nixpkgs-fmt
     nodejs
     gcc
+    fuzzel
+    alacritty
+    swaybg
+    swaylock
+    brave
+    playerctl
+    element-desktop
+    quickshell
+    sops
+    tree
+    (writeShellScriptBin "qstoggle" ''
+      pgrep quickshell && pkill quickshell || quickshell
+    '')
   ];
 }
 

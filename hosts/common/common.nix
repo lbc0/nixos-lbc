@@ -1,19 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, host, ... }:
 
 {
-  # imports only the hardware config
-  imports = [
-    ./hardware.nix
-    ./sops.nix
-    # ./noctalia.nix  # Noctalia system package
-  ];
-
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
-  networking.hostName = "nixos";
+  # networking.hostName = "lbc";
   networking.networkmanager.enable = true;
 
   # Bluetooth & power
@@ -42,6 +35,7 @@
     vim
     wget
     git
+    gnome-keyring
   ];
 
   # Fonts
