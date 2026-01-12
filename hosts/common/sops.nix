@@ -16,4 +16,8 @@
   sops.secrets."cportal/username".owner = "lbc";
   sops.secrets."cportal/password".owner = "lbc";
   sops.secrets."cportal/fw_domain".owner = "lbc";
+
+  # GitHub Auth
+  sops.secrets."github/username".owner = "lbc";
+  sops.secrets."github/pass".owner = "lbc";
 }
