@@ -13,6 +13,10 @@ let
 in
 
 {
+  imports = [
+    ./nvf.nix
+  ];
+
   # Basic Home Manager setup
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";

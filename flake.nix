@@ -28,9 +28,13 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nvf = {
+      url = "github:notashelf/nvf";
+    };
+
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, home-manager, quickshell, ... }:
+  outputs = inputs@{ self, nixpkgs, sops-nix, home-manager, quickshell, nvf, ... }:
   {
     nixosConfigurations = {
 
@@ -43,6 +47,7 @@
 
         modules = [
           ./hosts/work.nix
+	  nvf.nixosModules.default
 
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
