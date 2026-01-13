@@ -36,6 +36,7 @@
     wget
     git
     gnome-keyring
+    brightnessctl
   ];
 
   # Fonts
