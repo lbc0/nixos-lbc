@@ -6,7 +6,6 @@ let
 
   # Only relevant configs
   configs = {
-    # nvim = "nvim";
     niri = "niri";
     quickshell = "quickshell";
   };

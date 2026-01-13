@@ -47,7 +47,6 @@
 
         modules = [
           ./hosts/work.nix
-	  nvf.nixosModules.default
 
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
@@ -58,7 +57,12 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.lbc = import ./home/lbc/work.nix;
+            home-manager.users.lbc = {
+	      imports = [
+                nvf.homeManagerModules.default
+                ./home/lbc/work.nix
+              ];
+            };
 
             home-manager.backupFileExtension = "backup";
           }
@@ -84,7 +88,12 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.lbc = import ./home/lbc/home.nix;
+            home-manager.users.lbc = {
+	      imports = [
+                nvf.homeManagerModules.default
+                ./home/lbc/home.nix
+              ];
+            };
 
             home-manager.backupFileExtension = "backup";
           }
