@@ -9,11 +9,33 @@
         viAlias = true;
         vimAlias = true;
         lsp.enable = true;
+        autocomplete.nvim-cmp.enable = true;
+        telescope.enable = true;
+
+        options = {
+          shiftwidth = 2;
+          
+        };
+
+        keymaps = [
+          {
+            key = "<leader>e";
+            mode = "n";
+            silent = true;
+            action = "<cmd>Ex<CR>";
+          }
+          # {
+          #   key = "<leader>l";
+          #   mode = ["n" "x"];
+          #   silent = true;
+          #   action = "<cmd>cnext<CR>";
+          # }
+        ];
 
         theme = {
           enable = true;
-          name = "gruvbox";
-          style = "dark";
+          name = "tokyonight";
+          style = "night";
         };
 
         languages = {
