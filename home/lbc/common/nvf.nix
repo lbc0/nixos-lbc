@@ -15,6 +15,7 @@
         filetree.nvimTree = {
           enable = true;
           openOnSetup = false;
+          #mappings.toggle = "e";
         };
 
         options = {
@@ -27,7 +28,7 @@
             key = "<leader>e";
             mode = "n";
             silent = true;
-            action = "<leader>t<CR>";
+            action = "<cmd>Ex<CR>";
           }
           # {
           #   key = "<leader>l";
