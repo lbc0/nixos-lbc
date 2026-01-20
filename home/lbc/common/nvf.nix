@@ -27,7 +27,7 @@
             key = "<leader>e";
             mode = "n";
             silent = true;
-            action = "<cmd>Ex<CR>";
+            action = "<cmd>t<CR>";
           }
           # {
           #   key = "<leader>l";
