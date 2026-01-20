@@ -12,6 +12,11 @@
         autocomplete.nvim-cmp.enable = true;
         telescope.enable = true;
 
+        filetree.nvimTree = {
+          enable = true;
+          openOnSetup = false;
+        };
+
         options = {
           shiftwidth = 2;
           
@@ -40,6 +45,7 @@
 
         languages = {
           nix.enable = true;
+          python.enable = true;
         };
       };
     };
