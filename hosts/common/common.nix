@@ -52,6 +52,7 @@
     git
     gnome-keyring
     brightnessctl
+    wl-clipboard
   ];
 
   # Fonts

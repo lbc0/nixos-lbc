@@ -12,6 +12,11 @@
         autocomplete.nvim-cmp.enable = true;
         telescope.enable = true;
 
+        clipboard = {
+          providers.wl-copy.enable = true;
+          registers = "unamedplus";
+        };
+
         filetree.nvimTree = {
           enable = true;
           openOnSetup = false;
