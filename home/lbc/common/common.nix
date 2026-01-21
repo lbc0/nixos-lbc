@@ -14,6 +14,7 @@ in
 {
   imports = [
     ./nvf.nix
+    ./packages.nix
   ];
 
   # Basic Home Manager setup
@@ -45,28 +46,5 @@ in
       recursive = true;
     })
     configs;
-
-  # User packages (Wayland-friendly)
-  home.packages = with pkgs; [
-    neovim
-    ripgrep
-    nil
-    nixpkgs-fmt
-    nodejs
-    gcc
-    fuzzel
-    alacritty
-    swaybg
-    swaylock
-    brave
-    playerctl
-    element-desktop
-    quickshell
-    sops
-    tree
-    (writeShellScriptBin "qstoggle" ''
-      pgrep quickshell && pkill quickshell || quickshell
-    '')
-  ];
 }
 
