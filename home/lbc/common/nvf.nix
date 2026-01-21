@@ -13,8 +13,9 @@
         telescope.enable = true;
 
         clipboard = {
+          enable = true;
           providers.wl-copy.enable = true;
-          registers = "unamedplus";
+          registers = "unnamedplus";
         };
 
         filetree.nvimTree = {
