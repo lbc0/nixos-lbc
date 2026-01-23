@@ -156,6 +156,7 @@ layout {
 spawn-at-startup "swaybg" "-i" "nixos-lbc/assets/walls/desktop.png" "-m" "fill"
 spawn-at-startup "quickshell"
 spawn-at-startup "nac"
+spawn-at-startup "swayidle"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
