@@ -35,5 +35,8 @@
             niri msg output "$output" "$action"
           done
     '')
+    (writeShellScriptBin "swaylockPNG" ''
+      swaylock -i /home/lbc/nixos-lbc/assets/walls/desktop.png -s fill
+    '')
   ];
 }
