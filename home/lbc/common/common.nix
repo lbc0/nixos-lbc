@@ -8,6 +8,7 @@ let
   configs = {
     niri = "niri";
     quickshell = "quickshell";
+    swayidle = "swayidle";
   };
 in
 

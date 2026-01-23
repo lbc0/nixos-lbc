@@ -1,0 +1,3 @@
+timeout 10 swaylock -f
+timeout 20 screenOnOff off
+resume screenOnOff on

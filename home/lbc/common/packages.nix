@@ -12,6 +12,7 @@
     alacritty
     swaybg
     swaylock
+    swayidle
     brave
     playerctl
     element-desktop
@@ -25,6 +26,14 @@
     # Bin Scripts
     (writeShellScriptBin "qstoggle" ''
       pgrep quickshell && pkill quickshell || quickshell
+    '')
+    (writeShellScriptBin "screenOnOff" ''
+      action="$1"  # on | off
+      niri msg outputs \
+        | sed -n 's/^Output .* (\(.*\))$/\1/p' \
+        | while read -r output; do
+            niri msg output "$output" "$action"
+          done
     '')
   ];
 }
