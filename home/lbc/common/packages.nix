@@ -14,6 +14,7 @@
     swaylock
     swayidle
     brave
+    telegram-desktop
     playerctl
     element-desktop
     quickshell
