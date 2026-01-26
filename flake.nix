@@ -28,9 +28,13 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nvf = {
+      url = "github:notashelf/nvf";
+    };
+
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, home-manager, quickshell, ... }:
+  outputs = inputs@{ self, nixpkgs, sops-nix, home-manager, quickshell, nvf, ... }:
   {
     nixosConfigurations = {
 
@@ -53,7 +57,12 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.lbc = import ./home/lbc/work.nix;
+            home-manager.users.lbc = {
+	      imports = [
+                nvf.homeManagerModules.default
+                ./home/lbc/work.nix
+              ];
+            };
 
             home-manager.backupFileExtension = "backup";
           }
@@ -79,7 +88,12 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.users.lbc = import ./home/lbc/home.nix;
+            home-manager.users.lbc = {
+	      imports = [
+                nvf.homeManagerModules.default
+                ./home/lbc/home.nix
+              ];
+            };
 
             home-manager.backupFileExtension = "backup";
           }

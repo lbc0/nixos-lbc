@@ -156,6 +156,7 @@ layout {
 spawn-at-startup "swaybg" "-i" "nixos-lbc/assets/walls/desktop.png" "-m" "fill"
 spawn-at-startup "quickshell"
 spawn-at-startup "nac"
+spawn-at-startup "swayidle"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -262,7 +263,7 @@ binds {
 
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock" "-i" "nixos-lbc/assets/walls/desktop.png" "-s" "fill"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylockPNG"; }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -520,4 +521,7 @@ binds {
 
     // Shutdown
     Mod+Alt+X { spawn "shutdown" "now"; }
+
+    // Launch File Manager
+    Mod+E { spawn "nautilus"; }
 }

@@ -20,6 +20,21 @@
 
   # Display manager
   services.displayManager.ly.enable = true;
+#  services.greetd = {
+#    enable = true;
+#
+#    settings = {
+#      default_session = {
+#        user = "greeter";
+#        command = ''
+#          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+#            --cmd niri \
+#            --remember \
+#            --time
+#        '';
+#      };
+#    };
+#  };
 
   # Niri
   programs.niri.enable = true;
@@ -36,6 +51,8 @@
     wget
     git
     gnome-keyring
+    brightnessctl
+    wl-clipboard
   ];
 
   # Fonts

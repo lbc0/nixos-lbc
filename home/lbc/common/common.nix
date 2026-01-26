@@ -6,13 +6,19 @@ let
 
   # Only relevant configs
   configs = {
-    # nvim = "nvim";
     niri = "niri";
     quickshell = "quickshell";
+    swayidle = "swayidle";
   };
 in
 
 {
+  imports = [
+    ./nvf.nix
+    ./packages.nix
+    ./mpv.nix
+  ];
+
   # Basic Home Manager setup
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
@@ -35,6 +41,8 @@ in
     '';
   };
 
+  programs.neovim.defaultEditor = true;
+
   # Dotfiles symlinks
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
@@ -42,28 +50,5 @@ in
       recursive = true;
     })
     configs;
-
-  # User packages (Wayland-friendly)
-  home.packages = with pkgs; [
-    neovim
-    ripgrep
-    nil
-    nixpkgs-fmt
-    nodejs
-    gcc
-    fuzzel
-    alacritty
-    swaybg
-    swaylock
-    brave
-    playerctl
-    element-desktop
-    quickshell
-    sops
-    tree
-    (writeShellScriptBin "qstoggle" ''
-      pgrep quickshell && pkill quickshell || quickshell
-    '')
-  ];
 }
 
