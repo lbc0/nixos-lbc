@@ -1,0 +1,2 @@
+nix-shell -p yt-dlp
+yt-dlp -f "bv*[ext=mp4]+ba*[ext=m4a]/b[ext=mp4]" -o "playlistName/%(playlist_index)02d - %(title)s.%(ext)s" "playlist url"

@@ -9,6 +9,7 @@
     nodejs
     gcc
     fuzzel
+    yazi
     alacritty
     swaybg
     swaylock
