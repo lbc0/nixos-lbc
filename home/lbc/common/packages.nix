@@ -16,6 +16,7 @@
     brave
     telegram-desktop
     playerctl
+    mpv
     element-desktop
     quickshell
     sops
