@@ -16,6 +16,7 @@ in
   imports = [
     ./nvf.nix
     ./packages.nix
+    ./mpv.nix
   ];
 
   # Basic Home Manager setup
