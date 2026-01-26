@@ -10,6 +10,7 @@
     fuzzel
     yazi
     alacritty
+    nautilus
     swaybg
     swaylock
     swayidle
