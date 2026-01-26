@@ -40,6 +40,9 @@ in
     '';
   };
 
+  # Default editor
+  programs.neovim.defaultEditor = true;
+
   # Dotfiles symlinks
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
