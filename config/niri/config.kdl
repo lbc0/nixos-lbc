@@ -521,4 +521,7 @@ binds {
 
     // Shutdown
     Mod+Alt+X { spawn "shutdown" "now"; }
+
+    // Launch File Manager
+    Mod+E { spawn "nautilus"; }
 }
