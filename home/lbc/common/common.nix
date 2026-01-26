@@ -40,7 +40,6 @@ in
     '';
   };
 
-  # Default editor
   programs.neovim.defaultEditor = true;
 
   # Dotfiles symlinks

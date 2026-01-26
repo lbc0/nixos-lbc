@@ -2,7 +2,6 @@
 {
   # User packages (Wayland-friendly)
   home.packages = with pkgs; [
-    neovim
     ripgrep
     nil
     nixpkgs-fmt
