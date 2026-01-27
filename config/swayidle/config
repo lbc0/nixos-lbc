@@ -1,2 +1,2 @@
 # timeout 300 'swaylockPNG'
-# timeout 600 'screenOnOff off' resume 'screenOnOff on'
+timeout 300 'screenOnOff off' resume 'screenOnOff on'
