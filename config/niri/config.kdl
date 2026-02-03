@@ -517,7 +517,10 @@ binds {
     Alt+P { spawn "playerctl" "play-pause"; }
 
     // Show/Hide quickshell
-    Mod+B { spawn "qstoggle"; }
+    Mod+Alt+B { spawn "qstoggle"; }
+
+    // Spawn Brave
+    Mod+B { spawn "brave"; }
 
     // Shutdown
     Mod+Alt+X { spawn "shutdown" "now"; }

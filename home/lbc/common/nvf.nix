@@ -12,6 +12,11 @@
         autocomplete.nvim-cmp.enable = true;
         telescope.enable = true;
 
+        utility.motion.flash-nvim = {
+          enable = true;
+          mappings.jump = "z";
+        };
+
         clipboard = {
           enable = true;
           providers.wl-copy.enable = true;
@@ -21,7 +26,6 @@
         filetree.nvimTree = {
           enable = true;
           openOnSetup = false;
-          #mappings.toggle = "e";
         };
 
         options = {
