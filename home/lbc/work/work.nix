@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./packages.nix
+  ];
+  
   programs.bash = {
     enable = true;
     shellAliases = {
