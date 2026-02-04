@@ -10,6 +10,10 @@
     shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
     };
+    
+    initExtra = ''
+      export VAULT_ADDR=https://vault.cid-dev.ma
+    '';
   };
 
   home.packages = with pkgs; [
