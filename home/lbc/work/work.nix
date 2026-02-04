@@ -12,7 +12,7 @@
     };
     
     initExtra = ''
-      export VAULT_ADDR=https://vault.cid-dev.ma
+      export VAULT_ADDR=$(cat /run/secrets/vault/address)
     '';
   };
 
@@ -28,7 +28,7 @@
     '')
 
     (writeShellScriptBin "vault-login" ''
-      vault login -address=$(cat /run/secrets/vault/address) -method userpass username=$(cat /run/secrets/vault/username) password=$(cat /run/secrets/vault/password)
+      vault login -method userpass username=$(cat /run/secrets/vault/username) password=$(cat /run/secrets/vault/password)
     '')
   ];
 }
