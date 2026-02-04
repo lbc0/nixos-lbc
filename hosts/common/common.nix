@@ -15,6 +15,11 @@
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
 
+  # Gnome Keyring
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.ly.enableGnomeKeyring = true;
+  #security.pam.services.login.enableGnomeKeyring = true;
+
   # Time
   time.timeZone = "Africa/Casablanca";
 
@@ -50,7 +55,8 @@
     vim
     wget
     git
-    gnome-keyring
+#    gnome-keyring
+    libsecret
     brightnessctl
     wl-clipboard
   ];
