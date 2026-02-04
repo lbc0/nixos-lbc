@@ -47,6 +47,7 @@
 
         modules = [
           ./hosts/work.nix
+          ./modules/allow-unfree-vault.nix
 
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
