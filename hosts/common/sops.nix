@@ -17,6 +17,11 @@
   sops.secrets."cportal/password".owner = "lbc";
   sops.secrets."cportal/fw_domain".owner = "lbc";
 
+  # Vault Auth
+  sops.secrets."vault/address".owner = "lbc";
+  sops.secrets."vault/username".owner = "lbc";
+  sops.secrets."vault/password".owner = "lbc";
+
   # GitHub Auth
   sops.secrets."github/username".owner = "lbc";
   sops.secrets."github/pass".owner = "lbc";

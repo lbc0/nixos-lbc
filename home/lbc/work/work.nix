@@ -10,10 +10,6 @@
     shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
     };
-
-    initExtra = ''
-      export VAULT_ADDR="https://vault.cid-dev.ma"
-    '';
   };
 
   home.packages = with pkgs; [
@@ -25,6 +21,10 @@
 
     (writeShellScriptBin "gitup" ''
       git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push "https://$(cat /run/secrets/github/username):$(cat /run/secrets/github/pass)@github.com/lbc0/nixos-lbc.git"
+    '')
+
+    (writeShellScriptBin "vault-login" ''
+      vault login -address=$(cat /run/secrets/vault/address) -method userpass username=$(cat /run/secrets/vault/username) password=$(cat /run/secrets/vault/password)
     '')
   ];
 }

@@ -29,6 +29,7 @@
     (writeShellScriptBin "qstoggle" ''
       pgrep quickshell && pkill quickshell || quickshell
     '')
+
     (writeShellScriptBin "screenOnOff" ''
       action="$1"  # on | off
       niri msg outputs \
@@ -37,6 +38,7 @@
             niri msg output "$output" "$action"
           done
     '')
+
     (writeShellScriptBin "swaylockPNG" ''
       swaylock -i /home/lbc/nixos-lbc/assets/walls/desktop.png -s fill
     '')
