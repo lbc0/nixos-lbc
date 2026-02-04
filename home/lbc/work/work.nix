@@ -10,6 +10,10 @@
     shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
     };
+
+    initExtra = '' 
+      export SOPS_AGE_KEY_FILE=/home/lbc/nixos-lbc/.ignore/.keys.txt
+    ''; 
   };
 
   home.packages = with pkgs; [
