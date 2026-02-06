@@ -522,6 +522,9 @@ binds {
     // Spawn Brave
     Mod+B { spawn "brave"; }
 
+    // Spawn Notion
+    Mod+N { spawn "brave" "--app=https://www.notion.so"; }
+
     // Shutdown
     Mod+Alt+X { spawn "shutdown" "now"; }
 

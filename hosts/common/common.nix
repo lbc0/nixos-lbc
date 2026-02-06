@@ -15,31 +15,19 @@
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
 
+  # Display manager
+  services.displayManager.ly.enable = true;
+
   # Gnome Keyring
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.ly.enableGnomeKeyring = true;
-  #security.pam.services.login.enableGnomeKeyring = true;
+
+  # DBuS
+  services.dbus.enable = true;
+  #services.dbus.packages = [ pkgs.gnome-keyring ];
 
   # Time
   time.timeZone = "Africa/Casablanca";
-
-  # Display manager
-  services.displayManager.ly.enable = true;
-#  services.greetd = {
-#    enable = true;
-#
-#    settings = {
-#      default_session = {
-#        user = "greeter";
-#        command = ''
-#          ${pkgs.greetd.tuigreet}/bin/tuigreet \
-#            --cmd niri \
-#            --remember \
-#            --time
-#        '';
-#      };
-#    };
-#  };
 
   # Niri
   programs.niri.enable = true;
@@ -55,7 +43,7 @@
     vim
     wget
     git
-#    gnome-keyring
+    gnome-keyring
     libsecret
     brightnessctl
     wl-clipboard
