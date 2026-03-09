@@ -530,4 +530,10 @@ binds {
 
     // Launch File Manager
     Mod+E { spawn "nautilus"; }
+
+    // Search NixOS Packages
+    Mod+Alt+P { spawn "brave" "--app=https://search.nixos.org/packages"; }
+
+    // Search Home Manager Options
+    Mod+Alt+H { spawn "brave" "--app=https://home-manager-options.extranix.com"; }
 }
