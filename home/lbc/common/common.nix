@@ -24,28 +24,29 @@ in
   home.homeDirectory = "/home/lbc";
   home.stateVersion = "25.11";
 
-  # Git + shell
-  programs.git = {
-    enable = true;
-  
-    settings.user = {
-      name  = "lbc0";
-      email = "lbouchouari0@gmail.com";
+  programs = {
+    # Git + shell
+    git = {
+      enable = true;
+      settings.user = {
+        name  = "lbc0";
+        email = "lbouchouari0@gmail.com";
+      };
     };
-  };
-
-  programs.bash = {
-    enable = true;
-    initExtra = ''
-      export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
-      export SOPS_AGE_KEY_FILE=/home/lbc/nixos-lbc/.ignore/.keys.txt
-    '';
-  };
-
-  programs.neovim.defaultEditor = true;
-
-  programs.onlyoffice = {
-    enable = true;
+  
+    bash = {
+      enable = true;
+      initExtra = ''
+        export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
+        export SOPS_AGE_KEY_FILE=/home/lbc/nixos-lbc/.ignore/.keys.txt
+      '';
+    };
+  
+    neovim.defaultEditor = true;
+  
+    onlyoffice = {
+      enable = true;
+    };
   };
 
   # Dotfiles symlinks
