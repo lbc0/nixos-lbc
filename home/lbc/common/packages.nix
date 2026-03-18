@@ -25,6 +25,9 @@
     # Programming languages
     python315
 
+    # X11
+    xwayland
+
     # Bin Scripts
     (writeShellScriptBin "qstoggle" ''
       pgrep quickshell && pkill quickshell || quickshell
