@@ -26,7 +26,7 @@
     python315
 
     # X11
-    xwayland
+    xwayland-satellite
 
     # Bin Scripts
     (writeShellScriptBin "qstoggle" ''
