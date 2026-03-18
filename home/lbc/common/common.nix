@@ -44,6 +44,10 @@ in
 
   programs.neovim.defaultEditor = true;
 
+  programs.onlyoffice = {
+    enable = true;
+  };
+
   # Dotfiles symlinks
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {

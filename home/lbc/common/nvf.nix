@@ -9,7 +9,6 @@
         viAlias = true;
         vimAlias = true;
         lsp.enable = true;
-        autocomplete.nvim-cmp.enable = true;
         telescope.enable = true;
 
         utility.motion.flash-nvim = {
