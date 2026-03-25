@@ -1,5 +1,5 @@
 {
-  description = "Lbc NixOS Flake with Noctalia";
+  description = "Lbc NixOS Flake";
 
   inputs = {
     # Stable system
@@ -23,24 +23,24 @@
     #  inputs.nixpkgs.follows = "nixpkgs-unstable";
     #};
 
-#    quickshell = {
-#      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-#      inputs.nixpkgs.follows = "nixpkgs-unstable";
-#    };
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     nvf = {
       url = "github:notashelf/nvf";
     };
 
-    quickshell = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+#dms#    quickshell = {
+#dms#      url = "github:AvengeMedia/DankMaterialShell/stable";
+#dms#      inputs.nixpkgs.follows = "nixpkgs";
+#dms#    };
 
-    dgop = {
-      url = "github:AvengeMedia/dgop";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+#dms#    dgop = {
+#dms#      url = "github:AvengeMedia/dgop";
+#dms#      inputs.nixpkgs.follows = "nixpkgs";
+#dms#    };
 
   };
 
@@ -51,9 +51,9 @@
       lbcw = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        specialArgs = {
-          inherit inputs;
-        };
+#dms#        specialArgs = {
+#dms#          inherit inputs;
+#dms#        };
 
         modules = [
           ./hosts/work.nix
@@ -73,7 +73,7 @@
             home-manager.users.lbc = {
 	      imports = [
                 nvf.homeManagerModules.default
-                quickshell.homeModules.dank-material-shell
+#dms#                quickshell.homeModules.dank-material-shell
                 ./home/lbc/work.nix
               ];
             };

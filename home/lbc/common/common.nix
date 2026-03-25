@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, ... }:
+{ config, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
@@ -25,12 +25,12 @@ in
   home.stateVersion = "25.11";
 
   programs = {
-    # Git + shell
+    # Github
     git = {
       enable = true;
       settings.user = {
-        name  = "lbc0";
-        email = "lbouchouari0@gmail.com";
+        name  = "$(cat /run/secrets/github/username)";
+        email = "$(cat /run/secrets/github/mail)";
       };
     };
   
@@ -48,12 +48,12 @@ in
       enable = true;
     };
 
-    # Dank Linux
-    dank-material-shell = {
-      enable = true;
-      enableSystemMonitoring = true;
-      dgop.package = inputs.dgop.packages.${pkgs.system}.default;
-    };
+#dms#    # Dank Linux
+#dms#    dank-material-shell = {
+#dms#      enable = true;
+#dms#      enableSystemMonitoring = true;
+#dms#      dgop.package = inputs.dgop.packages.${pkgs.system}.default;
+#dms#    };
   };
 
   # Dotfiles symlinks

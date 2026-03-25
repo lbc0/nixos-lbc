@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }:
+{ inputs, ... }:
 
 {
   imports =
@@ -24,5 +24,6 @@
 
   # GitHub Auth
   sops.secrets."github/username".owner = "lbc";
+  sops.secrets."github/mail".owner = "lbc";
   sops.secrets."github/pass".owner = "lbc";
 }
