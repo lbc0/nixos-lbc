@@ -23,13 +23,23 @@
     #  inputs.nixpkgs.follows = "nixpkgs-unstable";
     #};
 
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+#    quickshell = {
+#      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+#      inputs.nixpkgs.follows = "nixpkgs-unstable";
+#    };
 
     nvf = {
       url = "github:notashelf/nvf";
+    };
+
+    quickshell = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -58,9 +68,12 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
+            home-manager.extraSpecialArgs = { inherit inputs; };
+
             home-manager.users.lbc = {
 	      imports = [
                 nvf.homeManagerModules.default
+                quickshell.homeModules.dank-material-shell
                 ./home/lbc/work.nix
               ];
             };

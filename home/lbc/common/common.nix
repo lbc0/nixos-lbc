@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, inputs, pkgs, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
@@ -46,6 +46,13 @@ in
   
     onlyoffice = {
       enable = true;
+    };
+
+    # Dank Linux
+    dank-material-shell = {
+      enable = true;
+      enableSystemMonitoring = true;
+      dgop.package = inputs.dgop.packages.${pkgs.system}.default;
     };
   };
 

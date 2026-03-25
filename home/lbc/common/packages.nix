@@ -18,7 +18,7 @@
     telegram-desktop
     playerctl
     element-desktop
-    quickshell
+#    quickshell
     sops
     tree
 
