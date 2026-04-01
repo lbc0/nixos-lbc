@@ -21,6 +21,7 @@
     quickshell
     sops
     tree
+    p7zip
 
     # Programming languages
     python315

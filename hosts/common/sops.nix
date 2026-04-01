@@ -21,4 +21,7 @@
   sops.secrets."github/username".owner = "lbc";
   sops.secrets."github/mail".owner = "lbc";
   sops.secrets."github/pass".owner = "lbc";
+
+  # p7zip
+  sops.secrets."p7zip/password".owner = "lbc";
 }
