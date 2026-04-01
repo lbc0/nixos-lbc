@@ -538,5 +538,5 @@ binds {
     Mod+Alt+H { spawn "brave" "--app=https://home-manager-options.extranix.com"; }
 
     // Spawn a playlist with MPV
-    Mod+Alt+M { spawn "mpv" "--loop-playlist=inf" "/home/lbc/nixos-lbc/assets/listening/playlist.m3u"; }
+    Mod+Alt+M { spawn "mpv" "--shuffle" "--loop-playlist=inf" "/home/lbc/nixos-lbc/assets/listening/playlist.m3u"; }
 }
