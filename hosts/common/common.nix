@@ -4,6 +4,18 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # Enable KVM kernel modules
+  boot.kernelModules = [ "kvm-intel" ];
+
+  # Enable libvirt + QEMU
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;        # optional: for TPM support (Windows 11)
+    };
+  };
 
   # Networking
   # networking.hostName = "lbc";
@@ -32,10 +44,19 @@
   # Niri
   programs.niri.enable = true;
 
+  # Enable virt-manager (GUI)
+  programs.virt-manager.enable = true;
+
+  # Optional: enable dconf (needed by virt-manager)
+  programs.dconf.enable = true;
+
+  # Optional but recommended: bridge networking helper
+  virtualisation.spiceUSBRedirection.enable = true;
+
   # User
   users.users.lbc = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "libvirtd" "kvm" ];
   };
 
   # System-wide packages
