@@ -50,6 +50,9 @@
   # Optional: enable dconf (needed by virt-manager)
   programs.dconf.enable = true;
 
+  # firefox
+  programs.firefox.enable = true;
+
   # Optional but recommended: bridge networking helper
   virtualisation.spiceUSBRedirection.enable = true;
 
