@@ -16,6 +16,7 @@
   sops.secrets."vault/address".owner = "lbc";
   sops.secrets."vault/username".owner = "lbc";
   sops.secrets."vault/password".owner = "lbc";
+  sops.secrets."vault/data".owner = "lbc";
 
   # GitHub Auth
   sops.secrets."github/username".owner = "lbc";
