@@ -25,4 +25,5 @@
 
   # p7zip
   sops.secrets."p7zip/password".owner = "lbc";
+  sops.secrets."p7zip/pass".owner = "lbc";
 }

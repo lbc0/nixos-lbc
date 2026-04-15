@@ -17,7 +17,7 @@
     brave
     telegram-desktop
     playerctl
-    element-desktop
+    # element-desktop
     quickshell
     sops
     tree
@@ -46,5 +46,22 @@
     (writeShellScriptBin "swaylockPNG" ''
       swaylock -i /home/lbc/nixos-lbc/assets/walls/desktop.png -s fill
     '')
+
+    (symlinkJoin {                          # <-- replaces bare element-desktop
+      name = "element-desktop";
+      paths = [ element-desktop ];
+      buildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/element-desktop \
+          --run '
+            read -s -p "Enter password: " input
+            echo ""
+            if [ "$input" != "supersecretpassword" ]; then
+              echo "Wrong password."
+              exit 1
+            fi
+          '
+      '';
+    })
   ];
 }
