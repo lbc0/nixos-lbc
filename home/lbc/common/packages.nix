@@ -56,11 +56,14 @@
           --run '
             read -s -p "Enter password: " input
             echo ""
-            if [ "$input" != "supersecretpassword" ]; then
+            if [ "$input" != "$(cat /run/secrets/p7zip/pass)" ]; then
               echo "Wrong password."
               exit 1
             fi
           '
+
+        # Override the .desktop file to use a terminal with the password prompt
+        sed -i "s|Exec=element-desktop|Exec=alacritty -e $out/bin/element-desktop|g" $out/share/applications/element-desktop.desktop
       '';
     })
   ];
