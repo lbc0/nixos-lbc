@@ -12,11 +12,11 @@
   sops.secrets."cportal/password".owner = "lbc";
   sops.secrets."cportal/fw_domain".owner = "lbc";
 
-  # Vault Auth
-  sops.secrets."vault/address".owner = "lbc";
-  sops.secrets."vault/username".owner = "lbc";
-  sops.secrets."vault/password".owner = "lbc";
-  sops.secrets."vault/data".owner = "lbc";
+  # OpenBao Auth
+  sops.secrets."openbao/address".owner = "lbc";
+  sops.secrets."openbao/username".owner = "lbc";
+  sops.secrets."openbao/password".owner = "lbc";
+  sops.secrets."openbao/data".owner = "lbc";
 
   # GitHub Auth
   sops.secrets."github/username".owner = "lbc";

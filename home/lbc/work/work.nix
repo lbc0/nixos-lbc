@@ -12,7 +12,7 @@
     };
     
     initExtra = ''
-      export BAO_ADDR=$(cat /run/secrets/vault/address)
+      export BAO_ADDR=$(cat /run/secrets/openbao/address)
     '';
   };
 
@@ -27,8 +27,8 @@
       git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push "https://$(cat /run/secrets/github/username):$(cat /run/secrets/github/pass)@github.com/lbc0/nixos-lbc.git"
     '')
 
-    (writeShellScriptBin "vault-login" ''
-      vault login -method userpass username=$(cat /run/secrets/vault/username) password=$(cat /run/secrets/vault/password)
+    (writeShellScriptBin "bao-login" ''
+      vault login -method userpass username=$(cat /run/secrets/openbao/username) password=$(cat /run/secrets/openbao/password)
     '')
   ];
 }
