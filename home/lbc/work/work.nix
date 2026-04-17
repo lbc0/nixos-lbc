@@ -28,7 +28,7 @@
     '')
 
     (writeShellScriptBin "bao-login" ''
-      vault login -method userpass username=$(cat /run/secrets/openbao/username) password=$(cat /run/secrets/openbao/password)
+      bao login -method userpass username=$(cat /run/secrets/openbao/username) password=$(cat /run/secrets/openbao/password)
     '')
   ];
 }
