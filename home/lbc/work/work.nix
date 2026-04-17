@@ -12,7 +12,7 @@
     };
     
     initExtra = ''
-      export VAULT_ADDR=$(cat /run/secrets/vault/address)
+      export BAO_ADDR=$(cat /run/secrets/vault/address)
     '';
   };
 
