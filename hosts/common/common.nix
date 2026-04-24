@@ -19,7 +19,12 @@
 
   # Networking
   # networking.hostName = "lbc";
-  networking.networkmanager.enable = true;
+  networking = {
+    networkmanager.enable = true;
+    firewall = {
+      allowedUDPPorts = [ 67 68 53 ];
+    };
+  };
 
   # Bluetooth & power
   hardware.bluetooth.enable = true;
