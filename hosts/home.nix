@@ -6,5 +6,6 @@
     ./common/common.nix
     ./common/sops.nix
     ./home/hardware.nix
+    ./home/home.nix
   ];
 }
