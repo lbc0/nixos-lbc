@@ -23,7 +23,14 @@
     networkmanager.enable = true;
     firewall = {
       allowedUDPPorts = [ 67 68 53 ];
+      allowedTCPPorts = [ 8000 ];
     };
+  };
+
+  # ModemManager
+  systemd.services.ModemManager = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
   };
 
   # Bluetooth & power
