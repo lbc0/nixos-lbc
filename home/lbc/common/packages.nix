@@ -25,6 +25,7 @@
 
     # Programming languages
     python315
+    go
 
     # X11
     xwayland-satellite
