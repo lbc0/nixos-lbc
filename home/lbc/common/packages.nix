@@ -22,6 +22,7 @@
     sops
     tree
     p7zip
+    localsend
 
     # Programming languages
     python315
