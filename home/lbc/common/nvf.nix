@@ -25,15 +25,20 @@
             enable = true;
             format.enable = true;
             lsp.servers = ["pyright"]; # list now
+            treesitter.enable = true;
           };
 
           go = {
             enable = true;
             format.enable = true;
             lsp.enable = true;
+            treesitter.enable = true;
           };
 
-          nix.enable = true;
+          nix = {
+            enable = true;
+            treesitter.enable = true;
+          };
         };
 
         # --- Git ---
@@ -67,7 +72,7 @@
         # --- Motion ---
         utility.motion.flash-nvim = {
           enable = true;
-          mappings.jump = "z";
+          mappings.jump = "m";
         };
 
         # --- Visuals ---
@@ -81,6 +86,7 @@
           nvim-web-devicons.enable = true; # file icons
           indent-blankline.enable = true; # indent guides
           highlight-undo.enable = true;
+          nvim-cursorline.enable = true;
         };
 
         # --- Clipboard ---
@@ -100,16 +106,78 @@
           scrolloff = 8;
         };
 
-        luaConfigRC.nvimtree-keys = ''
-          vim.api.nvim_create_autocmd("FileType", {
-            pattern = "NvimTree",
-            callback = function(args)
-              local api = require("nvim-tree.api")
-              vim.keymap.set("n", "l", api.node.open.edit, { buffer = args.buf, silent = true })
-              vim.keymap.set("n", "h", api.node.navigate.parent_close, { buffer = args.buf, silent = true })
-            end,
-          })
-        '';
+        binds.whichKey = {
+          enable = true;
+          setupOpts = {
+            preset = "modern";
+            win = {
+              border = "rounded";
+              #width = 0.33;
+              #height = {
+              #  min = 4;
+              #  max = 25;
+              #};
+            };
+          };
+        };
+
+        luaConfigRC = {
+          nvimtree-keys = ''
+            vim.api.nvim_create_autocmd("FileType", {
+              pattern = "NvimTree",
+              callback = function(args)
+                local api = require("nvim-tree.api")
+                vim.keymap.set("n", "l", api.node.open.edit, { buffer = args.buf, silent = true })
+                vim.keymap.set("n", "h", api.node.navigate.parent_close, { buffer = args.buf, silent = true })
+              end,
+            })
+          '';
+
+          go-highlight = ''
+            -- Enable semantic tokens (richer LSP-based coloring)
+            vim.api.nvim_create_autocmd("LspAttach", {
+              callback = function(args)
+                local client = vim.lsp.get_client_by_id(args.data.client_id)
+                if client then
+                  client.server_capabilities.semanticTokensProvider = client.server_capabilities.semanticTokensProvider
+                end
+              end,
+            })
+          '';
+
+          indentation = ''
+            vim.api.nvim_create_autocmd("FileType", {
+              pattern = { "go", "nix", "python" },
+              callback = function()
+                vim.opt_local.indentexpr = ""
+                vim.opt_local.autoindent = true
+                vim.opt_local.preserveindent = true
+              end,
+            })
+          '';
+
+          tabline = ''
+            vim.opt.showtabline = 2  -- always show tabline
+          '';
+
+          terminal-keymap = ''
+            vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { silent = true })
+          '';
+
+          which-key = ''
+            local wk = require("which-key")
+            wk.add({
+              { "<leader>f", group = "find" },
+              { "<leader>t", group = "terminal/tabs" },
+              { "<leader>w", group = "save" },
+              { "<leader>q", group = "quit" },
+              { "<leader>c", group = "code/format" },
+              { "<leader>r", group = "rename" },
+              { "g",         group = "goto" },
+              { "<leader>s", group = "splits" },
+            })
+          '';
+        };
 
         # --- Keymaps ---
         keymaps = [
@@ -196,6 +264,7 @@
           }
 
           # Switch focus
+          # Normal mode - all directions
           {
             key = "<C-h>";
             mode = "n";
@@ -207,6 +276,56 @@
             mode = "n";
             silent = true;
             action = "<C-w>l";
+          }
+          {
+            key = "<C-j>";
+            mode = "n";
+            silent = true;
+            action = "<C-w>j";
+          }
+          {
+            key = "<C-k>";
+            mode = "n";
+            silent = true;
+            action = "<C-w>k";
+          }
+          {
+            key = "<C-p>"; # previous window
+            mode = "n";
+            silent = true;
+            action = "<C-w>p";
+          }
+
+          # Terminal mode - same keys work inside terminal
+          {
+            key = "<C-h>";
+            mode = "t";
+            silent = true;
+            action = "<C-\\><C-n><C-w>h";
+          }
+          {
+            key = "<C-l>";
+            mode = "t";
+            silent = true;
+            action = "<C-\\><C-n><C-w>l";
+          }
+          {
+            key = "<C-j>";
+            mode = "t";
+            silent = true;
+            action = "<C-\\><C-n><C-w>j";
+          }
+          {
+            key = "<C-k>";
+            mode = "t";
+            silent = true;
+            action = "<C-\\><C-n><C-w>k";
+          }
+          {
+            key = "<C-p>";
+            mode = "t";
+            silent = true;
+            action = "<C-\\><C-n><C-w>p";
           }
 
           # Save and quit
@@ -230,6 +349,69 @@
             silent = true;
             action = "<cmd>w<CR>";
           }
+
+          # New empty tab
+          {
+            key = "<leader>tn";
+            mode = "n";
+            silent = true;
+            action = "<cmd>tabnew<CR>";
+          }
+          # Close current tab
+          {
+            key = "<leader>tc";
+            mode = "n";
+            silent = true;
+            action = "<cmd>tabclose<CR>";
+          }
+          # Next / prev tab
+          {
+            key = "<leader>t]";
+            mode = "n";
+            silent = true;
+            action = "<cmd>tabnext<CR>";
+          }
+          {
+            key = "<leader>t[";
+            mode = "n";
+            silent = true;
+            action = "<cmd>tabprev<CR>";
+          }
+
+          # Format entire file
+          {
+            key = "<leader>cf";
+            mode = "n";
+            silent = true;
+            action = "<cmd>lua vim.lsp.buf.format({ async = true })<CR>";
+          }
+
+          {
+            key = "<CR>";
+            mode = "n";
+            silent = true;
+            action = "i<CR><Esc>";
+          }
+
+          # Split windows
+          {
+            key = "<leader>sv";
+            mode = "n";
+            silent = true;
+            action = "<cmd>vsplit<CR>";
+          } # vertical split
+          {
+            key = "<leader>sh";
+            mode = "n";
+            silent = true;
+            action = "<cmd>split<CR>";
+          } # horizontal split
+          {
+            key = "<leader>sc";
+            mode = "n";
+            silent = true;
+            action = "<cmd>close<CR>";
+          } # close current split
         ];
       };
     };
