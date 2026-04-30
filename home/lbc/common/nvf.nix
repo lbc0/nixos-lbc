@@ -6,7 +6,7 @@
         viAlias = true;
         vimAlias = true;
 
-        # --- LSP ---
+        # --- LSP ---lk
         lsp = {
           enable = true;
           formatOnSave = true;
@@ -15,6 +15,12 @@
 
         # --- Autocomplete ---
         autocomplete.nvim-cmp.enable = true;
+
+        # Nvim BuffrLine
+        tabline.nvimBufferline = {
+          enable = true;
+          mappings.closeCurrent = "<leader>be";
+        };
 
         # --- Languages ---
         languages = {
@@ -67,6 +73,11 @@
         filetree.nvimTree = {
           enable = true;
           openOnSetup = false;
+          setupOpts.modified = {
+            enable = true;
+            show_on_dirs = true;
+            show_on_open_dirs = true;
+          };
         };
 
         # --- Motion ---
@@ -175,6 +186,45 @@
               { "<leader>r", group = "rename" },
               { "g",         group = "goto" },
               { "<leader>s", group = "splits" },
+            })
+          '';
+
+          bufferline-path = ''
+            vim.defer_fn(function()
+               require("bufferline").setup(vim.tbl_deep_extend("force", {}, {
+                 options = {
+                   name_formatter = function(buf)
+                     local cwd = vim.fn.getcwd()
+                     local path = buf.path
+                     -- Make path relative to cwd
+                     local rel = path:gsub("^" .. vim.pesc(cwd) .. "/", "")
+                     -- Split into parts
+                     local parts = vim.split(rel, "/")
+                     -- Shorten all parts except the last (filename)
+                     local shortened = {}
+                     for i, part in ipairs(parts) do
+                       if i < #parts then
+                         table.insert(shortened, part:sub(1, 1))
+                       else
+                         table.insert(shortened, part)
+                       end
+                     end
+                     return table.concat(shortened, "/")
+                   end,
+                 },
+               }))
+             end, 100)
+          '';
+
+          nvimtree-highlight = ''
+            vim.api.nvim_create_autocmd("BufEnter", {
+              callback = function()
+                local buf = vim.api.nvim_get_current_buf()
+                local modified = vim.api.nvim_get_option_value("modified", { buf = buf })
+                -- highlight modified files in tree
+                vim.api.nvim_set_hl(0, "NvimTreeModifiedFile", { fg = "#e0af68", bold = true })
+                vim.api.nvim_set_hl(0, "NvimTreeModifiedIcon", { fg = "#e0af68" })
+              end,
             })
           '';
         };
