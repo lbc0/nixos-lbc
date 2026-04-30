@@ -178,7 +178,7 @@
           which-key = ''
             local wk = require("which-key")
             wk.add({
-              { "<leader>f", group = "find" },
+              { "<leader>f", group = "find/file" },
               { "<leader>t", group = "terminal/tabs" },
               { "<leader>w", group = "save" },
               { "<leader>q", group = "quit" },
