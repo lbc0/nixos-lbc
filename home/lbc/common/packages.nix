@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   # User packages (Wayland-friendly)
   home.packages = with pkgs; [
     ripgrep
@@ -25,7 +24,10 @@
     localsend
 
     # Programming languages
-    python315
+    (python3.withPackages (ps:
+      with ps; [
+        bcrypt # package
+      ]))
     go
 
     # X11
@@ -49,16 +51,21 @@
       swaylock -i /home/lbc/nixos-lbc/assets/walls/desktop.png -s fill
     '')
 
-    (symlinkJoin {                          # <-- replaces bare element-desktop
+    (symlinkJoin {
+      # <-- replaces bare element-desktop
       name = "element-desktop";
-      paths = [ element-desktop ];
-      buildInputs = [ makeWrapper ];
+      paths = [element-desktop];
+      buildInputs = [makeWrapper];
       postBuild = ''
         wrapProgram $out/bin/element-desktop \
           --run '
             read -s -p "Enter password: " input
             echo ""
-            if [ "$input" != "$(cat /run/secrets/p7zip/pass)" ]; then
+            stored_hash=$(cat /run/secrets/p7zip/pass)
+            if ! python3 -c "
+              import bcrypt, sys
+              sys.exit(0 if bcrypt.checkpw(b'"'"'$input'"'"', b'"'"'$stored_hash'"'"') else 1)
+            "; then
               echo "Wrong password."
               exit 1
             fi
