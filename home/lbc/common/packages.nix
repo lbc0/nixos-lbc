@@ -61,11 +61,8 @@
           --run '
             read -s -p "Enter password: " input
             echo ""
-            stored_hash=$(cat /run/secrets/p7zip/pass)
-            if ! python3 -c "
-              import bcrypt, sys
-              sys.exit(0 if bcrypt.checkpw(b'"'"'$input'"'"', b'"'"'$stored_hash'"'"') else 1)
-            "; then
+            stored=$(cat /run/secrets/p7zip/pass)
+            if ! python3 -c "import bcrypt,sys;sys.exit(0 if bcrypt.checkpw(b\"$input\",b\"$stored\") else 1)"; then
               echo "Wrong password."
               exit 1
             fi
