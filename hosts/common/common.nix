@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   # Enable KVM kernel modules
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = ["kvm-intel"];
 
   # Enable libvirt + QEMU
   virtualisation.libvirtd = {
@@ -13,7 +11,7 @@
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = true;
-      swtpm.enable = true;        # optional: for TPM support (Windows 11)
+      swtpm.enable = true; # optional: for TPM support (Windows 11)
     };
   };
 
@@ -22,15 +20,15 @@
   networking = {
     networkmanager.enable = true;
     firewall = {
-      allowedUDPPorts = [ 67 68 53 53317 ];
-      allowedTCPPorts = [ 8000 53317 ];
+      allowedUDPPorts = [67 68 53 53317];
+      allowedTCPPorts = [8000 53317];
     };
   };
 
   # ModemManager
   systemd.services.ModemManager = {
     enable = true;
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
   };
 
   # Bluetooth & power
@@ -49,6 +47,11 @@
   # DBuS
   services.dbus.enable = true;
   #services.dbus.packages = [ pkgs.gnome-keyring ];
+
+  # sudo timeout
+  security.sudo.extraConfig = ''
+    Defaults timestamp_timeout=0
+  '';
 
   # Time
   time.timeZone = "Africa/Casablanca";
@@ -71,7 +74,7 @@
   # User
   users.users.lbc = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" "kvm" ];
+    extraGroups = ["wheel" "libvirtd" "kvm"];
   };
 
   # System-wide packages
@@ -91,7 +94,7 @@
   ];
 
   # Nix settings
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # NixOS versioning
   system.stateVersion = "25.11";
