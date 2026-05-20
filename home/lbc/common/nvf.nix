@@ -11,6 +11,7 @@
           enable = true;
           formatOnSave = true;
           lspSignature.enable = true;
+          servers.nil.settings.nil.nix.flake.autoArchive = true;
         };
 
         # --- Autocomplete ---
