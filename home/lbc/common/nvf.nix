@@ -463,6 +463,31 @@
             silent = true;
             action = "<cmd>close<CR>";
           } # close current split
+          # Resize splits
+          {
+            key = "<C-Left>";
+            mode = "n";
+            silent = true;
+            action = "<cmd>vertical resize -2<CR>";
+          }
+          {
+            key = "<C-Right>";
+            mode = "n";
+            silent = true;
+            action = "<cmd>vertical resize +2<CR>";
+          }
+          {
+            key = "<C-Up>";
+            mode = "n";
+            silent = true;
+            action = "<cmd>resize +2<CR>";
+          }
+          {
+            key = "<C-Down>";
+            mode = "n";
+            silent = true;
+            action = "<cmd>resize -2<CR>";
+          }
         ];
       };
     };
