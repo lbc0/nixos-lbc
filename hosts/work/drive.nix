@@ -23,7 +23,7 @@
 
   systemd = {
     tmpfiles.rules = [
-      "d /mnt/nextcloud 0775 lbc users -"
+      "d /mnt/drive 0775 lbc users -"
     ];
 
     mounts = [
