@@ -25,7 +25,7 @@ libinput debug-events 2>/dev/null | while IFS= read -r line; do
   fi
   if [ "$TRIGGER" = "1" ]; then
     BEFORE=$(is_focused_on_room)
-    sleep 0.1
+    sleep 0.3
     AFTER=$(is_focused_on_room)
     if [ "$BEFORE" = "yes" ] && [ "$AFTER" = "yes" ]; then
       pkill -f element-desktop
