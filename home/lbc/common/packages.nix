@@ -16,7 +16,7 @@
     brave
     telegram-desktop
     playerctl
-    element-desktop
+    # element-desktop
     quickshell
     sops
     tree
