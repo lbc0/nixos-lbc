@@ -74,7 +74,7 @@
   # User
   users.users.lbc = {
     isNormalUser = true;
-    extraGroups = ["wheel" "libvirtd" "kvm"];
+    extraGroups = ["wheel" "libvirtd" "kvm" "input"];
   };
 
   # System-wide packages

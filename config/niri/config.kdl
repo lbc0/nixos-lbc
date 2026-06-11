@@ -157,7 +157,7 @@ spawn-at-startup "swaybg" "-i" "nixos-lbc/assets/walls/desktop.png" "-m" "fill"
 spawn-at-startup "quickshell"
 spawn-at-startup "nac"
 spawn-at-startup "swayidle"
-spawn-at-startup "sh" "-c" "/home/lbc/nixos-lbc/.local/bin/element-idle-killer"
+spawn-at-startup "/home/lbc/nixos-lbc/.local/bin/room-guard"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

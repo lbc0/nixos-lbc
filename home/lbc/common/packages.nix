@@ -22,6 +22,7 @@
     tree
     p7zip
     localsend
+    libinput
 
     # Programming languages
     (python3.withPackages (ps:
@@ -51,26 +52,26 @@
       swaylock -i /home/lbc/nixos-lbc/assets/walls/desktop.png -s fill
     '')
 
-    (symlinkJoin {
-      # <-- replaces bare element-desktop
-      name = "element-desktop";
-      paths = [element-desktop];
-      buildInputs = [makeWrapper];
-      postBuild = ''
-        wrapProgram $out/bin/element-desktop \
-          --run '
-            read -s -p "Enter password: " input
-            echo ""
-            stored=$(cat /run/secrets/p7zip/pass)
-            if ! python3 -c "import bcrypt,sys;sys.exit(0 if bcrypt.checkpw(b\"$input\",b\"$stored\") else 1)"; then
-              echo "Wrong password."
-              exit 1
-            fi
-          '
-
-        # Override the .desktop file to use a terminal with the password prompt
-        sed -i "s|Exec=element-desktop|Exec=alacritty -e $out/bin/element-desktop|g" $out/share/applications/element-desktop.desktop
-      '';
-    })
+    # (symlinkJoin {
+    #   # <-- replaces bare element-desktop
+    #   name = "element-desktop";
+    #   paths = [element-desktop];
+    #   buildInputs = [makeWrapper];
+    #   postBuild = ''
+    #     wrapProgram $out/bin/element-desktop \
+    #       --run '
+    #         read -s -p "Enter password: " input
+    #         echo ""
+    #         stored=$(cat /run/secrets/p7zip/pass)
+    #         if ! python3 -c "import bcrypt,sys;sys.exit(0 if bcrypt.checkpw(b\"$input\",b\"$stored\") else 1)"; then
+    #           echo "Wrong password."
+    #           exit 1
+    #         fi
+    #       '
+    #
+    #     # Override the .desktop file to use a terminal with the password prompt
+    #     sed -i "s|Exec=element-desktop|Exec=alacritty -e $out/bin/element-desktop|g" $out/share/applications/element-desktop.desktop
+    #   '';
+    # })
   ];
 }
