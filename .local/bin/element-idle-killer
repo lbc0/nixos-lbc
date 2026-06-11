@@ -1,0 +1,5 @@
+#!/bin/sh
+while true; do
+  swayidle -w timeout 5 'sh -c "pkill -f element-desktop"' 2>/dev/null
+  sleep 2
+done
