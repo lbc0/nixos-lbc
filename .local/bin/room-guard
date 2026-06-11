@@ -28,7 +28,7 @@ libinput debug-events 2>/dev/null | while IFS= read -r line; do
     sleep 0.3
     AFTER=$(is_focused_on_room)
     if [ "$BEFORE" = "yes" ] && [ "$AFTER" = "yes" ]; then
-      swaylockPNG
+      pkill -f element-desktop
     fi
   fi
 done
