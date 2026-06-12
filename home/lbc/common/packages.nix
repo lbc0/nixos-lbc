@@ -73,5 +73,10 @@
         sed -i "s|Exec=element-desktop|Exec=alacritty -e $out/bin/element-desktop|g" $out/share/applications/element-desktop.desktop
       '';
     })
+
+    # Hotspot
+    (writeShellScriptBin "hotspotUP" ''
+      nmcli connection up Hotspot
+    '')
   ];
 }
