@@ -1,6 +1,4 @@
-{ config, ... }:
-
-let
+{config, ...}: let
   dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
@@ -10,9 +8,7 @@ let
     quickshell = "quickshell";
     swayidle = "swayidle";
   };
-in
-
-{
+in {
   imports = [
     ./nvf.nix
     ./packages.nix
@@ -29,11 +25,12 @@ in
     git = {
       enable = true;
       settings.user = {
-        name  = "$(cat /run/secrets/github/username)";
+        name = "$(cat /run/secrets/github/username)";
         email = "$(cat /run/secrets/github/mail)";
       };
+      extraConfig.credential.helper = "/run/current-system/sw/bin/bash -c 'echo username=$(cat /run/secrets/github/username) && echo password=$(cat /run/secrets/github/pass)'";
     };
-  
+
     bash = {
       enable = true;
       initExtra = ''
@@ -41,27 +38,27 @@ in
         export SOPS_AGE_KEY_FILE=/home/lbc/nixos-lbc/.ignore/.keys.txt
       '';
     };
-  
+
     neovim.defaultEditor = true;
-  
+
     onlyoffice = {
       enable = true;
     };
 
-#dms#    # Dank Linux
-#dms#    dank-material-shell = {
-#dms#      enable = true;
-#dms#      enableSystemMonitoring = true;
-#dms#      dgop.package = inputs.dgop.packages.${pkgs.system}.default;
-#dms#    };
+    #dms#    # Dank Linux
+    #dms#    dank-material-shell = {
+    #dms#      enable = true;
+    #dms#      enableSystemMonitoring = true;
+    #dms#      dgop.package = inputs.dgop.packages.${pkgs.system}.default;
+    #dms#    };
   };
 
   # Dotfiles symlinks
-  xdg.configFile = builtins.mapAttrs
+  xdg.configFile =
+    builtins.mapAttrs
     (name: subpath: {
       source = create_symlink "${dotfiles}/${subpath}";
       recursive = true;
     })
     configs;
 }
-
