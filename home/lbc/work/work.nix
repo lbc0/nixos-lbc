@@ -1,16 +1,14 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ./packages.nix
   ];
-  
+
   programs.bash = {
     enable = true;
     shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
     };
-    
+
     initExtra = ''
       export BAO_ADDR=$(cat /run/secrets/openbao/address)
     '';
@@ -24,7 +22,7 @@
     '')
 
     (writeShellScriptBin "gitup" ''
-      git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push "https://$(cat /run/secrets/github/username):$(cat /run/secrets/github/pass)@github.com/lbc0/nixos-lbc.git"
+      git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push "https://$(cat /run/secrets/github/username):$(cat /run/secrets/github/pass)@github.com/lbc0/nixos-lbc.git" nix-work
     '')
 
     (writeShellScriptBin "bao-login" ''
