@@ -24,10 +24,12 @@ in {
     # Github
     git = {
       enable = true;
-      extraConfig.credential.helper = "/run/current-system/sw/bin/bash -c 'echo username=$(cat /run/secrets/github/username) && echo password=$(cat /run/secrets/github/pass)'";
-      settings.user = {
-        name = "lbc0";
-        email = "lbc0@gmail.com";
+      extraConfig = {
+        credential.helper = "/run/current-system/sw/bin/bash -c 'echo username=$(cat /run/secrets/github/username) && echo password=$(cat /run/secrets/github/pass)'";
+        user = {
+          name = "lbc0";
+          email = "lbc0@gmail.com";
+        };
       };
     };
 
