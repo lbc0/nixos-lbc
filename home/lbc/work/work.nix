@@ -22,7 +22,7 @@
     '')
 
     (writeShellScriptBin "gitup" ''
-      git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push "https://$(cat /run/secrets/github/username):$(cat /run/secrets/github/pass)@github.com/lbc0/nixos-lbc.git" nix-work
+      git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push -u "https://$(cat /run/secrets/github/username):$(cat /run/secrets/github/pass)@github.com/lbc0/nixos-lbc.git" nix-work
     '')
 
     (writeShellScriptBin "bao-login" ''
