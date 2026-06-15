@@ -23,6 +23,7 @@
     p7zip
     localsend
     libinput
+    zathura
 
     # Programming languages
     (python3.withPackages (ps:
