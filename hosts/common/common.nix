@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -61,6 +65,12 @@
 
   # Enable virt-manager (GUI)
   programs.virt-manager.enable = true;
+
+  # GNOME Virtual Filesystem
+  services.gvfs.enable = true;
+
+  # Thunar File Manager
+  programs.thunar.enable = true;
 
   # Optional: enable dconf (needed by virt-manager)
   programs.dconf.enable = true;

@@ -530,7 +530,7 @@ binds {
     Mod+Alt+X { spawn "shutdown" "now"; }
 
     // Launch File Manager
-    Mod+E { spawn "nautilus"; }
+    Mod+E { spawn "thunar"; }
 
     // Search NixOS Packages
     Mod+Alt+P { spawn "brave" "--app=https://search.nixos.org/packages"; }

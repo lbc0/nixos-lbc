@@ -9,7 +9,10 @@
     fuzzel
     yazi
     alacritty
-    nautilus
+    # nautilus
+    # xfce.thunar
+    # xfce.thunar-volman
+    # xfce.thunar-archive-plugin
     swaybg
     swaylock
     swayidle
