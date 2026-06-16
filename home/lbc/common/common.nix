@@ -24,7 +24,7 @@ in {
     # Github
     git = {
       enable = true;
-      extraConfig = {
+      settings = {
         credential.helper = "/run/current-system/sw/bin/bash -c 'echo username=$(cat /run/secrets/github/username) && echo password=$(cat /run/secrets/github/pass)'";
         user = {
           name = "lbc0";
