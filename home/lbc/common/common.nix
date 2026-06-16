@@ -13,7 +13,7 @@ in {
     ./nvf.nix
     ./packages.nix
     ./mpv.nix
-    ./gtk/gtk2.nix
+    ./gtk/gtk4.nix
   ];
 
   # Basic Home Manager setup
