@@ -66,11 +66,20 @@
   # Enable virt-manager (GUI)
   programs.virt-manager.enable = true;
 
-  # GNOME Virtual Filesystem
-  services.gvfs.enable = true;
-
   # Thunar File Manager
   programs.thunar.enable = true;
+
+  programs.xfconf.enable = true; # For thunar preference changes
+
+  # GNOME Virtual Filesystem
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
+  # Thunar plugins
+  programs.thunar.plugins = with pkgs; [
+    xfce.thunar-archive-plugin # Requires an Archive manager like file-roller, ark, etc
+    xfce.thunar-volman
+  ];
 
   # Optional: enable dconf (needed by virt-manager)
   programs.dconf.enable = true;
