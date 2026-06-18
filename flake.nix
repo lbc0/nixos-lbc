@@ -18,11 +18,13 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    # QuickShell
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # NVF
     nvf = {
       url = "github:notashelf/nvf";
     };
@@ -46,9 +48,9 @@
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {inherit inputs;};
+
         modules = [
           hostModule
-          ./modules/allow-unfree-vault.nix
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
           {
@@ -69,6 +71,7 @@
         hostModule = ./hosts/work.nix;
         homeModule = ./home/lbc/work.nix;
       };
+
       lbch = mkHost {
         hostName = "lbch";
         hostModule = ./hosts/home.nix;
