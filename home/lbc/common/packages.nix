@@ -9,17 +9,12 @@
     fuzzel
     yazi
     alacritty
-    # nautilus
-    # xfce.thunar
-    # xfce.thunar-volman
-    # xfce.thunar-archive-plugin
     swaybg
     swaylock
     swayidle
     brave
     telegram-desktop
     playerctl
-    # element-desktop
     quickshell
     sops
     tree

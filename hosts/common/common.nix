@@ -1,120 +1,99 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
-  # Bootloader
+{pkgs, ...}: {
+  # ── Bootloader ───────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # Enable KVM kernel modules
   boot.kernelModules = ["kvm-intel"];
 
-  # Enable libvirt + QEMU
+  # ── Virtualisation (KVM / QEMU / virt-manager) ───────────────────────────
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = true;
-      swtpm.enable = true; # optional: for TPM support (Windows 11)
+      swtpm.enable = true; # TPM support (needed for Windows 11 guests)
     };
   };
+  virtualisation.spiceUSBRedirection.enable = true;
+  programs.virt-manager.enable = true;
+  programs.dconf.enable = true; # required by virt-manager
 
-  # Networking
-  # networking.hostName = "lbc";
+  # ── Networking ───────────────────────────────────────────────────────────
   networking = {
     networkmanager.enable = true;
     firewall = {
+      # 67/68: DHCP (hotspot), 53: DNS, 53317: LocalSend
       allowedUDPPorts = [67 68 53 53317];
+      # 8000: python http.server (file sharing), 53317: LocalSend
       allowedTCPPorts = [8000 53317];
     };
   };
 
-  # ModemManager
+  # ModemManager: needed for mobile broadband / SIM management
   systemd.services.ModemManager = {
     enable = true;
     wantedBy = ["multi-user.target"];
   };
 
-  # Bluetooth & power
+  # ── Hardware ─────────────────────────────────────────────────────────────
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  services.blueman.enable = true; # Bluetooth GUI
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
 
-  # Display manager
-  services.displayManager.ly.enable = true;
+  # ── Display / Session ────────────────────────────────────────────────────
+  services.displayManager.ly.enable = true; # TUI login manager
+  programs.niri.enable = true; # Wayland compositor
 
-  # Gnome Keyring
+  # ── Security ─────────────────────────────────────────────────────────────
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.ly.enableGnomeKeyring = true;
+  # Ask for sudo password every time (no caching)
+  security.sudo.extraConfig = "Defaults timestamp_timeout=0";
 
-  # DBuS
+  # ── DBus ─────────────────────────────────────────────────────────────────
   services.dbus.enable = true;
-  #services.dbus.packages = [ pkgs.gnome-keyring ];
 
-  # sudo timeout
-  security.sudo.extraConfig = ''
-    Defaults timestamp_timeout=0
-  '';
-
-  # Time
+  # ── Time ─────────────────────────────────────────────────────────────────
   time.timeZone = "Africa/Casablanca";
 
-  # Niri
-  programs.niri.enable = true;
+  # ── File Manager (Thunar) ────────────────────────────────────────────────
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [
+      xfce.thunar-archive-plugin # right-click → extract/compress
+      xfce.thunar-volman # auto-mount removable drives
+    ];
+  };
+  programs.xfconf.enable = true; # persists Thunar preferences
+  services.gvfs.enable = true; # trash, network mounts, MTP
+  services.tumbler.enable = true; # image thumbnails
 
-  # Enable virt-manager (GUI)
-  programs.virt-manager.enable = true;
-
-  # Thunar File Manager
-  programs.thunar.enable = true;
-
-  programs.xfconf.enable = true; # For thunar preference changes
-
-  # GNOME Virtual Filesystem
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
-
-  # Thunar plugins
-  programs.thunar.plugins = with pkgs; [
-    xfce.thunar-archive-plugin # Requires an Archive manager like file-roller, ark, etc
-    xfce.thunar-volman
-  ];
-
-  # Optional: enable dconf (needed by virt-manager)
-  programs.dconf.enable = true;
-
-  # firefox
+  # ── Browser ──────────────────────────────────────────────────────────────
   programs.firefox.enable = true;
 
-  # Optional but recommended: bridge networking helper
-  virtualisation.spiceUSBRedirection.enable = true;
-
-  # User
+  # ── User ─────────────────────────────────────────────────────────────────
   users.users.lbc = {
     isNormalUser = true;
     extraGroups = ["wheel" "libvirtd" "kvm" "input"];
   };
 
-  # System-wide packages
+  # ── System Packages ──────────────────────────────────────────────────────
   environment.systemPackages = with pkgs; [
     vim
     wget
     git
     gnome-keyring
-    libsecret
-    brightnessctl
-    wl-clipboard
+    libsecret # for gnome-keyring CLI access
+    brightnessctl # keyboard backlight / screen brightness
+    wl-clipboard # wl-copy / wl-paste
   ];
 
-  # Fonts
+  # ── Fonts ────────────────────────────────────────────────────────────────
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
 
-  # Nix settings
+  # ── Nix ──────────────────────────────────────────────────────────────────
   nix.settings.experimental-features = ["nix-command" "flakes"];
-
-  # NixOS versioning
   system.stateVersion = "25.11";
 }

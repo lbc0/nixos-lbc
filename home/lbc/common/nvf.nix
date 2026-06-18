@@ -6,7 +6,7 @@
         viAlias = true;
         vimAlias = true;
 
-        # --- LSP ---lk
+        # --- LSP ---
         lsp = {
           enable = true;
           formatOnSave = true;

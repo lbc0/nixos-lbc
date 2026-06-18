@@ -1,4 +1,9 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
@@ -26,11 +31,15 @@ in {
     git = {
       enable = true;
       settings = {
-        credential.helper = "/run/current-system/sw/bin/bash -c 'echo username=$(cat /run/secrets/github/username) && echo password=$(cat /run/secrets/github/pass)'";
         user = {
           name = "lbc0";
           email = "lbc0@gmail.com";
         };
+        credential.helper = lib.getExe (pkgs.writeShellScriptBin "git-credential-sops" ''
+          printf "username=%s\npassword=%s\n" \
+            "$(cat /run/secrets/github/username)" \
+            "$(cat /run/secrets/github/pass)"
+        '');
       };
     };
 
