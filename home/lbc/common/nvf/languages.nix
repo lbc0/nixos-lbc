@@ -1,5 +1,5 @@
-{...}: {
-  vim.languages = {
+{
+  languages = {
     enableFormat = true;
     enableTreesitter = true;
 

@@ -1,5 +1,3 @@
-{...}:
-# Helper to build a normal-mode silent keymap with less boilerplate.
 let
   n = key: action: {
     inherit key action;
@@ -12,7 +10,7 @@ let
     silent = true;
   };
 in {
-  vim.keymaps = [
+  keymaps = [
     # ── File explorer ──────────────────────────────────────────────
     (n "<leader>e" "<cmd>NvimTreeToggle<CR>")
 
@@ -73,6 +71,6 @@ in {
     (n "<C-Down>" "<cmd>resize -2<CR>")
 
     # ── Misc ───────────────────────────────────────────────────────
-    (n "<CR>" "i<CR><Esc>") # insert newline below without entering insert mode
+    (n "<CR>" "i<CR><Esc>") # insert newline without entering insert mode
   ];
 }

@@ -1,5 +1,5 @@
-{...}: {
-  vim.options = {
+{
+  options = {
     shiftwidth = 2;
     tabstop = 2;
     number = true;

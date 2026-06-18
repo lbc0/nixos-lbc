@@ -1,12 +1,12 @@
-{...}: {
-  vim.luaConfigRC = {
+{
+  luaConfigRC = {
     # NvimTree: use h/l to collapse/expand nodes
     nvimtree-keys = ''
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "NvimTree",
         callback = function(args)
           local api = require("nvim-tree.api")
-          vim.keymap.set("n", "l", api.node.open.edit,            { buffer = args.buf, silent = true })
+          vim.keymap.set("n", "l", api.node.open.edit,             { buffer = args.buf, silent = true })
           vim.keymap.set("n", "h", api.node.navigate.parent_close, { buffer = args.buf, silent = true })
         end,
       })
@@ -30,8 +30,8 @@
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "go", "nix", "python" },
         callback = function()
-          vim.opt_local.indentexpr    = ""
-          vim.opt_local.autoindent    = true
+          vim.opt_local.indentexpr     = ""
+          vim.opt_local.autoindent     = true
           vim.opt_local.preserveindent = true
         end,
       })
