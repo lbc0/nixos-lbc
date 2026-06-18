@@ -26,6 +26,12 @@ in {
   home.homeDirectory = "/home/lbc";
   home.stateVersion = "25.11";
 
+  home.packages = with pkgs; [
+    (writeShellScriptBin "gitup" ''
+      git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push -u origin nix-work
+    '')
+  ];
+
   programs = {
     # Github
     git = {
@@ -50,19 +56,11 @@ in {
         export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
         export SOPS_AGE_KEY_FILE="${config.home.homeDirectory}/home/lbc/nixos-lbc/.ignore/.keys.txt"
       '';
-
-      home.packages = with pkgs; [
-        (writeShellScriptBin "gitup" ''
-          git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push -u origin nix-work
-        '')
-      ];
     };
 
     neovim.defaultEditor = true;
 
-    onlyoffice = {
-      enable = true;
-    };
+    onlyoffice.enable = true;
   };
 
   # Dotfiles symlinks
