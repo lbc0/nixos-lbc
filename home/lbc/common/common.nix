@@ -18,8 +18,7 @@ in {
     ./nvf.nix
     ./packages.nix
     ./mpv.nix
-    # Switch between themes: adwaita, rosepine, and nordic
-    ./gtk/nordic.nix
+    ./gtk/nordic.nix # Switch between themes: adwaita, rosepine, and nordic
   ];
 
   # Basic Home Manager setup
