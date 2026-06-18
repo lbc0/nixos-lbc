@@ -88,6 +88,9 @@
     wl-clipboard # wl-copy / wl-paste
   ];
 
+  # ── Global Editor ────────────────────────────────────────────────────────
+  environment.variables.EDITOR = "nvim";
+
   # ── Fonts ────────────────────────────────────────────────────────────────
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

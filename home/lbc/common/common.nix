@@ -25,6 +25,7 @@ in {
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
   home.stateVersion = "25.11";
+  home.sessionVariables.EDITOR = "nvim";
 
   home.packages = with pkgs; [
     (writeShellScriptBin "gitup" ''
