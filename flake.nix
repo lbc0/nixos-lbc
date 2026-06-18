@@ -36,66 +36,43 @@
     quickshell,
     nvf,
     ...
-  }: {
-    nixosConfigurations = {
-      lbcw = nixpkgs.lib.nixosSystem {
+  }: let
+    mkHost = {
+      hostName,
+      hostModule,
+      homeModule,
+      extraHomeImports ? [],
+    }:
+      nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
         modules = [
-          ./hosts/work.nix
+          hostModule
           ./modules/allow-unfree-vault.nix
-
           sops-nix.nixosModules.sops
           home-manager.nixosModules.home-manager
-
           {
-            networking.hostName = "lbcw";
-
+            networking.hostName = hostName;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-
             home-manager.extraSpecialArgs = {inherit inputs;};
-
-            home-manager.users.lbc = {
-              imports = [
-                nvf.homeManagerModules.default
-                ./home/lbc/work.nix
-              ];
-            };
-
             home-manager.backupFileExtension = "backup";
+            home-manager.users.lbc.imports =
+              [nvf.homeManagerModules.default homeModule] ++ extraHomeImports;
           }
         ];
       };
-
-      lbch = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        specialArgs = {
-          inherit inputs;
-        };
-
-        modules = [
-          ./hosts/home.nix
-
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-
-          {
-            networking.hostName = "lbch";
-
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            home-manager.users.lbc = {
-              imports = [
-                nvf.homeManagerModules.default
-                ./home/lbc/home.nix
-              ];
-            };
-
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
+  in {
+    nixosConfigurations = {
+      lbcw = mkHost {
+        hostName = "lbcw";
+        hostModule = ./hosts/work.nix;
+        homeModule = ./home/lbc/work.nix;
+      };
+      lbch = mkHost {
+        hostName = "lbch";
+        hostModule = ./hosts/home.nix;
+        homeModule = ./home/lbc/home.nix;
       };
     };
   };
