@@ -1,8 +1,8 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   # ── Bootloader ───────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = ["kvm-intel"];
 
   # ── Virtualisation (KVM / QEMU / virt-manager) ───────────────────────────
   virtualisation.libvirtd = {
@@ -22,16 +22,16 @@
     networkmanager.enable = true;
     firewall = {
       # 67/68: DHCP (hotspot), 53: DNS, 53317: LocalSend
-      allowedUDPPorts = [ 67 68 53 53317 ];
+      allowedUDPPorts = [67 68 53 53317];
       # 8000: python http.server (file sharing), 53317: LocalSend
-      allowedTCPPorts = [ 8000 53317 ];
+      allowedTCPPorts = [8000 53317];
     };
   };
 
   # ModemManager: needed for mobile broadband / SIM management
   systemd.services.ModemManager = {
     enable = true;
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
   };
 
   # ── Hardware ─────────────────────────────────────────────────────────────
@@ -74,7 +74,7 @@
   # ── User ─────────────────────────────────────────────────────────────────
   users.users.lbc = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" "kvm" "input" ];
+    extraGroups = ["wheel" "libvirtd" "kvm" "input"];
   };
 
   # ── System Packages ──────────────────────────────────────────────────────
@@ -97,6 +97,6 @@
   ];
 
   # ── Nix ──────────────────────────────────────────────────────────────────
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   system.stateVersion = "25.11";
 }
