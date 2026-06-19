@@ -14,13 +14,6 @@
     swayidle = "swayidle";
   };
 in {
-  imports = [
-    ./nvf
-    ./packages.nix
-    ./mpv.nix
-    ./gtk/nordic.nix # Switch between themes: adwaita, rosepine, and nordic
-  ];
-
   # Basic Home Manager setup
   home.username = "lbc";
   home.homeDirectory = "/home/lbc";
