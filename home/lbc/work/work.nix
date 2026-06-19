@@ -1,9 +1,4 @@
-{ pkgs, ... }: {
-  imports = [
-    ./packages.nix
-    # ./opencode.nix
-  ];
-
+{pkgs, ...}: {
   programs.bash = {
     enable = true;
     shellAliases = {
