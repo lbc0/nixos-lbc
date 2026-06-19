@@ -2,7 +2,7 @@
   imports = [
     ./common.nix
     ./packages.nix
-    ./mpv.nix
+    ./mpv
     ./nvf
     ./gtk
   ];
