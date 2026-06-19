@@ -1,8 +1,6 @@
-{ ... }:
-
-{
+{...}: {
   imports = [
-    ./common/common.nix
+    ./common
     ./home/home.nix
   ];
 }
