@@ -1,6 +1,6 @@
 {...}: {
   imports = [
     ./common.nix
-    ./sops.nix
+    ./sops
   ];
 }
