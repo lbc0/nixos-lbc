@@ -1,9 +1,7 @@
-{ ... }:
-
-{
-  sops.defaultSopsFile = secrets/secrets.yaml;
+{ ... }: {
+  sops.defaultSopsFile = "./secrets/secrets.yaml";
   sops.defaultSopsFormat = "yaml";
-  
+
   sops.age.keyFile = "/home/lbc/nixos-lbc/.ignore/.keys.txt";
 
   # importing my secrets

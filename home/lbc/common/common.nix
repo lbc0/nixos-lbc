@@ -15,7 +15,7 @@
   };
 in {
   imports = [
-    ./nvf/default.nix
+    ./nvf
     ./packages.nix
     ./mpv.nix
     ./gtk/nordic.nix # Switch between themes: adwaita, rosepine, and nordic

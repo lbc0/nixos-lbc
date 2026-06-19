@@ -30,53 +30,56 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    sops-nix,
-    home-manager,
-    quickshell,
-    nvf,
-    ...
-  }: let
-    mkHost = {
-      hostName,
-      hostModule,
-      homeModule,
-      extraHomeImports ? [],
+  outputs =
+    inputs @ { self
+    , nixpkgs
+    , sops-nix
+    , home-manager
+    , quickshell
+    , nvf
+    , ...
     }:
-      nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
+    let
+      mkHost =
+        { hostName
+        , hostModule
+        , homeModule
+        , extraHomeImports ? [ ]
+        ,
+        }:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
 
-        modules = [
-          hostModule
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-          {
-            networking.hostName = hostName;
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {inherit inputs;};
-            home-manager.backupFileExtension = "backup";
-            home-manager.users.lbc.imports =
-              [nvf.homeManagerModules.default homeModule] ++ extraHomeImports;
-          }
-        ];
-      };
-  in {
-    nixosConfigurations = {
-      lbcw = mkHost {
-        hostName = "lbcw";
-        hostModule = ./hosts/work.nix;
-        homeModule = ./home/lbc/work.nix;
-      };
+          modules = [
+            hostModule
+            sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
+            {
+              networking.hostName = hostName;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.backupFileExtension = "backup";
+              home-manager.users.lbc.imports =
+                [ nvf.homeManagerModules.default homeModule ] ++ extraHomeImports;
+            }
+          ];
+        };
+    in
+    {
+      nixosConfigurations = {
+        lbcw = mkHost {
+          hostName = "lbcw";
+          hostModule = ./hosts/work.nix;
+          homeModule = ./home/lbc/work.nix;
+        };
 
-      lbch = mkHost {
-        hostName = "lbch";
-        hostModule = ./hosts/home.nix;
-        homeModule = ./home/lbc/home.nix;
+        lbch = mkHost {
+          hostName = "lbch";
+          hostModule = ./hosts/home.nix;
+          homeModule = ./home/lbc/home.nix;
+        };
       };
     };
-  };
 }

@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   programs.opencode = {
     enable = true;
 
@@ -11,7 +11,7 @@
           api = "openai";
           url = "http://192.168.x.x:PORT/v1";
           apiKey = "local"; # dummy key, required non-empty
-          models = ["your-model-name"];
+          models = [ "your-model-name" ];
         };
       };
     };

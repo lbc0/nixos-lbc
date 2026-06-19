@@ -9,7 +9,8 @@ let
     mode = "t";
     silent = true;
   };
-in {
+in
+{
   keymaps = [
     # ── File explorer ──────────────────────────────────────────────
     (n "<leader>e" "<cmd>NvimTreeToggle<CR>")

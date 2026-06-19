@@ -1,9 +1,11 @@
-{lib, ...}: let
+{ lib, ... }:
+let
   keymaps = import ./keymaps.nix;
   options = import ./options.nix;
   lua = import ./lua.nix;
   languages = import ./languages.nix;
-in {
+in
+{
   programs.nvf = {
     enable = true;
     settings.vim = lib.mkMerge [

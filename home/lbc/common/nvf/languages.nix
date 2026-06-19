@@ -6,7 +6,7 @@
     python = {
       enable = true;
       format.enable = true;
-      lsp.servers = ["pyright"];
+      lsp.servers = [ "pyright" ];
       treesitter.enable = true;
     };
 

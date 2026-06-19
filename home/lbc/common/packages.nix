@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   # User packages (Wayland-friendly)
   home.packages = with pkgs; [
     ripgrep
@@ -54,8 +54,8 @@
     (symlinkJoin {
       # <-- replaces bare element-desktop
       name = "element-desktop";
-      paths = [element-desktop];
-      buildInputs = [makeWrapper];
+      paths = [ element-desktop ];
+      buildInputs = [ makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/element-desktop \
           --run '

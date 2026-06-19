@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   environment = {
     systemPackages = with pkgs; [
       davfs2
@@ -13,7 +13,7 @@
   };
 
   users = {
-    groups.davfs2 = {};
+    groups.davfs2 = { };
 
     users.davfs2 = {
       isSystemUser = true;
@@ -30,8 +30,8 @@
       {
         enable = true;
         description = "Nextcloud WebDAV mount";
-        after = ["network-online.target"];
-        wants = ["network-online.target"];
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
         what = "https://drive.cid-dev.ma/remote.php/dav/files/a.lbouchouari";
         where = "/mnt/drive";
         type = "davfs";
@@ -44,7 +44,7 @@
       {
         enable = true;
         where = "/mnt/drive";
-        wantedBy = ["multi-user.target"];
+        wantedBy = [ "multi-user.target" ];
         automountConfig.TimeoutIdleSec = 60;
       }
     ];
