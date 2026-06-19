@@ -68,13 +68,13 @@
     nixosConfigurations = {
       lbcw = mkHost {
         hostName = "lbcw";
-        hostModule = ./hosts/work.nix;
-        homeModule = ./home/lbc/work.nix;
+        hostModule = ./hosts/work;
+        homeModule = ./home/lbc/work;
       };
 
       lbch = mkHost {
         hostName = "lbch";
-        hostModule = ./hosts/home.nix;
+        hostModule = ./hosts/home;
         homeModule = ./home/lbc/home;
       };
     };
