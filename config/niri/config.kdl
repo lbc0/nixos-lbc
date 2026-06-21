@@ -10,7 +10,7 @@ input {
     }
 
     touchpad {
-        off
+        // off
         tap
         // dwt
         // dwtp
@@ -541,5 +541,5 @@ binds {
     Mod+Alt+M { spawn "mpv" "--shuffle" "--loop-playlist=inf" "/home/lbc/nixos-lbc/assets/listening/playlist.m3u"; }
 
     // Toggle Touchpad
-    Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' ~/.config/niri/config.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' ~/.config/niri/config.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' ~/.config/niri/config.kdl; fi && niri msg action reload-config"; }
+    Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' ~/.config/niri/config.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' ~/.config/niri/config.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' ~/.config/niri/config.kdl; fi"; }
 }
