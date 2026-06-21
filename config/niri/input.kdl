@@ -1,7 +1,7 @@
 // =============================================================================
 // Input devices — included from config.kdl
 // =============================================================================
-// Keyboard, touchpad, mouse, and trackpoint behavior, plus how mouse
+// Keyboard, Touchpad, Mouse, and Trackpoint behavior, plus how mouse
 // movement interacts with window focus.
 // Wiki: https://github.com/niri-wm/niri/wiki/Configuration:-Input
 // =============================================================================
@@ -25,9 +25,9 @@ input {
     // Touchpad is disabled entirely (toggle at runtime with Mod+T — see
     // the "Toggle Touchpad" bind in binds.kdl, which sed-edits the `off`
     // line directly below and reloads the config). Keep `off` as the very
-    // next line after `touchpad {` or that toggle will stop finding it.
+    // next line after Touchpad or that toggle will stop finding it.
     touchpad {
-        off
+        // off
 
         // Tap-to-click is enabled.
         tap
