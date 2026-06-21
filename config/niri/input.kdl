@@ -1,0 +1,59 @@
+// =============================================================================
+// Input devices — included from config.kdl
+// =============================================================================
+// Keyboard, touchpad, mouse, and trackpoint behavior, plus how mouse
+// movement interacts with window focus.
+// Wiki: https://github.com/niri-wm/niri/wiki/Configuration:-Input
+// =============================================================================
+
+input {
+    keyboard {
+        // How long a key must be held before it starts auto-repeating (ms),
+        // and how many repeats per second once it does.
+        repeat-delay 200
+        repeat-rate 35
+
+        // xkb layout/variant/options would go here if you needed them,
+        // e.g. layout "us" or options "caps:escape". Empty = system default.
+        xkb {
+        }
+
+        // Numlock is turned on automatically at startup.
+        numlock
+    }
+
+    // Touchpad is disabled entirely (toggle at runtime with Mod+T — see
+    // the "Toggle Touchpad" bind in binds.kdl, which sed-edits the `off`
+    // line directly below and reloads the config). Keep `off` as the very
+    // next line after `touchpad {` or that toggle will stop finding it.
+    touchpad {
+        off
+
+        // Tap-to-click is enabled.
+        tap
+
+        // Disabled options, uncomment to enable:
+        // dwt                       - disable while typing
+        // dwtp                      - disable while trackpointing
+        // drag false                - tap-and-drag (default true; set false to disable)
+        // drag-lock                 - keep dragging after a brief lift
+        natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "two-finger"
+        // disabled-on-external-mouse
+    }
+
+    mouse {
+        // No overrides — system defaults.
+    }
+
+    trackpoint {
+        // No overrides — system defaults.
+    }
+
+    // Hovering a window with the mouse focuses it, without needing a click.
+    // max-scroll-amount="0%" prevents scroll-wheel events from being able
+    // to shift focus across columns.
+    focus-follows-mouse max-scroll-amount="0%"
+}
