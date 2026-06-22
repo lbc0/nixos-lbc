@@ -16,6 +16,7 @@ input {
         // xkb layout/variant/options would go here if you needed them,
         // e.g. layout "us" or options "caps:escape". Empty = system default.
         xkb {
+          layout "us,ara"
         }
 
         // Numlock is turned on automatically at startup.

@@ -275,6 +275,10 @@ binds {
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
+    // --- Switch keyboard layout ---------------------------------------------------------
+
+    Alt+Space { switch-layout "next"; }
+
     // --- Shortcuts inhibitor escape hatch ---------------------------------------
 
     // Applications such as remote-desktop clients and software KVM switches may
