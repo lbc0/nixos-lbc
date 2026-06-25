@@ -29,13 +29,14 @@
 // transparent windows.
 prefer-no-csd
 
-include "input.kdl"
-include "outputs.kdl"
-include "layout.kdl"
-include "startup.kdl"
-include "workspaces.kdl"
-include "window-rules.kdl"
-include "binds.kdl"
+include "common/input.kdl"
+include "common/outputs.kdl"
+include "common/layout.kdl"
+include "common/startup.kdl"
+include "common/workspaces.kdl"
+include "common/window-rules.kdl"
+include "common/binds.kdl"
+// include "common/"
 
 // Shows the "Important Hotkeys" pop-up at session startup.
 // Uncomment skip-at-startup below to disable that pop-up.

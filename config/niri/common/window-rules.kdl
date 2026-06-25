@@ -1,0 +1,52 @@
+// =============================================================================
+// Window rules — included from config.kdl
+// =============================================================================
+// Window rules adjust behavior for individual windows matched by app-id
+// and/or title (regex). Rules are applied in the order they appear here.
+// Wiki: https://github.com/niri-wm/niri/wiki/Configuration:-Window-Rules
+// =============================================================================
+
+// Work around WezTerm's initial-configure bug by giving it an empty
+// default-column-width (instead of inheriting layout.kdl's 0.5 proportion).
+// Regex is deliberately narrow to avoid false positives elsewhere.
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+// Open Firefox's picture-in-picture player as floating instead of tiled.
+// Matches both native Firefox (app-id "firefox") and Flatpak Firefox
+// (app-id "org.mozilla.firefox") via the trailing "firefox$" anchor.
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Send Firefox's main window to workspace "c" (defined in workspaces.kdl),
+// maximized, when it opens.
+window-rule {
+    match title="Firefox"
+    open-on-workspace "c"
+    open-maximized true
+}
+
+// Disabled example: hide password manager windows from screen captures.
+// The leading "/-" comments out this whole rule (niri-specific syntax) —
+// remove it to enable. Useful if you ever run KeePassXC or GNOME Secrets.
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+
+    // Use this instead if you want them visible to third-party screenshot
+    // tools but still hidden from screen-share/recording:
+    // block-out-from "screencast"
+}
+
+// Rounded corners on every window, clipped to the window's actual geometry
+// (so the rounding doesn't bleed into shadows/decorations).
+window-rule {
+    geometry-corner-radius 4
+    clip-to-geometry true
+}
