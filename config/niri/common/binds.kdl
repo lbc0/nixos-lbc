@@ -313,7 +313,7 @@ binds {
     Mod+B { spawn "brave"; }
 
     // Spawn Notion (as a Brave web-app window)
-    Mod+N { spawn "brave" "--app=https://www.notion.so"; }
+    Mod+Shift+N { spawn "brave" "--app=https://www.notion.so"; }
 
     // Shutdown
     Mod+Alt+X { spawn "shutdown" "now"; }

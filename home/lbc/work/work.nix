@@ -1,4 +1,17 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
+  # Niri Config
+  xdg.configFile."niri" = {
+    source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/nixos-lbc/config/niri/work";
+    recursive = true;
+  };
+
+  # Scripts
   programs.bash = {
     enable = true;
     shellAliases = {
