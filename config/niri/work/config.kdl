@@ -1,34 +1,8 @@
-// =============================================================================
-// niri config — main entry point
-// =============================================================================
-// niri loads this file from ~/.config/niri/config.kdl. Everything below is
-// either a small global setting, or an `include` pulling in a sibling file.
-// niri watches every included file too, so editing any of them live-reloads
-// the whole config — you don't need to touch this file for routine changes.
-//
-// Sibling files (all expected to live next to this one, in ~/.config/niri/):
-//   input.kdl          keyboard / touchpad / mouse / trackpoint behavior
-//   outputs.kdl         monitor layout (resolution, scale, position)
-//   layout.kdl          gaps, column widths, borders, focus ring, shadow
-//   startup.kdl         spawn-at-startup programs
-//   workspaces.kdl      named workspace declarations
-//   window-rules.kdl    per-app window behavior overrides
-//   binds.kdl           all keybindings
-//
-// `include` requires niri >= 25.11. Since includes here don't redefine
-// anything the main file also sets, load order below doesn't matter for
-// correctness — it's just laid out in a sensible reading order.
-// More info: https://github.com/niri-wm/niri/wiki/Configuration:-Include
-// =============================================================================
-
-// Ask clients to skip drawing their own (client-side) title bars/decorations
-// where possible. If a client insists on CSD anyway, the request is honored.
-// Apps generally need a restart after toggling this for it to take effect.
-// Note: this also tells tiled clients they're tiled (drops some client-side
-// rounded corners) and fixes border/focus-ring drawing behind semi-
-// transparent windows.
-prefer-no-csd
-
+// Niri Config
+include "startup.kdl"
+include "input.kdl"
+include "binds.kdl"
+include "../common/settings.kdl"
 include "../common/input.kdl"
 include "../common/outputs.kdl"
 include "../common/layout.kdl"
@@ -36,30 +10,3 @@ include "../common/startup.kdl"
 include "../common/workspaces.kdl"
 include "../common/window-rules.kdl"
 include "../common/binds.kdl"
-include "startup.kdl"
-include "input.kdl"
-include "binds.kdl"
-
-// Shows the "Important Hotkeys" pop-up at session startup.
-// Uncomment skip-at-startup below to disable that pop-up.
-hotkey-overlay {
-    // skip-at-startup
-}
-
-// Where screenshots get saved. Formatted with strftime(3) at save time.
-// Set to `screenshot-path null` instead to stop saving to disk entirely.
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-// Animation tuning, left at defaults.
-// Uncomment `off` to kill all animations, or `slowdown <factor>` to
-// globally speed up (below 1.0) or slow down (above 1.0) every animation.
-animations {
-    // off
-    // slowdown 3.0
-}
-
-// Cursor behavior: auto-hide while typing, and after a period of inactivity.
-cursor {
-    hide-when-typing
-    hide-after-inactive-ms 10000
-}
