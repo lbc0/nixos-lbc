@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  profile,
   ...
 }: let
   dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
