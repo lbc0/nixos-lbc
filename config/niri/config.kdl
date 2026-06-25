@@ -1,9 +1,0 @@
-// Niri Config
-include "settings.kdl"
-include "input.kdl"
-include "outputs.kdl"
-include "layout.kdl"
-include "startup.kdl"
-include "workspaces.kdl"
-include "window-rules.kdl"
-include "binds.kdl"
