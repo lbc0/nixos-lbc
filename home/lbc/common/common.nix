@@ -10,7 +10,7 @@
 
   # Only relevant configs
   configs = {
-    niri = "niri/${profile}/config";
+    # niri = "niri/${profile}/test";
     quickshell = "quickshell";
     swayidle = "swayidle";
   };
@@ -60,10 +60,13 @@ in {
 
   # Dotfiles symlinks
   xdg.configFile =
-    builtins.mapAttrs
-    (name: subpath: {
-      source = create_symlink "${dotfiles}/${subpath}";
-      recursive = true;
-    })
-    configs;
+    (builtins.mapAttrs
+      (name: subpath: {
+        source = create_symlink "${dotfiles}/${subpath}";
+        recursive = true;
+      })
+      configs)
+    // {
+      "niri/config.kdl".source = create_symlink "${dotfiles}/niri/${profile}/config.kdl";
+    };
 }
