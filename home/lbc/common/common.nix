@@ -9,7 +9,7 @@
 
   # Only relevant configs
   configs = {
-    niri = "niri";
+    # niri = "niri";
     quickshell = "quickshell";
     swayidle = "swayidle";
   };
