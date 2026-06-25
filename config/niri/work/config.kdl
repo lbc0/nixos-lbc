@@ -36,6 +36,9 @@ include "../common/startup.kdl"
 include "../common/workspaces.kdl"
 include "../common/window-rules.kdl"
 include "../common/binds.kdl"
+include "startup.kdl"
+include "input.kdl"
+include "binds.kdl"
 
 // Shows the "Important Hotkeys" pop-up at session startup.
 // Uncomment skip-at-startup below to disable that pop-up.

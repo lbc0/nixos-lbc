@@ -313,7 +313,7 @@ binds {
     Mod+B { spawn "brave"; }
 
     // Spawn Notion (as a Brave web-app window)
-    Mod+Shift+N { spawn "brave" "--app=https://www.notion.so"; }
+    Mod+N { spawn "brave" "--app=https://www.notion.so"; }
 
     // Shutdown
     Mod+Alt+X { spawn "shutdown" "now"; }
@@ -336,5 +336,5 @@ binds {
     // IMPORTANT: this now targets input.kdl, not config.kdl, since the
     // touchpad block lives there after the split (see input.kdl). If you
     // rename or relocate input.kdl, update the path here too.
-    Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' ~/.config/niri/input.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' ~/.config/niri/input.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' ~/.config/niri/input.kdl; fi"; }
+    // Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' ~/.config/niri/input.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' ~/.config/niri/input.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' ~/.config/niri/input.kdl; fi"; }
 }

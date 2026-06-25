@@ -17,17 +17,9 @@ spawn-at-startup "swaybg" "-i" "nixos-lbc/assets/walls/desktop.png" "-m" "fill"
 // Your shell/bar (replaces waybar — see note above).
 spawn-at-startup "quickshell"
 
-// Custom tool from your nixos-lbc dotfiles — name suggests a notification
-// or applet daemon; check nixos-lbc for what it actually does.
-spawn-at-startup "nac"
-
 // Idle management (screen lock/dim/suspend on inactivity timers, configured
 // elsewhere in your swayidle config).
 spawn-at-startup "swayidle"
-
-// Custom script from nixos-lbc — name suggests it watches for
-// presence/room state (e.g. auto-lock when you leave), confirm in source.
-spawn-at-startup "/home/lbc/nixos-lbc/.local/bin/room-guard"
 
 // For shell commands needing pipes, variables, multiple commands, etc.,
 // use spawn-sh-at-startup instead — the whole command is passed to `sh -c`:
