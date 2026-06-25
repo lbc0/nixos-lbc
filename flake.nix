@@ -44,10 +44,11 @@
       hostModule,
       homeModule,
       extraHomeImports ? [],
+      profile, # home/work
     }:
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
+        specialArgs = {inherit inputs profile;};
 
         modules = [
           hostModule
@@ -57,7 +58,7 @@
             networking.hostName = hostName;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {inherit inputs;};
+            home-manager.extraSpecialArgs = {inherit inputs profile;};
             home-manager.backupFileExtension = "backup";
             home-manager.users.lbc.imports =
               [nvf.homeManagerModules.default homeModule] ++ extraHomeImports;
@@ -70,12 +71,14 @@
         hostName = "lbcw";
         hostModule = ./hosts/work;
         homeModule = ./home/lbc/work;
+        profile = "work";
       };
 
       lbch = mkHost {
         hostName = "lbch";
         hostModule = ./hosts/home;
         homeModule = ./home/lbc/home;
+        profile = "home";
       };
     };
   };

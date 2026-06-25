@@ -9,7 +9,7 @@
 
   # Only relevant configs
   configs = {
-    # niri = "niri";
+    niri = "niri/${profile}/config";
     quickshell = "quickshell";
     swayidle = "swayidle";
   };
