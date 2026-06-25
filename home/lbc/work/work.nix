@@ -6,7 +6,7 @@
   # Niri Config
   xdg.configFile."niri/config.kdl".source =
     config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/nixos-lbc/config/niri/work/config.kdl";
+    "${config.home.homeDirectory}/nixos-lbc/config/niri/home/config.kdl";
 
   # xdg.configFile."niri/config.kdl" = {
   #   source =

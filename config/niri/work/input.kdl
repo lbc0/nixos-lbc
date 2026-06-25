@@ -12,7 +12,7 @@ input {
     // line directly below and reloads the config). Keep `off` as the very
     // next line after Touchpad or that toggle will stop finding it.
     touchpad {
-        // off
+        off
 
         // Tap-to-click is enabled.
         tap

@@ -11,5 +11,5 @@ binds {
     // IMPORTANT: this now targets input.kdl, not config.kdl, since the
     // touchpad block lives there after the split (see input.kdl). If you
     // rename or relocate input.kdl, update the path here too.
-    Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' ~/.config/niri/work/input.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' ~/.config/niri/work/input.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' ~/.config/niri/work/input.kdl; fi"; }
+    Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' ~/nixos-lbc/config/niri/work/input.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' ~/nixos-lbc/config/niri/work/input.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' ~/nixos-lbc/config/niri/work/input.kdl; fi"; }
 }
