@@ -4,12 +4,16 @@
   ...
 }: {
   # Niri Config
-  xdg.configFile."niri" = {
-    source =
-      config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/nixos-lbc/config/niri/work";
-    recursive = true;
-  };
+  xdg.configFile."niri/config.kdl".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/nixos-lbc/config/niri/work/config.kdl";
+
+  # xdg.configFile."niri/config.kdl" = {
+  #   source =
+  #     config.lib.file.mkOutOfStoreSymlink
+  #     "${config.home.homeDirectory}/nixos-lbc/config/niri/work/config.kdl";
+  #   recursive = true;
+  # };
 
   # Scripts
   programs.bash = {
