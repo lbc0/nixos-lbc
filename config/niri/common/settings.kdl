@@ -32,7 +32,7 @@ prefer-no-csd
 // Shows the "Important Hotkeys" pop-up at session startup.
 // Uncomment skip-at-startup below to disable that pop-up.
 hotkey-overlay {
-    // skip-at-startup
+    skip-at-startup
 }
 
 // Where screenshots get saved. Formatted with strftime(3) at save time.

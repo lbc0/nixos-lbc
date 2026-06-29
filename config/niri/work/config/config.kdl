@@ -1,4 +1,4 @@
-// Niri Config
+// Niri Work Config
 include "../startup.kdl"
 include "../input.kdl"
 include "../binds.kdl"

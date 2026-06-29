@@ -1,4 +1,4 @@
-// Niri Config
+// Niri Home Config
 include "../input.kdl"
 include "../binds.kdl"
 include "../../common/settings.kdl"
