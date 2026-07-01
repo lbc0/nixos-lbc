@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   # User packages (Wayland-friendly)
   home.packages = with pkgs; [
     ripgrep
@@ -22,6 +22,7 @@
     localsend
     libinput
     zathura
+    xfce.mousepad
 
     # Programming languages
     (python3.withPackages (ps:
@@ -54,8 +55,8 @@
     (symlinkJoin {
       # <-- replaces bare element-desktop
       name = "element-desktop";
-      paths = [ element-desktop ];
-      buildInputs = [ makeWrapper ];
+      paths = [element-desktop];
+      buildInputs = [makeWrapper];
       postBuild = ''
         wrapProgram $out/bin/element-desktop \
           --run '
