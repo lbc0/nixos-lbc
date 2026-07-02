@@ -54,6 +54,7 @@
   services.dbus.enable = true;
 
   # ── Time ─────────────────────────────────────────────────────────────────
+  services.timesyncd.enable = true;
   time.timeZone = "Africa/Casablanca";
 
   # ── File Manager (Thunar) ────────────────────────────────────────────────
