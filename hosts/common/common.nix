@@ -54,8 +54,18 @@
   services.dbus.enable = true;
 
   # ── Time ─────────────────────────────────────────────────────────────────
-  services.timesyncd.enable = true;
   time.timeZone = "Africa/Casablanca";
+  services.chrony = {
+    enable = true;
+    servers = [
+      "0.pool.ntp.org"
+      "1.pool.ntp.org"
+      "2.pool.ntp.org"
+      "3.pool.ntp.org"
+      "time.cloudflare.com"
+      "time.google.com"
+    ];
+  };
 
   # ── File Manager (Thunar) ────────────────────────────────────────────────
   programs.thunar = {
