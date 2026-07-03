@@ -23,6 +23,7 @@
     libinput
     zathura
     xfce.mousepad
+    kanshi
 
     # Programming languages
     (python3.withPackages (ps:
