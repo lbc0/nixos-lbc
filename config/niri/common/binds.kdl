@@ -329,4 +329,7 @@ binds {
 
     // Spawn a shuffled, looping playlist with MPV
     Mod+Alt+M { spawn "mpv" "--shuffle" "--loop-playlist=inf" "/home/lbc/nixos-lbc/assets/listening/playlist.m3u"; }
+
+    // Re-arrange monitors
+    Mod+Alt+D { spawn "wdisplays"; }
 }
