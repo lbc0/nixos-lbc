@@ -17,6 +17,9 @@ spawn-at-startup "swaybg" "-i" "nixos-lbc/assets/walls/desktop.png" "-m" "fill"
 // Your shell/bar (replaces waybar — see note above).
 spawn-at-startup "quickshell"
 
+// Kanshi monitors config
+spawn-at-startup "kanshi"
+
 // Idle management (screen lock/dim/suspend on inactivity timers, configured
 // elsewhere in your swayidle config).
 spawn-at-startup "swayidle"

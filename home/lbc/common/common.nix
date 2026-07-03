@@ -13,7 +13,6 @@
     niri = "niri/${profile}/config";
     quickshell = "quickshell";
     swayidle = "swayidle";
-    kanshi = "kanshi";
   };
 in {
   # Basic Home Manager setup

@@ -23,7 +23,7 @@
     libinput
     zathura
     xfce.mousepad
-    kanshi
+    nwg-displays # Monitors arrangement
 
     # Programming languages
     (python3.withPackages (ps:
