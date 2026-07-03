@@ -23,7 +23,7 @@
     libinput
     zathura
     xfce.mousepad
-    nwg-displays # Monitors arrangement
+    wdisplays # Monitors arrangement
 
     # Programming languages
     (python3.withPackages (ps:
