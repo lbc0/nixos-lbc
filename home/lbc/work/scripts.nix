@@ -28,6 +28,7 @@ in {
     };
 
     initExtra = ''
+      export DOTFILES_LIVE="$HOME/nixos-lbc"
       export BAO_ADDR=$(cat /run/secrets/openbao/address)
     '';
   };

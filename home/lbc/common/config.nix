@@ -20,7 +20,10 @@ in {
   # Basic Home Manager setup
   home.username = "lbc";
   home.stateVersion = "25.11";
-  home.sessionVariables.EDITOR = "nvim";
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    DOTFILES_ROOT = "${root}";
+  };
 
   programs = {
     # Github
@@ -44,7 +47,7 @@ in {
 
       initExtra = ''
         export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
-        export SOPS_AGE_KEY_FILE="${root}/nixos-lbc/.ignore/.keys.txt"
+        export SOPS_AGE_KEY_FILE="${root}/.ignore/.keys.txt"
       '';
     };
 
