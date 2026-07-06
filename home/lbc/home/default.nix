@@ -1,6 +1,6 @@
 {...}: {
   imports = [
     ../common
-    ./home.nix
+    ./config.nix
   ];
 }
