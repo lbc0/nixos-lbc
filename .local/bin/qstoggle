@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-pgrep quickshell && pkill quickshell || quickshell
+if pgrep -x quickshell >/dev/null; then
+  pkill quickshell
+else
+  quickshell
+fi
