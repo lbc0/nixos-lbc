@@ -52,7 +52,6 @@ in {
     };
 
     neovim.defaultEditor = true;
-
     onlyoffice.enable = true;
   };
 
