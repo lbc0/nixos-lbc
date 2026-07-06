@@ -24,6 +24,9 @@ spawn-at-startup "kanshi"
 // elsewhere in your swayidle config).
 spawn-at-startup "swayidle"
 
+// Watches keyboard/mouse input
+spawn-at-startup "room-lock-guard"
+
 // For shell commands needing pipes, variables, multiple commands, etc.,
 // use spawn-sh-at-startup instead — the whole command is passed to `sh -c`:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

@@ -15,10 +15,6 @@
 // or applet daemon; check nixos-lbc for what it actually does.
 spawn-at-startup "nac"
 
-// Custom script from nixos-lbc — name suggests it watches for
-// presence/room state (e.g. auto-lock when you leave), confirm in source.
-spawn-at-startup "/home/lbc/nixos-lbc/.local/bin/room-guard"
-
 // For shell commands needing pipes, variables, multiple commands, etc.,
 // use spawn-sh-at-startup instead — the whole command is passed to `sh -c`:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

@@ -26,10 +26,7 @@
     wdisplays # Monitors arrangement
 
     # Programming languages
-    (python3.withPackages (ps:
-      with ps; [
-        bcrypt # package
-      ]))
+    python3
     go
 
     # X11

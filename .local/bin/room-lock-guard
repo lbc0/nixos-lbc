@@ -4,7 +4,7 @@ set -euo pipefail
 is_focused_on_room() {
   niri msg --json windows 2>/dev/null | python3 -c "
 import json, sys
-ROOM_KEYWORD='Element | General'
+ROOM_KEYWORD='General'
 keyword = ROOM_KEYWORD.lower()
 wins = json.load(sys.stdin)
 for w in wins:
