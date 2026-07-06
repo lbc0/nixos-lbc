@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ./common.nix
+    ./config.nix
     ./packages.nix
     ./scripts.nix
     ./mpv
