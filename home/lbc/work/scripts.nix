@@ -1,8 +1,12 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   brightness-all = pkgs.writeShellApplication {
     name = "brightness-all";
     runtimeInputs = [pkgs.brightnessctl pkgs.ddcutil];
-    text = builtins.readFile ./.local/brightness-all;
+    text = builtins.readFile "${inputs.self}/.local/bin/brightness-all";
   };
 in {
   programs.bash = {
