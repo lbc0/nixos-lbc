@@ -15,7 +15,7 @@
 
   qstoggle = pkgs.writeShellApplication {
     name = "qstoggle";
-    runtimeInputs = [pkgs.procps inputs.quickshell.packages.${pkgs.system}.default];
+    runtimeInputs = [pkgs.procps inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default];
     text = builtins.readFile "${root}/.local/bin/qstoggle";
   };
 
