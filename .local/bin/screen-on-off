@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+action="$1"  # on | off
+niri msg outputs \
+  | sed -n 's/^Output .* (\(.*\))$/\1/p' \
+  | while read -r output; do
+      niri msg output "$output" "$action"
+    done

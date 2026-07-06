@@ -3,10 +3,18 @@
   inputs,
   ...
 }: let
-  brightness-all = pkgs.writeShellApplication {
-    name = "brightness-all";
-    runtimeInputs = [pkgs.brightnessctl pkgs.ddcutil];
-    text = builtins.readFile "${inputs.self}/.local/bin/brightness-all";
+  root = inputs.self;
+
+  nac = pkgs.writeShellApplication {
+    name = "nac";
+    runtimeInputs = [pkgs.curl];
+    text = builtins.readFile "${root}/.local/bin/nac";
+  };
+
+  bao-login = pkgs.writeShellApplication {
+    name = "bao-login";
+    runtimeInputs = [pkgs.openbao];
+    text = builtins.readFile "${root}/.local/bin/bao-login";
   };
 in {
   programs.bash = {
@@ -20,20 +28,8 @@ in {
     '';
   };
 
-  home.packages = with pkgs; [
-    (writeShellScriptBin "nac" ''
-      curl -k -X POST "$(cat /run/secrets/cportal/nac_url)" \
-        -H "Content-Type: application/x-www-form-urlencoded" \
-        -d "fw_username=$(cat /run/secrets/cportal/username)&fw_password=$(cat /run/secrets/cportal/password)&fw_domain=$(cat /run/secrets/cportal/fw_domain)&action=fw_logon&fw_logon_type=logon"
-    '')
-
-    (writeShellScriptBin "gitup" ''
-      git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push -u origin nix-work
-    '')
-
-    (writeShellScriptBin "bao-login" ''
-      bao login -method userpass username=$(cat /run/secrets/openbao/username) password=$(cat /run/secrets/openbao/password)
-    '')
-    brightness-all
+  home.packages = [
+    nac
+    bao-login
   ];
 }
