@@ -24,7 +24,7 @@ in {
   programs.bash = {
     enable = true;
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
+      nrs = "sudo nixos-rebuild switch --flake ${root}#lbcw";
     };
 
     initExtra = ''

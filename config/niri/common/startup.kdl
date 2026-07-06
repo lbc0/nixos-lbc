@@ -24,7 +24,7 @@ spawn-at-startup "kanshi"
 // elsewhere in your swayidle config).
 spawn-at-startup "swayidle"
 
-// Watches keyboard/mouse input
+// Watcher
 spawn-at-startup "room-lock-guard"
 
 // For shell commands needing pipes, variables, multiple commands, etc.,

@@ -33,7 +33,11 @@
   swaylock-png = pkgs.writeShellApplication {
     name = "swaylock-png";
     runtimeInputs = [pkgs.swaylock];
-    text = builtins.readFile "${root}/.local/bin/swaylock-png";
+    text =
+      builtins.replaceStrings
+      ["@WALLPAPER@"]
+      ["${root}/assets/walls/desktop.png"]
+      (builtins.readFile "${root}/.local/bin/swaylock-png");
   };
 
   # Brings up the "Hotspot" NetworkManager connection profile.

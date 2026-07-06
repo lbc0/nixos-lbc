@@ -1,11 +1,13 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   profile,
   ...
 }: let
-  dotfiles = "${config.home.homeDirectory}/nixos-lbc/config";
+  root = inputs.self;
+  dotfiles = "${root}/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
 
   # Only relevant configs
@@ -17,7 +19,6 @@
 in {
   # Basic Home Manager setup
   home.username = "lbc";
-  home.homeDirectory = "/home/lbc";
   home.stateVersion = "25.11";
   home.sessionVariables.EDITOR = "nvim";
 
@@ -43,7 +44,7 @@ in {
 
       initExtra = ''
         export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
-        export SOPS_AGE_KEY_FILE="${config.home.homeDirectory}/nixos-lbc/.ignore/.keys.txt"
+        export SOPS_AGE_KEY_FILE="${root}/nixos-lbc/.ignore/.keys.txt"
       '';
     };
 

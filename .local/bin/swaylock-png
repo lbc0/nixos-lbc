@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-swaylock -i "$HOME/nixos-lbc/assets/walls/desktop.png" -s fill
+swaylock -i "@WALLPAPER@" -s fill
