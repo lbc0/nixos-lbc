@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  brightness-all = pkgs.writeShellApplication {
+    name = "brightness-all";
+    runtimeInputs = [pkgs.brightnessctl pkgs.ddcutil];
+    text = builtins.readFile ./.local/brightness-all;
+  };
+in {
   programs.bash = {
     enable = true;
     shellAliases = {
@@ -24,5 +30,6 @@
     (writeShellScriptBin "bao-login" ''
       bao login -method userpass username=$(cat /run/secrets/openbao/username) password=$(cat /run/secrets/openbao/password)
     '')
+    brightness-all
   ];
 }

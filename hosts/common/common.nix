@@ -2,7 +2,7 @@
   # ── Bootloader ───────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelModules = ["kvm-intel"];
+  boot.kernelModules = ["kvm-intel" "i2c-dev"];
 
   # ── Virtualisation (KVM / QEMU / virt-manager) ───────────────────────────
   virtualisation.libvirtd = {
@@ -36,6 +36,7 @@
 
   # ── Hardware ─────────────────────────────────────────────────────────────
   hardware.bluetooth.enable = true;
+  hardware.i2c.enable = true; # DDC/CI
   services.blueman.enable = true; # Bluetooth GUI
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
@@ -85,7 +86,7 @@
   # ── User ─────────────────────────────────────────────────────────────────
   users.users.lbc = {
     isNormalUser = true;
-    extraGroups = ["wheel" "libvirtd" "kvm" "input"];
+    extraGroups = ["wheel" "libvirtd" "kvm" "input" "i2c"];
   };
 
   # ── System Packages ──────────────────────────────────────────────────────
@@ -96,6 +97,7 @@
     gnome-keyring
     libsecret # for gnome-keyring CLI access
     brightnessctl # keyboard backlight / screen brightness
+    ddcutil # monitors
     wl-clipboard # wl-copy / wl-paste
   ];
 

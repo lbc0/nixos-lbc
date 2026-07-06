@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+# brightness-all: control laptop backlight + all external DDC/CI monitors together
+set -eo pipefail
+
+PROG="$(basename "$0")"
+DEFAULT_STEP=10
+
+usage() {
+  cat <<EOF
+Usage: $PROG <command> [percent]
+
+Commands:
+  up [percent]      Increase brightness by [percent] (default: ${DEFAULT_STEP})
+  down [percent]    Decrease brightness by [percent] (default: ${DEFAULT_STEP})
+  set <percent>     Set brightness to an absolute percent (0-100)
+  get               Show current brightness of laptop + external displays
+
+Examples:
+  $PROG up
+  $PROG down 20
+  $PROG set 50
+EOF
+}
+
+get_external_displays() {
+  ddcutil detect 2>/dev/null | awk '
+    /^Display [0-9]+/ { num=$2; valid=1; next }
+    /^Invalid display/ { valid=0; next }
+    /Laptop display/ { valid=0; next }
+    /^$/ { if (valid && num != "") print num; num=""; valid=0 }
+  '
+}
+
+apply_to_all() {
+  local pct="$1"
+  brightnessctl --class=backlight set "${pct}%" >/dev/null
+  for n in $(get_external_displays); do
+    ddcutil --display "$n" setvcp 10 "$pct" >/dev/null
+  done
+}
+
+cmd_get() {
+  local cur_raw max_raw laptop_pct
+  cur_raw=$(brightnessctl --class=backlight get)
+  max_raw=$(brightnessctl --class=backlight max)
+  laptop_pct=$(( cur_raw * 100 / max_raw ))
+  echo "laptop: ${laptop_pct}%"
+  for n in $(get_external_displays); do
+    val=$(ddcutil --display "$n" getvcp 10 --brief 2>/dev/null | awk '{print $4}')
+    echo "display $n: ${val}%"
+  done
+}
+
+case "${1:-}" in
+  up)
+    step="${2:-$DEFAULT_STEP}"
+    brightnessctl --class=backlight set "+${step}%" >/dev/null
+    cur_raw=$(brightnessctl --class=backlight get)
+    max_raw=$(brightnessctl --class=backlight max)
+    new=$(( cur_raw * 100 / max_raw ))
+    for n in $(get_external_displays); do
+      ddcutil --display "$n" setvcp 10 "$new" >/dev/null
+    done
+    ;;
+  down)
+    step="${2:-$DEFAULT_STEP}"
+    brightnessctl --class=backlight set "${step}%-" >/dev/null
+    cur_raw=$(brightnessctl --class=backlight get)
+    max_raw=$(brightnessctl --class=backlight max)
+    new=$(( cur_raw * 100 / max_raw ))
+    for n in $(get_external_displays); do
+      ddcutil --display "$n" setvcp 10 "$new" >/dev/null
+    done
+    ;;
+  set)
+    if [ -z "${2:-}" ]; then
+      echo "Error: 'set' requires a percentage argument" >&2
+      usage
+      exit 1
+    fi
+    apply_to_all "$2"
+    ;;
+  get)
+    cmd_get
+    ;;
+  -h|--help|"")
+    usage
+    ;;
+  *)
+    echo "Error: unknown command '$1'" >&2
+    usage
+    exit 1
+    ;;
+esac
