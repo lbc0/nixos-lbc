@@ -21,12 +21,6 @@ in {
   home.stateVersion = "25.11";
   home.sessionVariables.EDITOR = "nvim";
 
-  home.packages = with pkgs; [
-    (writeShellScriptBin "gitup" ''
-      git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push -u origin nix-work
-    '')
-  ];
-
   programs = {
     # Github
     git = {
