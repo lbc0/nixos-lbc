@@ -59,7 +59,7 @@ in {
   xdg.configFile =
     builtins.mapAttrs
     (name: subpath: {
-      source = create_symlink "${repo}/config/${subpath}";
+      source = create_symlink "/home/lbc/nixos-lbc/config/${subpath}";
       recursive = true;
     })
     configs;
