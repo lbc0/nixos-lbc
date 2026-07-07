@@ -1,8 +1,8 @@
-{...}: {
+{repo, ...}: {
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
 
-  sops.age.keyFile = "/home/lbc/nixos-lbc/.ignore/.keys.txt";
+  sops.age.keyFile = "${repo}/.ignore/.keys.txt";
 
   # importing my secrets
   sops.secrets."cportal/nac_url".owner = "lbc";
