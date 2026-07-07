@@ -1,1 +1,12 @@
-/nix/store/xccqxq7ikirz87w260haxr8wnni9f5w7-home-manager-files/.config/niri/config.kdl
+// Niri Work Config
+include "../startup.kdl"
+include "../input.kdl"
+include "../binds.kdl"
+include "../../common/settings.kdl"
+include "../../common/input.kdl"
+include "../../common/outputs.kdl"
+include "../../common/layout.kdl"
+include "../../common/startup.kdl"
+include "../../common/workspaces.kdl"
+include "../../common/window-rules.kdl"
+include "../../common/binds.kdl"

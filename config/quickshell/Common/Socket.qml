@@ -1,1 +1,0 @@
-/nix/store/xccqxq7ikirz87w260haxr8wnni9f5w7-home-manager-files/.config/quickshell/Common/Socket.qml
