@@ -1,1 +1,5 @@
-/nix/store/gbp7byxs5kg3m38mspywg4bznzf27qyz-home-manager-files/.config/swayidle/config
+# After 5 minutes of inactivity: turn off all outputs.
+# On resume (any input): turn them back on.
+# Alternative: lock the screen instead — uncomment the line below:
+# timeout 300 'swaylockPNG'
+timeout 300 'screen-on-off off' resume 'screen-on-off on'
