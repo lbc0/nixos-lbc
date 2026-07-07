@@ -1,1 +1,1 @@
-/nix/store/d3808saq8kiryj1kic1y5xvl7wxhnafa-home-manager-files/.config/quickshell/Common/Socket.qml
+/nix/store/fqld2h6cq6w2m7qqz3k70cskvg7c6nm4-home-manager-files/.config/quickshell/Common/Socket.qml
