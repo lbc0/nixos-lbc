@@ -328,7 +328,7 @@ binds {
     Mod+Alt+H { spawn "brave" "--app=https://home-manager-options.extranix.com"; }
 
     // Spawn a shuffled, looping playlist with MPV
-    Mod+Alt+M { spawn "mpv" "--shuffle" "--loop-playlist=inf" "$DOTFILES_LIVE/assets/listening/playlist.m3u"; }
+    Mod+Alt+M { spawn "mpv" "--shuffle" "--loop-playlist=inf" "$DOTFILES_ROOT/assets/listening/playlist.m3u"; }
 
     // Re-arrange monitors
     Mod+Alt+D { spawn "wdisplays"; }

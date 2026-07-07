@@ -1,7 +1,8 @@
 {...}: {
   imports = [
     ../common
-    ./scripts.nix
+    ./config.nix
     ./packages.nix
+    ./scripts.nix
   ];
 }

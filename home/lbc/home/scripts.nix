@@ -4,9 +4,7 @@
     shellAliases = {
       nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbch";
     };
-
-    initExtra = ''
-      export DOTFILES_LIVE=$HOME/nixos-lbc
-    '';
   };
+
+  home.sessionVariables.DOTFILES_LIVE = "$HOME/nixos-lbc";
 }

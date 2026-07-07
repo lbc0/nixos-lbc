@@ -12,7 +12,7 @@
 // spawn-at-startup "noctalia-shell"
 
 // Wallpaper, scaled to fill the screen.
-spawn-at-startup "swaybg" "-i" "$DOTFILES_LIVE/assets/walls/desktop.png" "-m" "fill"
+spawn-sh-at-startup "swaybg -i \"$DOTFILES_ROOT/assets/walls/desktop.png\" -m fill"
 
 // Your shell/bar (replaces waybar — see note above).
 spawn-at-startup "quickshell"

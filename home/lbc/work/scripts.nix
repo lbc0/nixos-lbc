@@ -21,18 +21,6 @@
     text = builtins.readFile "${root}/.local/bin/bao-login";
   };
 in {
-  programs.bash = {
-    enable = true;
-    shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
-    };
-
-    initExtra = ''
-      export DOTFILES_LIVE=$HOME/nixos-lbc
-      export BAO_ADDR=$(cat /run/secrets/openbao/address)
-    '';
-  };
-
   home.packages = [
     nac
     bao-login
