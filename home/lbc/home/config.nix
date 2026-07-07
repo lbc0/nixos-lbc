@@ -1,10 +1,8 @@
-{...}: {
+{repo, ...}: {
   programs.bash = {
     enable = true;
     shellAliases = {
-      nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbch";
+      nrs = "sudo nixos-rebuild switch --flake ${repo}#lbch";
     };
   };
-
-  home.sessionVariables.DOTFILES_LIVE = "$HOME/nixos-lbc";
 }

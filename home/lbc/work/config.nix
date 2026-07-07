@@ -1,12 +1,10 @@
-{...}: {
+{repo, ...}: {
   programs.bash = {
     enable = true;
-    shellAliases.nrs = "sudo nixos-rebuild switch --flake $HOME/nixos-lbc#lbcw";
+    shellAliases.nrs = "sudo nixos-rebuild switch --flake ${repo}#lbcw";
 
     initExtra = ''
       export BAO_ADDR=$(cat /run/secrets/openbao/address)
     '';
   };
-
-  home.sessionVariables.DOTFILES_LIVE = "$HOME/nixos-lbc";
 }

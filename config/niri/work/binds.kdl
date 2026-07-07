@@ -11,5 +11,5 @@ binds {
     // IMPORTANT: this now targets input.kdl, not config.kdl, since the
     // touchpad block lives there after the split (see input.kdl). If you
     // rename or relocate input.kdl, update the path here too.
-    Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' $DOTFILES_LIVE/config/niri/work/input.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' $DOTFILES_LIVE/config/niri/work/input.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' $DOTFILES_LIVE/config/niri/work/input.kdl; fi"; }
+    Mod+T { spawn-sh "if sed -n '/touchpad {/{n;p}' $DOTFILES_REPO/config/niri/work/input.kdl | grep -q '// off'; then sed -i '/touchpad {/{n;s|// off|off|}' $DOTFILES_REPO/config/niri/work/input.kdl; else sed -i '/touchpad {/{n;s|off|// off|}' $DOTFILES_REPO/config/niri/work/input.kdl; fi"; }
 }

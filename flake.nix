@@ -39,6 +39,9 @@
     nvf,
     ...
   }: let
+    repo = "$HOME/nixos-lbc"; # live checkout on disk
+    store = self; # flake source as copied into /nix/store
+
     mkHost = {
       hostName,
       hostModule,
@@ -48,7 +51,7 @@
     }:
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {inherit inputs profile;};
+        specialArgs = {inherit inputs profile repo store;};
 
         modules = [
           hostModule
@@ -58,7 +61,7 @@
             networking.hostName = hostName;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {inherit inputs profile;};
+            home-manager.extraSpecialArgs = {inherit inputs profile repo store;};
             home-manager.backupFileExtension = "backup";
             home-manager.users.lbc.imports =
               [nvf.homeManagerModules.default homeModule] ++ extraHomeImports;

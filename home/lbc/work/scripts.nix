@@ -1,16 +1,14 @@
 {
   pkgs,
-  inputs,
+  store,
   ...
 }: let
-  root = inputs.self;
-
   # Logs in to the captive-portal-style network access control (NAC) page
   # using credentials stored in sops secrets.
   nac = pkgs.writeShellApplication {
     name = "nac";
     runtimeInputs = [pkgs.curl];
-    text = builtins.readFile "${root}/.local/bin/nac";
+    text = builtins.readFile "${store}/.local/bin/nac";
   };
 
   # Logs in to OpenBao (Vault-compatible secrets manager) using userpass auth
@@ -18,7 +16,7 @@
   bao-login = pkgs.writeShellApplication {
     name = "bao-login";
     runtimeInputs = [pkgs.openbao];
-    text = builtins.readFile "${root}/.local/bin/bao-login";
+    text = builtins.readFile "${store}/.local/bin/bao-login";
   };
 in {
   home.packages = [

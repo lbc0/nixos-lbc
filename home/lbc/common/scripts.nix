@@ -1,10 +1,9 @@
 {
   pkgs,
   inputs,
+  store,
   ...
 }: let
-  root = inputs.self;
-
   pythonWithBcrypt = pkgs.python3.withPackages (ps: [ps.bcrypt]);
 
   # Increases/decreases brightness on the laptop panel (backlight) and all
@@ -12,21 +11,21 @@
   brightness-all = pkgs.writeShellApplication {
     name = "brightness-all";
     runtimeInputs = [pkgs.brightnessctl pkgs.ddcutil];
-    text = builtins.readFile "${root}/.local/bin/brightness-all";
+    text = builtins.readFile "${store}/.local/bin/brightness-all";
   };
 
   # Toggles quickshell: kills it if running, launches it if not.
   qstoggle = pkgs.writeShellApplication {
     name = "qstoggle";
     runtimeInputs = [pkgs.procps inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default];
-    text = builtins.readFile "${root}/.local/bin/qstoggle";
+    text = builtins.readFile "${store}/.local/bin/qstoggle";
   };
 
   # Turns all connected display outputs on or off via niri msg (usage: screen-on-off on|off).
   screen-on-off = pkgs.writeShellApplication {
     name = "screen-on-off";
     runtimeInputs = [pkgs.gnused];
-    text = builtins.readFile "${root}/.local/bin/screen-on-off";
+    text = builtins.readFile "${store}/.local/bin/screen-on-off";
   };
 
   # Locks the screen with swaylock using a fixed desktop wallpaper image.
@@ -36,15 +35,15 @@
     text =
       builtins.replaceStrings
       ["@WALLPAPER@"]
-      ["${root}/assets/walls/desktop.png"]
-      (builtins.readFile "${root}/.local/bin/swaylock-png");
+      ["${store}/assets/walls/desktop.png"]
+      (builtins.readFile "${store}/.local/bin/swaylock-png");
   };
 
   # Brings up the "Hotspot" NetworkManager connection profile.
   hotspot-up = pkgs.writeShellApplication {
     name = "hotspot-up";
     runtimeInputs = [pkgs.networkmanager];
-    text = builtins.readFile "${root}/.local/bin/hotspot-up";
+    text = builtins.readFile "${store}/.local/bin/hotspot-up";
   };
 
   # Stages all changes, prompts for a commit message, commits, and pushes
@@ -52,7 +51,7 @@
   gitup = pkgs.writeShellApplication {
     name = "gitup";
     runtimeInputs = [pkgs.git];
-    text = builtins.readFile "${root}/.local/bin/gitup";
+    text = builtins.readFile "${store}/.local/bin/gitup";
   };
 
   # Watches for keyboard/mouse input while an Element "Element | General" room
@@ -62,7 +61,7 @@
   room-lock-guard = pkgs.writeShellApplication {
     name = "room-lock-guard";
     runtimeInputs = [pkgs.libinput pkgs.python3 pkgs.gnugrep pkgs.procps swaylock-png];
-    text = builtins.readFile "${root}/.local/bin/room-lock-guard";
+    text = builtins.readFile "${store}/.local/bin/room-lock-guard";
   };
 
   # Wraps element-desktop with a bcrypt password prompt (via a private,
