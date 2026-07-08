@@ -67,21 +67,43 @@
   # Wraps element-desktop with a bcrypt password prompt (via a private,
   # self-contained python+bcrypt environment) before allowing launch, and
   # rewrites its .desktop entry to run inside alacritty so the prompt is visible.
-  element-desktop-wrapped = pkgs.symlinkJoin {
+  # element-desktop-wrapped = pkgs.symlinkJoin {
+  #   name = "element-desktop";
+  #   paths = [pkgs.element-desktop];
+  #   buildInputs = [pkgs.makeWrapper];
+  #   postBuild = ''
+  #     wrapProgram $out/bin/element-desktop \
+  #       --run '
+  #         read -s -p "Enter password: " input
+  #         echo ""
+  #         stored=$(cat /run/secrets/p7zip/pass)
+  #         if ! ${pythonWithBcrypt}/bin/python3 -c "import bcrypt,sys;sys.exit(0 if bcrypt.checkpw(b\"$input\",b\"$stored\") else 1)"; then
+  #           echo "Wrong password."
+  #           exit 1
+  #         fi
+  #       '
+  #     sed -i "s|Exec=element-desktop|Exec=alacritty -e $out/bin/element-desktop|g" $out/share/applications/element-desktop.desktop
+  #   '';
+  # };
+
+  # Mounts an encrypted (gocryptfs) profile directory for Element, prompting
+  # for the passphrase, launches Element against it, and unmounts on exit.
+  # Wrong passphrase = mount fails = no plaintext data ever exists on disk.
+  element-locked = pkgs.writeShellApplication {
+    name = "element-locked";
+    runtimeInputs = [pkgs.gocryptfs pkgs.fuse pkgs.util-linux pkgs.element-desktop];
+    text = builtins.readFile "${store}/.local/bin/element-locked";
+  };
+
+  # Repoints the element-desktop binary name at element-locked and rewrites
+  # the .desktop entry to launch inside alacritty so the passphrase prompt
+  # (and any gocryptfs/mount errors) are visible.
+  element-desktop-locked = pkgs.symlinkJoin {
     name = "element-desktop";
     paths = [pkgs.element-desktop];
-    buildInputs = [pkgs.makeWrapper];
     postBuild = ''
-      wrapProgram $out/bin/element-desktop \
-        --run '
-          read -s -p "Enter password: " input
-          echo ""
-          stored=$(cat /run/secrets/p7zip/pass)
-          if ! ${pythonWithBcrypt}/bin/python3 -c "import bcrypt,sys;sys.exit(0 if bcrypt.checkpw(b\"$input\",b\"$stored\") else 1)"; then
-            echo "Wrong password."
-            exit 1
-          fi
-        '
+      rm -f $out/bin/element-desktop
+      ln -s ${element-locked}/bin/element-locked $out/bin/element-desktop
       sed -i "s|Exec=element-desktop|Exec=alacritty -e $out/bin/element-desktop|g" $out/share/applications/element-desktop.desktop
     '';
   };
@@ -94,6 +116,6 @@ in {
     hotspot-up
     gitup
     room-lock-guard
-    element-desktop-wrapped
+    element-desktop-locked
   ];
 }

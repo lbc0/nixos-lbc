@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CIPHER="$HOME/.local/share/element-encrypted"
+MOUNT="$HOME/.config/Element"
+
+mkdir -p "$CIPHER" "$MOUNT"
+
+if [ ! -f "$CIPHER/gocryptfs.conf" ]; then
+  echo "No encrypted Element profile found yet."
+  echo "This should only happen once — see migration steps before running normally."
+  gocryptfs -init "$CIPHER"
+fi
+
+if mountpoint -q "$MOUNT"; then
+  echo "Element profile already mounted, reusing it."
+else
+  gocryptfs "$CIPHER" "$MOUNT"
+fi
+
+cleanup() {
+  fusermount -u "$MOUNT" 2>/dev/null || true
+}
+trap cleanup EXIT
+
+# Not exec'd on purpose: we need this script to stay alive so the
+# EXIT trap runs and unmounts once Element quits (or is pkilled by
+# room-lock-guard, which matches the child process by cmdline).
+element-desktop
