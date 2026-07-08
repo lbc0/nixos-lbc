@@ -37,6 +37,7 @@ if ! mountpoint -q "$MOUNT"; then
   exit 1
 fi
 
+# shellcheck disable=SC2329
 cleanup() {
   fusermount -u "$MOUNT" 2>/dev/null || fusermount -uz "$MOUNT" 2>/dev/null || true
   kill "$GC_PID" 2>/dev/null || true
