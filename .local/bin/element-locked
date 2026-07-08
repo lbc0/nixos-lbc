@@ -16,14 +16,14 @@ fi
 
 if [ ! -f "$CIPHER/gocryptfs.conf" ]; then
   echo "No encrypted Element profile found yet."
-  gocryptfs -init "$CIPHER"
+  gocryptfs -init "$CIPHER" < /dev/tty
 fi
 
 # -fg keeps gocryptfs as a direct foreground CHILD of this script instead
 # of daemonizing. That means: (a) we get a real PID to track and kill
 # explicitly in cleanup, and (b) if THIS script dies by any signal,
 # gocryptfs (its child) dies too since it's not detached.
-gocryptfs -fg "$CIPHER" "$MOUNT" &
+gocryptfs -fg "$CIPHER" "$MOUNT" < /dev/tty &
 GC_PID=$!
 
 # wait for the mount to actually appear before launching Element
