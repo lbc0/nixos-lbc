@@ -47,7 +47,7 @@ in {
 
       initExtra = ''
         export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
-        export SOPS_AGE_KEY_FILE="${store}/.ignore/.keys.txt"
+        export SOPS_AGE_KEY_FILE="${repo}/.ignore/.keys.txt"
       '';
     };
 
