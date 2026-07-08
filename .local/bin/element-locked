@@ -1,29 +1,48 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail   # note: no -e here, see below
 
 CIPHER="$HOME/.local/share/element-encrypted"
 MOUNT="$HOME/.config/Element"
 
 mkdir -p "$CIPHER" "$MOUNT"
 
+# Idempotent guard: if a previous run left this mounted (orphaned daemon,
+# crash, whatever), don't try to mount again on top of it.
+if mountpoint -q "$MOUNT"; then
+  echo "Element profile already mounted — unmounting stale mount first."
+  fusermount -u "$MOUNT" || fusermount -uz "$MOUNT" || true
+  sleep 0.3
+fi
+
 if [ ! -f "$CIPHER/gocryptfs.conf" ]; then
   echo "No encrypted Element profile found yet."
-  echo "This should only happen once — see migration steps before running normally."
   gocryptfs -init "$CIPHER"
 fi
 
-if mountpoint -q "$MOUNT"; then
-  echo "Element profile already mounted, reusing it."
-else
-  gocryptfs "$CIPHER" "$MOUNT"
+# -fg keeps gocryptfs as a direct foreground CHILD of this script instead
+# of daemonizing. That means: (a) we get a real PID to track and kill
+# explicitly in cleanup, and (b) if THIS script dies by any signal,
+# gocryptfs (its child) dies too since it's not detached.
+gocryptfs -fg "$CIPHER" "$MOUNT" &
+GC_PID=$!
+
+# wait for the mount to actually appear before launching Element
+for _ in $(seq 1 50); do
+  mountpoint -q "$MOUNT" && break
+  sleep 0.1
+done
+if ! mountpoint -q "$MOUNT"; then
+  echo "gocryptfs failed to mount (wrong passphrase?)."
+  kill "$GC_PID" 2>/dev/null || true
+  exit 1
 fi
 
 cleanup() {
-  fusermount -u "$MOUNT" 2>/dev/null || true
+  fusermount -u "$MOUNT" 2>/dev/null || fusermount -uz "$MOUNT" 2>/dev/null || true
+  kill "$GC_PID" 2>/dev/null || true
 }
-trap cleanup EXIT
+trap cleanup EXIT INT TERM HUP QUIT
 
-# Not exec'd on purpose: we need this script to stay alive so the
-# EXIT trap runs and unmounts once Element quits (or is pkilled by
-# room-lock-guard, which matches the child process by cmdline).
 element-desktop
+EXIT_CODE=$?
+exit "$EXIT_CODE"

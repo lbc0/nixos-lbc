@@ -4,8 +4,7 @@
   store,
   ...
 }: let
-  pythonWithBcrypt = pkgs.python3.withPackages (ps: [ps.bcrypt]);
-
+  # pythonWithBcrypt = pkgs.python3.withPackages (ps: [ps.bcrypt]);
   # Increases/decreases brightness on the laptop panel (backlight) and all
   # connected external monitors (DDC/CI via ddcutil) together, keeping them in sync.
   brightness-all = pkgs.writeShellApplication {
