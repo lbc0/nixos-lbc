@@ -14,35 +14,32 @@
   # needed to see changes).
   configs = {
     niri = "niri/${profile}/config";
-    # quickshell = "quickshell";
+    quickshell = "quickshell";
     swayidle = "swayidle";
   };
 
   # Generated from theme.nix — NOT live-edited, changes only via rebuild.
-  themeQml = pkgs.writeTextFile {
-    name = "Theme.qml";
-    text = ''
-      pragma Singleton
-      import QtQuick
+  themeQml = pkgs.writeText "Theme.qml" ''
+    pragma Singleton
+    import QtQuick
 
-      QtObject {
-          readonly property color bg: "#${theme.bg}"
-          readonly property color bgAlt: "#${theme.bgAlt}"
-          readonly property color bgHighlight: "#${theme.bgHighlight}"
-          readonly property color fg: "#${theme.fg}"
-          readonly property color fgDim: "#${theme.fgDim}"
-          readonly property color red: "#${theme.red}"
-          readonly property color orange: "#${theme.orange}"
-          readonly property color yellow: "#${theme.yellow}"
-          readonly property color green: "#${theme.green}"
-          readonly property color cyan: "#${theme.cyan}"
-          readonly property color blue: "#${theme.blue}"
-          readonly property color purple: "#${theme.purple}"
-          readonly property string fontFamily: "${theme.font}"
-          readonly property int fontSize: ${toString theme.fontSize}
-      }
-    '';
-  };
+    QtObject {
+        readonly property color bg: "#${theme.bg}"
+        readonly property color bgAlt: "#${theme.bgAlt}"
+        readonly property color bgHighlight: "#${theme.bgHighlight}"
+        readonly property color fg: "#${theme.fg}"
+        readonly property color fgDim: "#${theme.fgDim}"
+        readonly property color red: "#${theme.red}"
+        readonly property color orange: "#${theme.orange}"
+        readonly property color yellow: "#${theme.yellow}"
+        readonly property color green: "#${theme.green}"
+        readonly property color cyan: "#${theme.cyan}"
+        readonly property color blue: "#${theme.blue}"
+        readonly property color purple: "#${theme.purple}"
+        readonly property string fontFamily: "${theme.font}"
+        readonly property int fontSize: ${toString theme.fontSize}
+    }
+  '';
 in {
   # Basic Home Manager setup
   home.username = "lbc";
@@ -85,19 +82,19 @@ in {
 
   # Dotfiles symlinks
   xdg.configFile =
-    (builtins.mapAttrs
-      (name: subpath: {
-        source = create_symlink "${repo}/config/${subpath}";
-        recursive = true;
-      })
-      configs)
-    // {
-      # Quickshell: individual live-edited files, plus one Nix-generated
-      # Theme.qml so theme.nix is the single source of truth for colors.
-      # note: new files added under config/quickshell/ need a line here too.
-      "quickshell/shell.qml".source = create_symlink "${repo}/config/quickshell/shell.qml";
-      "quickshell/Common/Socket.qml".source = create_symlink "${repo}/config/quickshell/Common/Socket.qml";
-      "quickshell/Services/NiriService.qml".source = create_symlink "${repo}/config/quickshell/Services/NiriService.qml";
-      "quickshell/Common/Theme.qml".source = themeQml;
-    };
+    builtins.mapAttrs
+    (name: subpath: {
+      source = create_symlink "${repo}/config/${subpath}";
+      recursive = true;
+    })
+    configs;
+
+  # Copies the generated Theme.qml content into place as a plain file
+  # (not a store symlink), so it behaves like a normal file on disk while
+  # still being fully derived from theme.nix on every `nrs`.
+  home.activation.quickshellTheme = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p "$HOME/.config/quickshell/Common"
+    cp -f ${themeQml} "$HOME/.config/quickshell/Common/Theme.qml"
+    chmod 644 "$HOME/.config/quickshell/Common/Theme.qml"
+  '';
 }
