@@ -65,25 +65,41 @@
     text = builtins.readFile "${store}/.local/bin/room-lock-guard";
   };
 
-  # Mounts an encrypted (gocryptfs) profile directory for Element, prompting
-  # for the passphrase, launches Element against it, and unmounts on exit.
-  # Wrong passphrase = mount fails = no plaintext data ever exists on disk.
+  # Rofi-based passphrase prompt for gocryptfs's -extpass, themed to match
+  # the rest of the system via rofi.nix. No args with spaces (gocryptfs
+  # splits -extpass on whitespace), so this wraps the -p flag safely.
+  rofi-passphrase = pkgs.writeShellApplication {
+    name = "rofi-passphrase";
+    runtimeInputs = [pkgs.rofi];
+    text = builtins.readFile "${store}/.local/bin/rofi-passphrase";
+  };
+
+  # Mounts an encrypted (gocryptfs) profile directory for Element via a
+  # themed rofi passphrase prompt, launches Element against it, and
+  # unmounts on exit. Wrong passphrase = mount fails = no plaintext data
+  # ever exists on disk. No terminal needed anywhere in this flow.
   element-locked = pkgs.writeShellApplication {
     name = "element-locked";
-    runtimeInputs = [pkgs.gocryptfs pkgs.fuse pkgs.util-linux pkgs.element-desktop];
+    runtimeInputs = [
+      pkgs.gocryptfs
+      pkgs.fuse
+      pkgs.util-linux
+      pkgs.libnotify
+      pkgs.element-desktop
+      rofi-passphrase
+    ];
     text = builtins.readFile "${store}/.local/bin/element-locked";
   };
 
-  # Repoints the element-desktop binary name at element-locked and rewrites
-  # the .desktop entry to launch inside alacritty so the passphrase prompt
-  # (and any gocryptfs/mount errors) are visible.
+  # Repoints the element-desktop binary name at element-locked. No .desktop
+  # Exec rewrite needed anymore — rofi handles the prompt, no terminal
+  # wrapper required.
   element-desktop-locked = pkgs.symlinkJoin {
     name = "element-desktop";
     paths = [pkgs.element-desktop];
     postBuild = ''
       rm -f $out/bin/element-desktop
       ln -s ${element-locked}/bin/element-locked $out/bin/element-desktop
-      sed -i "s|Exec=element-desktop|Exec=alacritty -e $out/bin/element-desktop|g" $out/share/applications/element-desktop.desktop
     '';
   };
 in {
@@ -95,6 +111,7 @@ in {
     hotspot-up
     gitup
     room-lock-guard
+    rofi-passphrase
     element-desktop-locked
   ];
 }
