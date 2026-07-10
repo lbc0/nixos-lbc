@@ -4,6 +4,8 @@
   store,
   ...
 }: let
+  theme = import ./theme.nix;
+
   # pythonWithBcrypt = pkgs.python3.withPackages (ps: [ps.bcrypt]);
   # Increases/decreases brightness on the laptop panel (backlight) and all
   # connected external monitors (DDC/CI via ddcutil) together, keeping them in sync.
@@ -33,8 +35,8 @@
     runtimeInputs = [pkgs.swaylock];
     text =
       builtins.replaceStrings
-      ["@WALLPAPER@"]
-      ["${store}/assets/walls/desktop.png"]
+      ["@WALLPAPER@" "@RING@" "@INSIDE@" "@TEXT@"]
+      ["${store}/assets/walls/desktop.png" "#${theme.blue}" "#${theme.bg}" "#${theme.fg}"]
       (builtins.readFile "${store}/.local/bin/swaylock-png");
   };
 

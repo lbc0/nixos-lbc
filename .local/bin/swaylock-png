@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-swaylock -i "@WALLPAPER@" -s fill
+swaylock -i "@WALLPAPER@" -s fill \
+  --ring-color @RING@ \
+  --inside-color @INSIDE@ \
+  --text-color @TEXT@
