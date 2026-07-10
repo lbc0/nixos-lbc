@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
-set -uo pipefail   # note: no -e here, see below
+set -uo pipefail   # no -e: we want cleanup to run regardless of exit codes
 
 CIPHER="$HOME/.local/share/element-encrypted"
 MOUNT="$HOME/.config/Element"
 
 mkdir -p "$CIPHER" "$MOUNT"
 
-# Idempotent guard: if a previous run left this mounted (orphaned daemon,
-# crash, whatever), don't try to mount again on top of it.
-if mountpoint -q "$MOUNT"; then
-  echo "Element profile already mounted — unmounting stale mount first."
-  fusermount -u "$MOUNT" || fusermount -uz "$MOUNT" || true
+# Idempotent guard: clear any stale/dead mount from a previous crash
+# before trying to mount again.
+if mountpoint -q "$MOUNT" 2>/dev/null; then
+  echo "Element profile already mounted or stale — clearing it first."
+  fusermount -uz "$MOUNT" 2>/dev/null || sudo umount -l "$MOUNT" 2>/dev/null || true
   sleep 0.3
 fi
 
@@ -19,19 +19,21 @@ if [ ! -f "$CIPHER/gocryptfs.conf" ]; then
   gocryptfs -init "$CIPHER" < /dev/tty
 fi
 
-# -fg keeps gocryptfs as a direct foreground CHILD of this script instead
-# of daemonizing. That means: (a) we get a real PID to track and kill
-# explicitly in cleanup, and (b) if THIS script dies by any signal,
-# gocryptfs (its child) dies too since it's not detached.
-gocryptfs -fg "$CIPHER" "$MOUNT" < /dev/tty &
+# setsid launches gocryptfs in its own session, detached from this
+# terminal's controlling process group. This means if the terminal is
+# closed (SIGHUP), gocryptfs does NOT receive it directly — only this
+# script does, giving the trap below a chance to unmount cleanly before
+# gocryptfs is torn down. Without setsid, both processes die at once
+# on terminal close, which is what caused the stale/dead mount.
+setsid gocryptfs -fg "$CIPHER" "$MOUNT" < /dev/tty &
 GC_PID=$!
 
 # wait for the mount to actually appear before launching Element
 for _ in $(seq 1 50); do
-  mountpoint -q "$MOUNT" && break
+  mountpoint -q "$MOUNT" 2>/dev/null && break
   sleep 0.1
 done
-if ! mountpoint -q "$MOUNT"; then
+if ! mountpoint -q "$MOUNT" 2>/dev/null; then
   echo "gocryptfs failed to mount (wrong passphrase?)."
   kill "$GC_PID" 2>/dev/null || true
   exit 1
@@ -46,4 +48,5 @@ trap cleanup EXIT INT TERM HUP QUIT
 
 element-desktop
 EXIT_CODE=$?
+
 exit "$EXIT_CODE"
