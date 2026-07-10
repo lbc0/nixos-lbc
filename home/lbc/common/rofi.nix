@@ -3,7 +3,6 @@
 in {
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland; # Wayland-native, not the X11 pkgs.rofi
     theme = pkgs.writeText "rofi-theme.rasi" ''
       * {
           background:     #${theme.bg};
