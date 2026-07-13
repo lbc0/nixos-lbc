@@ -65,9 +65,9 @@ in {
     extraConfig = {
       modi = "drun,run,window";
       show-icons = true;
-      display-drun = "Apps";
-      display-run = "Run";
-      display-window = "Windows";
+      display-drun = "Apps: ";
+      display-run = "Run: ";
+      display-window = "Windows: ";
     };
   };
 }
