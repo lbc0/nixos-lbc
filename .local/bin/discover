@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 #
-# discover_dir.sh - Walk a directory tree and dump everything into one note file.
+# discover - Walk a directory tree and dump everything into one note file.
 #
 # What it does:
 #   1. Writes a `tree` listing of the target directory to the note file.
 #   2. Walks the directory subdirectory by subdirectory (in sorted order),
 #      and for every regular file, appends its full path and its content
 #      to the same note file.
+#   3. Redacts the contents of any file named .keys.txt (secret key file)
+#      instead of dumping it.
 #
 # Usage:
-#   ./discover_dir.sh <directory> [output_note_file]
+#   discover <directory> [output_note_file]
 #
 # Example:
-#   ./discover_dir.sh ./myproject notes.txt
+#   discover ./myproject notes.txt
 #
 set -euo pipefail
 
@@ -74,10 +76,15 @@ while IFS= read -r dir; do
         echo ">>> FILE: $file" >> "$OUT_FILE"
         echo "--------------------" >> "$OUT_FILE"
 
+        # Redact secret key file content instead of dumping it, but only
+        # when it's the .keys.txt that lives directly inside a .ignore dir.
+        if [ "$(basename "$file")" = ".keys.txt" ] && [ "$(basename "$(dirname "$file")")" = ".ignore" ]; then
+            echo "[REDACTED: secret key content omitted]" >> "$OUT_FILE"
+            echo "...................." >> "$OUT_FILE"
         # Detect binary files without relying on the external `file` command
         # (not available on all systems, e.g. Git Bash / MSYS on Windows).
         # grep -I treats binary content as "no match", so this is a portable check.
-        if grep -Iq '' "$file" 2>/dev/null; then
+        elif grep -Iq '' "$file" 2>/dev/null; then
             cat "$file" >> "$OUT_FILE"
         else
             echo "[binary file - content skipped]" >> "$OUT_FILE"

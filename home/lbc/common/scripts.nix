@@ -102,6 +102,15 @@
       ln -s ${element-locked}/bin/element-locked $out/bin/element-desktop
     '';
   };
+
+  # Walks a directory tree and dumps a `tree` listing plus every file's
+  # contents into a single note file, subdirectory by subdirectory. Redacts
+  # the content of any .keys.txt file it encounters instead of dumping it.
+  discover = pkgs.writeShellApplication {
+    name = "discover";
+    runtimeInputs = [pkgs.tree pkgs.findutils pkgs.gnused pkgs.gnugrep];
+    text = builtins.readFile "${store}/.local/bin/discover";
+  };
 in {
   home.packages = [
     brightness-all
@@ -113,5 +122,6 @@ in {
     room-lock-guard
     rofi-passphrase
     element-desktop-locked
+    discover
   ];
 }
