@@ -37,32 +37,40 @@ TARGET_DIR="$(cd "$TARGET_DIR" && pwd)"
 # note file into itself).
 OUT_FILE_ABS="$(cd "$(dirname "$OUT_FILE")" && pwd)/$(basename "$OUT_FILE")"
 
-echo "==================================================" >> "$OUT_FILE"
-echo "DIRECTORY STRUCTURE: $TARGET_DIR" >> "$OUT_FILE"
-echo "Generated: $(date)" >> "$OUT_FILE"
-echo "==================================================" >> "$OUT_FILE"
-echo >> "$OUT_FILE"
+{
+    echo "=================================================="
+    echo "DIRECTORY STRUCTURE: $TARGET_DIR"
+    echo "Generated: $(date)"
+    echo "=================================================="
+    echo
+} >> "$OUT_FILE"
 
 # Step 1: tree listing (fall back to a find-based tree if `tree` isn't installed)
 if command -v tree >/dev/null 2>&1; then
     tree "$TARGET_DIR" >> "$OUT_FILE"
 else
-    echo "(note: 'tree' command not found, using a find-based fallback)" >> "$OUT_FILE"
-    find "$TARGET_DIR" | sed -e "s|^$TARGET_DIR|.|" -e 's|[^/]*/| |g' >> "$OUT_FILE"
+    {
+        echo "(note: 'tree' command not found, using a find-based fallback)"
+        find "$TARGET_DIR" | sed -e "s|^$TARGET_DIR|.|" -e 's|[^/]*/| |g'
+    } >> "$OUT_FILE"
 fi
 
-echo >> "$OUT_FILE"
-echo "==================================================" >> "$OUT_FILE"
-echo "FILE CONTENTS" >> "$OUT_FILE"
-echo "==================================================" >> "$OUT_FILE"
+{
+    echo
+    echo "=================================================="
+    echo "FILE CONTENTS"
+    echo "=================================================="
+} >> "$OUT_FILE"
 
 # Step 2: walk subdirectory by subdirectory (sorted), file by file (sorted)
 # Find every directory under TARGET_DIR (including itself), sorted by path.
 while IFS= read -r dir; do
-    echo >> "$OUT_FILE"
-    echo "--------------------------------------------------" >> "$OUT_FILE"
-    echo "DIRECTORY: $dir" >> "$OUT_FILE"
-    echo "--------------------------------------------------" >> "$OUT_FILE"
+    {
+        echo
+        echo "--------------------------------------------------"
+        echo "DIRECTORY: $dir"
+        echo "--------------------------------------------------"
+    } >> "$OUT_FILE"
 
     # Only files directly inside this directory (so we still go dir by dir),
     # sorted alphabetically.
@@ -72,15 +80,19 @@ while IFS= read -r dir; do
             continue
         fi
 
-        echo >> "$OUT_FILE"
-        echo ">>> FILE: $file" >> "$OUT_FILE"
-        echo "--------------------" >> "$OUT_FILE"
+        {
+            echo
+            echo ">>> FILE: $file"
+            echo "--------------------"
+        } >> "$OUT_FILE"
 
         # Redact secret key file content instead of dumping it, but only
         # when it's the .keys.txt that lives directly inside a .ignore dir.
         if [ "$(basename "$file")" = ".keys.txt" ] && [ "$(basename "$(dirname "$file")")" = ".ignore" ]; then
-            echo "[REDACTED: secret key content omitted]" >> "$OUT_FILE"
-            echo "...................." >> "$OUT_FILE"
+            {
+                echo "[REDACTED: secret key content omitted]"
+                echo "...................."
+            } >> "$OUT_FILE"
         # Detect binary files without relying on the external `file` command
         # (not available on all systems, e.g. Git Bash / MSYS on Windows).
         # grep -I treats binary content as "no match", so this is a portable check.
