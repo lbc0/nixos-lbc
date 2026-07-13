@@ -8,7 +8,6 @@
   ...
 }: let
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-  theme = import ./theme.nix;
 
   # Whole-directory, live-edited configs (out-of-store symlink, no rebuild
   # needed to see changes).
@@ -17,29 +16,6 @@
     quickshell = "quickshell";
     swayidle = "swayidle";
   };
-
-  # Generated from theme.nix — NOT live-edited, changes only via rebuild.
-  themeQml = pkgs.writeText "Theme.qml" ''
-    pragma Singleton
-    import QtQuick
-
-    QtObject {
-        readonly property color bg: "#${theme.bg}"
-        readonly property color bgAlt: "#${theme.bgAlt}"
-        readonly property color bgHighlight: "#${theme.bgHighlight}"
-        readonly property color fg: "#${theme.fg}"
-        readonly property color fgDim: "#${theme.fgDim}"
-        readonly property color red: "#${theme.red}"
-        readonly property color orange: "#${theme.orange}"
-        readonly property color yellow: "#${theme.yellow}"
-        readonly property color green: "#${theme.green}"
-        readonly property color cyan: "#${theme.cyan}"
-        readonly property color blue: "#${theme.blue}"
-        readonly property color purple: "#${theme.purple}"
-        readonly property string fontFamily: "${theme.font}"
-        readonly property int fontSize: ${toString theme.fontSize}
-    }
-  '';
 in {
   # Basic Home Manager setup
   home.username = "lbc";
@@ -88,13 +64,4 @@ in {
       recursive = true;
     })
     configs;
-
-  # Copies the generated Theme.qml content into place as a plain file
-  # (not a store symlink), so it behaves like a normal file on disk while
-  # still being fully derived from theme.nix on every `nrs`.
-  home.activation.quickshellTheme = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    mkdir -p "$HOME/.config/quickshell/Common"
-    cp -f ${themeQml} "$HOME/.config/quickshell/Common/Theme.qml"
-    chmod 644 "$HOME/.config/quickshell/Common/Theme.qml"
-  '';
 }
