@@ -96,10 +96,14 @@ while IFS= read -r dir; do
         # Detect binary files without relying on the external `file` command
         # (not available on all systems, e.g. Git Bash / MSYS on Windows).
         # grep -I treats binary content as "no match", so this is a portable check.
-        elif grep -Iq '' "$file" 2>/dev/null; then
+        # Also reject files that aren't valid UTF-8: a single invalid byte
+        # anywhere in this note file can make editors like nvim misdetect
+        # the encoding for the ENTIRE file, garbling unrelated sections
+        # (e.g. the tree listing) even though they're valid UTF-8 themselves.
+        elif grep -Iq '' "$file" 2>/dev/null && iconv -f UTF-8 -t UTF-8 "$file" >/dev/null 2>&1; then
             cat "$file" >> "$OUT_FILE"
         else
-            echo "[binary file - content skipped]" >> "$OUT_FILE"
+            echo "[binary or non-UTF-8 file - content skipped]" >> "$OUT_FILE"
         fi
         echo >> "$OUT_FILE"
     done

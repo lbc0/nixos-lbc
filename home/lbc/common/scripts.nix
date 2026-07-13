@@ -108,7 +108,7 @@
   # the content of any .keys.txt file it encounters instead of dumping it.
   discover = pkgs.writeShellApplication {
     name = "discover";
-    runtimeInputs = [pkgs.tree pkgs.findutils pkgs.gnused pkgs.gnugrep];
+    runtimeInputs = [pkgs.tree pkgs.findutils pkgs.gnused pkgs.gnugrep pkgs.libiconv];
     text = builtins.readFile "${store}/.local/bin/discover";
   };
 in {
