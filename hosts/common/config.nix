@@ -44,6 +44,14 @@
   # ── Display / Session ────────────────────────────────────────────────────
   services.displayManager.ly.enable = true; # TUI login manager
   programs.niri.enable = true; # Wayland compositor
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
+  #     };
+  #   };
+  # };
 
   # ── Security ─────────────────────────────────────────────────────────────
   services.gnome.gnome-keyring.enable = true;
