@@ -9,7 +9,6 @@
     enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
-      runAsRoot = true;
       swtpm.enable = true; # TPM support (needed for Windows 11 guests)
     };
   };
