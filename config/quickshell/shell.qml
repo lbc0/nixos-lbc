@@ -4,6 +4,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import qs.Services
+import qs.Common
 
 Variants {
     model: Quickshell.screens
@@ -11,18 +12,8 @@ Variants {
     PanelWindow {
         id: root
 
-	required property var modelData
+	      required property var modelData
         screen: modelData
-    
-        /* ================= THEME ================= */
-        property color colBg: "#1a1b26"
-        property color colFg: "#a9b1d6"
-        property color colMuted: "#444b6a"
-        property color colCyan: "#0db9d7"
-        property color colBlue: "#7aa2f7"
-        property color colYellow: "#e0af68"
-        property string fontFamily: "JetBrainsMono Nerd Font"
-        property int fontSize: 14
     
         /* ================= SYSTEM DATA ================= */
         property int cpuUsage: 0
@@ -98,7 +89,7 @@ Variants {
         }
     
         implicitHeight: 30
-        color: root.colBg
+        color: Theme.bg
     
         /* ================= LAYOUT ================= */
         RowLayout {
@@ -116,8 +107,8 @@ Variants {
                 Text {
                     id: clock
                     text: Qt.formatDateTime(new Date(), "ddd,")
-                    color: root.colBlue
-                    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                    color: Theme.blue
+                    font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
     
                     Timer {
                         interval: 1000
@@ -127,13 +118,11 @@ Variants {
                     }
                 }
     
-                // Rectangle { width: 1; height: 16; color: root.colMuted }
-    
                 Text {
                     id: date
                     text: Qt.formatDateTime(new Date(), "MMM dd - HH:mm")
-                    color: root.colBlue
-                    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                    color: Theme.blue
+                    font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
     
                     Timer {
                         interval: 1000
@@ -156,14 +145,12 @@ Variants {
                     model: NiriService.allWorkspaces.filter(ws => ws.output == root.screen.name)
                     Text {
                         property var wsData: modelData
-			property bool notEmpty: NiriService.windows.some(
+			                  property bool notEmpty: NiriService.windows.some(
                             w => w.workspace_id === wsData.id
                         )
                         text: wsData.idx
                         font { family: fontFamily; pixelSize: fontSize; bold: true }
-    
-			color: wsData.is_focused ? "#f7768e" : notEmpty ? colCyan : colMuted
-    
+			                  color: wsData.is_focused ? Theme.red : notEmpty ? Theme.cyan : Theme.fgDim
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
@@ -181,27 +168,24 @@ Variants {
             RowLayout {
                 spacing: 10
                 Layout.alignment: Qt.AlignRight
-    
                 Text {
                     text: "CPU " + cpuUsage + "%"
-                    color: root.colYellow
-                    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                    color: Theme.yellow
+                    font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
                 }
-    
-                Rectangle { width: 1; height: 16; color: root.colMuted }
-    
+
+                Rectangle { width: 1; height: 16; color: Theme.fgDim }
                 Text {
                     text: "MEM " + memUsage + "%"
-                    color: root.colCyan
-                    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                    color: Theme.cyan
+                    font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
                 }
     
-                Rectangle { width: 1; height: 16; color: root.colMuted }
-    
+                Rectangle { width: 1; height: 16; color: Theme.fgDim }
                 Text {
                     text: batteryIcon + " " + batteryLevel + "%"
-                    color: batteryLevel < 15 ? "#f7768e" : root.colBlue
-                    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                    color: batteryLevel < 15 ? Theme.red : Theme.blue
+                    font { family: Theme.fontFamily; pixelSize: Theme.fontSize; bold: true }
                 }
             }
         }

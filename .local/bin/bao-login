@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+bao login -method userpass \
+  username="$(cat /run/secrets/openbao/username)" \
+  password="$(cat /run/secrets/openbao/password)"

@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -uo pipefail   # no -e: cleanup must run regardless of exit codes
+
+CIPHER="$HOME/.local/share/element-encrypted"
+MOUNT="$HOME/.config/Element"
+EXTPASS="rofi-passphrase"
+
+mkdir -p "$CIPHER" "$MOUNT"
+
+notify() {
+  notify-send -a "Element" "$1" "$2" 2>/dev/null || true
+}
+
+# Idempotent guard: clear any stale/dead mount from a previous crash.
+if mountpoint -q "$MOUNT" 2>/dev/null; then
+  fusermount -uz "$MOUNT" 2>/dev/null || sudo umount -l "$MOUNT" 2>/dev/null || true
+  sleep 0.3
+fi
+
+if [ ! -f "$CIPHER/gocryptfs.conf" ]; then
+  notify "Element" "Setting up encrypted profile — enter a new passphrase."
+  gocryptfs -init -extpass "$EXTPASS" "$CIPHER"
+fi
+
+# setsid detaches gocryptfs from this script's session so a terminal
+# SIGHUP (if ever launched from one) can't kill it out from under an
+# active mount — trap below gets to unmount cleanly first.
+setsid gocryptfs -fg -extpass "$EXTPASS" "$CIPHER" "$MOUNT" &
+GC_PID=$!
+
+for _ in $(seq 1 50); do
+  mountpoint -q "$MOUNT" 2>/dev/null && break
+  sleep 0.1
+done
+
+if ! mountpoint -q "$MOUNT" 2>/dev/null; then
+  notify "Element" "Wrong passphrase or mount failed."
+  kill "$GC_PID" 2>/dev/null || true
+  exit 1
+fi
+
+# shellcheck disable=SC2329
+cleanup() {
+  fusermount -u "$MOUNT" 2>/dev/null || fusermount -uz "$MOUNT" 2>/dev/null || true
+  kill "$GC_PID" 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM HUP QUIT
+
+element-desktop
+EXIT_CODE=$?
+exit "$EXIT_CODE"

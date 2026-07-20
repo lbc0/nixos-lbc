@@ -1,0 +1,38 @@
+// =============================================================================
+// Input devices — included from config.kdl
+// =============================================================================
+// Keyboard, Touchpad, Mouse, and Trackpoint behavior, plus how mouse
+// movement interacts with window focus.
+// Wiki: https://github.com/niri-wm/niri/wiki/Configuration:-Input
+// =============================================================================
+
+input {
+    keyboard {
+        // How long a key must be held before it starts auto-repeating (ms),
+        // and how many repeats per second once it does.
+        repeat-delay 200
+        repeat-rate 35
+
+        // xkb layout/variant/options would go here if you needed them,
+        // e.g. layout "us" or options "caps:escape". Empty = system default.
+        xkb {
+          layout "us,ara"
+        }
+
+        // Numlock is turned on automatically at startup.
+        numlock
+    }
+
+    mouse {
+        // No overrides — system defaults.
+    }
+
+    trackpoint {
+        // No overrides — system defaults.
+    }
+
+    // Hovering a window with the mouse focuses it, without needing a click.
+    // max-scroll-amount="0%" prevents scroll-wheel events from being able
+    // to shift focus across columns.
+    focus-follows-mouse max-scroll-amount="0%"
+}

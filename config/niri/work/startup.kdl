@@ -1,0 +1,20 @@
+// =============================================================================
+// Startup programs — included from config.kdl
+// =============================================================================
+// Each spawn-at-startup launches one program (no shell parsing — args are
+// passed exactly as written, no pipes/env-vars/globbing). Use
+// spawn-sh-at-startup instead if you need shell features.
+// =============================================================================
+
+// Disabled alternative bar — quickshell (below) is what's actually in use.
+// NOTE: this line's name is misleading leftover from niri's default config
+// template, which mentions waybar here; that's not what's running below.
+// spawn-at-startup "noctalia-shell"
+
+// Custom tool from your nixos-lbc dotfiles — name suggests a notification
+// or applet daemon; check nixos-lbc for what it actually does.
+spawn-at-startup "nac"
+
+// For shell commands needing pipes, variables, multiple commands, etc.,
+// use spawn-sh-at-startup instead — the whole command is passed to `sh -c`:
+// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

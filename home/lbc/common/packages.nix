@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   # User packages (Wayland-friendly)
   home.packages = with pkgs; [
     ripgrep
@@ -10,35 +9,28 @@
     fuzzel
     yazi
     alacritty
-    nautilus
     swaybg
     swaylock
     swayidle
     brave
     telegram-desktop
     playerctl
-    element-desktop
     quickshell
     sops
     tree
+    p7zip
+    localsend
+    libinput
+    zathura
+    xournalpp
+    mousepad
+    wdisplays # Monitors arrangement
 
     # Programming languages
-    python315
+    python3
+    go
 
-    # Bin Scripts
-    (writeShellScriptBin "qstoggle" ''
-      pgrep quickshell && pkill quickshell || quickshell
-    '')
-    (writeShellScriptBin "screenOnOff" ''
-      action="$1"  # on | off
-      niri msg outputs \
-        | sed -n 's/^Output .* (\(.*\))$/\1/p' \
-        | while read -r output; do
-            niri msg output "$output" "$action"
-          done
-    '')
-    (writeShellScriptBin "swaylockPNG" ''
-      swaylock -i /home/lbc/nixos-lbc/assets/walls/desktop.png -s fill
-    '')
+    # X11
+    xwayland-satellite
   ];
 }

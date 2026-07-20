@@ -1,269 +1,22 @@
-prefer-no-csd
-
-input {
-    keyboard {
-        repeat-delay 200
-        repeat-rate 35
-        xkb {
-        }
-        numlock
-    }
-
-    touchpad {
-        // off
-        tap
-        // dwt
-        // dwtp
-        // drag false
-        // drag-lock
-        natural-scroll
-        // accel-speed 0.2
-        // accel-profile "flat"
-        // scroll-method "two-finger"
-        // disabled-on-external-mouse
-    }
-
-    mouse {
-    }
-
-    trackpoint {
-    }
-    focus-follows-mouse max-scroll-amount="0%"
-}
-
-// You can configure outputs by their name, which you can find
-// by running `niri msg outputs` while inside a niri instance.
-// The built-in laptop monitor is usually called "eDP-1".
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Outputs
-// Remember to uncomment the node by removing "/-"!
-/-output "eDP-1" {
-    // Uncomment this line to disable this output.
-    // off
-
-    // Resolution and, optionally, refresh rate of the output.
-    // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-    // If the refresh rate is omitted, niri will pick the highest refresh rate
-    // for the resolution.
-    // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-    // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080@120.030"
-
-    // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-    scale 2
-
-    // Transform allows to rotate the output counter-clockwise, valid values are:
-    // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-    transform "normal"
-
-    // Position of the output in the global coordinate space.
-    // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-    // The cursor can only move between directly adjacent outputs.
-    // Output scale and rotation has to be taken into account for positioning:
-    // outputs are sized in logical, or scaled, pixels.
-    // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-    // so to put another output directly adjacent to it on the right, set its x to 1920.
-    // If the position is unset or results in an overlap, the output is instead placed
-    // automatically.
-    position x=1280 y=0
-}
-
-/-output "DP-3" {
-    mode "1920x1080@120.030"
-    scale 2
-    transform "normal"
-    position x=0 y=0
-}
-
-/-output "DP-5" {
-    mode "1920x1080@120.030"
-    scale 2
-    transform "normal"
-    position x=-1280 y=0
-}
-
-// Left Monitor
-output "eDP-1" {
-    mode "1920x1080@60.020"
-    scale 1
-    position x=0 y=0
-}
-
-// Center Monitor
-output "DP-3" {
-    mode "1920x1080@60.000"
-    scale 1
-    position x=1920 y=0
-    focus-at-startup
-}
-
-// Right Monitor
-output "DP-5" {
-    mode "1920x1080@60.000"
-    scale 1
-    position x=3840 y=0
-}
-
-
-// Settings that influence how windows are positioned and sized.
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Layout
-layout {
-    gaps 5
-
-    center-focused-column "never"
-
-    preset-column-widths {
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-    }
-
-    default-column-width { proportion 0.5; }
-    focus-ring {
-        width 1.5
-
-        active-color "#7fc8ff"
-
-        inactive-color "#505050"
-    }
-
-    border {
-        off
-
-        width 1.5
-        active-color "#ffc87f"
-        inactive-color "#505050"
-        urgent-color "#9b0000"
-
-    }
-
-    shadow {
-        // on
-
-        softness 30
-        spread 5
-        offset x=0 y=5
-        color "#0007"
-    }
-
-    struts {
-    }
-}
-
-// This line starts waybar, a commonly used bar for Wayland compositors.
-// spawn-at-startup "noctalia-shell"
-spawn-at-startup "swaybg" "-i" "nixos-lbc/assets/walls/desktop.png" "-m" "fill"
-spawn-at-startup "quickshell"
-spawn-at-startup "nac"
-spawn-at-startup "swayidle"
-
-// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
-
-hotkey-overlay {
-    // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
-    // skip-at-startup
-}
-
-// Uncomment this line to ask the clients to omit their client-side decorations if possible.
-// If the client will specifically ask for CSD, the request will be honored.
-// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
-// This option will also fix border/focus ring drawing behind some semitransparent windows.
-// After enabling or disabling this, you need to restart the apps for this to take effect.
-// prefer-no-csd
-
-// You can change the path where screenshots are saved.
-// A ~ at the front will be expanded to the home directory.
-// The path is formatted with strftime(3) to give you the screenshot date and time.
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-// You can also set this to null to disable saving screenshots to disk.
-// screenshot-path null
-
-// Animation settings.
-// The wiki explains how to configure individual animations:
-// https://yalter.github.io/niri/Configuration:-Animations
-animations {
-    // Uncomment to turn off all animations.
-    // off
-
-    // Slow down all animations by this factor. Values below 1 speed them up instead.
-    // slowdown 3.0
-}
-
-cursor {
-    hide-when-typing
-    hide-after-inactive-ms 10000
-}
-
-// Window rules let you adjust behavior for individual windows.
-// Find more information on the wiki:
-// https://yalter.github.io/niri/Configuration:-Window-Rules
-
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
-window-rule {
-    // This regular expression is intentionally made as specific as possible,
-    // since this is the default config, and we want no false positives.
-    // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
-}
-
-// Open the Firefox picture-in-picture player as floating by default.
-window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
-}
-
-
-// workspace "" {
-workspace "c" {
-}
-workspace "b" {
-}
-workspace "a" {
-}
-
-window-rule {
-    match title="Firefox"
-    open-on-workspace "c"
-    open-maximized true
-}
-
-// Example: block out two password managers from screen capture.
-// (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-    match app-id=r#"^org\.gnome\.World\.Secrets$"#
-
-    block-out-from "screen-capture"
-
-    // Use this instead if you want them visible on third-party screenshot tools.
-    // block-out-from "screencast"
-}
-
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-window-rule {
-    geometry-corner-radius 4
-    clip-to-geometry true
-}
+// =============================================================================
+// Keybindings — included from config.kdl
+// =============================================================================
+// `niri msg action do-something` lists every available bindable action.
+// Wiki: https://github.com/niri-wm/niri/wiki/Configuration:-Key-Bindings
+// =============================================================================
 
 binds {
-    // `niri msg action do-something`.
+    // --- Help overlay -----------------------------------------------------
 
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
     Mod+Shift+Slash { show-hotkey-overlay; }
 
+    // --- Core launchers -----------------------------------------------------
+
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylockPNG"; }
+    Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun"; }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock-png"; }
     // Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
@@ -271,25 +24,31 @@ binds {
     // For example, this is a standard bind to toggle the screen reader (orca).
     Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
+    // --- Volume / brightness (allow-when-locked so they work on the lock screen) ----
+
     // Example volume keys mappings for PipeWire & WirePlumber.
     // The allow-when-locked=true property makes them work even when the session is locked.
     // Using spawn-sh allows to pass multiple arguments together with the command.
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.03+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.03-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
     // but you need to manually put each argument in separate "" quotes.
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightness-all" "up" "5"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn  "brightness-all" "down" "5"; }
+
+    // --- Overview / window close ---------------------------------------------
 
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
+
+    // --- Focus movement (arrows + vim-style hjkl) -----------------------------
 
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
@@ -299,6 +58,8 @@ binds {
     Mod+J     { focus-window-down; }
     Mod+K     { focus-window-up; }
     Mod+L     { focus-column-right; }
+
+    // --- Move windows/columns (Mod+Ctrl + direction) --------------------------
 
     Mod+Ctrl+Left  { move-column-left; }
     Mod+Ctrl+Down  { move-window-down; }
@@ -320,6 +81,8 @@ binds {
     Mod+End  { focus-column-last; }
     Mod+Ctrl+Home { move-column-to-first; }
     Mod+Ctrl+End  { move-column-to-last; }
+
+    // --- Monitor focus / move columns between monitors --------------------------
 
     Mod+Shift+Left  { focus-monitor-left; }
     Mod+Shift+Down  { focus-monitor-down; }
@@ -347,6 +110,8 @@ binds {
     // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
     // ...
 
+    // --- Workspace navigation -------------------------------------------------
+
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
     Mod+U              { focus-workspace-down; }
@@ -364,6 +129,8 @@ binds {
     Mod+Shift+Page_Up   { move-workspace-up; }
     Mod+Shift+U         { move-workspace-down; }
     Mod+Shift+I         { move-workspace-up; }
+
+    // --- Mouse wheel / touchpad scroll bindings --------------------------------
 
     // You can bind mouse wheel scroll ticks using the following syntax.
     // These binds will change direction based on the natural-scroll setting.
@@ -396,6 +163,8 @@ binds {
     // touchpads by default.
     // Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
     // Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
+
+    // --- Workspace by index -----------------------------------------------
 
     // You can refer to workspaces by index. However, keep in mind that
     // niri is a dynamic workspace system, so these commands are kind of
@@ -430,6 +199,8 @@ binds {
     // Switches focus between the current and the previous workspace.
     // Mod+Tab { focus-workspace-previous; }
 
+    // --- Column/window grouping ---------------------------------------------
+
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
     // If the window is already in a column, they will expel it out.
@@ -440,6 +211,8 @@ binds {
     Mod+Comma  { consume-window-into-column; }
     // Expel the bottom window from the focused column to the right.
     Mod+Period { expel-window-from-column; }
+
+    // --- Sizing: presets, fullscreen, centering --------------------------------
 
     Mod+R { switch-preset-column-width; }
     // Cycling through the presets in reverse order is also possible.
@@ -473,14 +246,20 @@ binds {
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
 
+    // --- Floating layout -----------------------------------------------------
+
     // Move the focused window between the floating and the tiling layout.
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    // --- Tabbed columns ------------------------------------------------------
 
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
     Mod+W { toggle-column-tabbed-display; }
+
+    // --- Keyboard layout switching (disabled) ----------------------------------
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
@@ -490,9 +269,17 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
+    // --- Screenshots ---------------------------------------------------------
+
     Mod+S { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+
+    // --- Switch keyboard layout ---------------------------------------------------------
+
+    Alt+Space { switch-layout "next"; }
+
+    // --- Shortcuts inhibitor escape hatch ---------------------------------------
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here
@@ -504,6 +291,8 @@ binds {
     // which ensures niri always processes them, even when an inhibitor is active.
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
+    // --- Session control -------------------------------------------------------
+
     // The quit action will show a confirmation dialog to avoid accidental exits.
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
@@ -512,7 +301,8 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
 
-    // Custom Actions
+    // --- Custom actions --------------------------------------------------------
+
     // Play/Pause media player
     Alt+P { spawn "playerctl" "play-pause"; }
 
@@ -522,9 +312,24 @@ binds {
     // Spawn Brave
     Mod+B { spawn "brave"; }
 
+    // Spawn Notion (as a Brave web-app window)
+    Mod+Shift+N { spawn "brave" "--app=https://www.notion.so"; }
+
     // Shutdown
     Mod+Alt+X { spawn "shutdown" "now"; }
 
     // Launch File Manager
-    Mod+E { spawn "nautilus"; }
+    Mod+E { spawn "thunar"; }
+
+    // Search NixOS Packages
+    Mod+Alt+P { spawn "brave" "--app=https://search.nixos.org/packages"; }
+
+    // Search Home Manager Options
+    Mod+Alt+H { spawn "brave" "--app=https://home-manager-options.extranix.com"; }
+
+    // Spawn a shuffled, looping playlist with MPV
+    Mod+Alt+M { spawn "mpv" "--shuffle" "--loop-playlist=inf" "$DOTFILES_STORE/assets/listening/playlist.m3u"; }
+
+    // Re-arrange monitors
+    Mod+Alt+D { spawn "wdisplays"; }
 }

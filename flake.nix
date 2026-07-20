@@ -1,16 +1,16 @@
 {
-  description = "Lbc NixOS Flake with Noctalia";
+  description = "Lbc NixOS Flake";
 
   inputs = {
     # Stable system
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # Unstable system
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home Manager stable
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -18,88 +18,72 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    #noctalia = {
-    #  url = "github:noctalia-dev/noctalia-shell";
-    #  inputs.nixpkgs.follows = "nixpkgs-unstable";
-    #};
-
+    # QuickShell
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # NVF
     nvf = {
       url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
   };
 
-  outputs = inputs@{ self, nixpkgs, sops-nix, home-manager, quickshell, nvf, ... }:
-  {
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    sops-nix,
+    home-manager,
+    quickshell,
+    nvf,
+    ...
+  }: let
+    store = self; # flake source as copied into /nix/store
+    repo = "/home/lbc/nixos-lbc"; # live checkout on disk
+
+    mkHost = {
+      hostName,
+      hostModule,
+      homeModule,
+      extraHomeImports ? [],
+      profile, # home/work
+    }:
+      nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs profile store repo;};
+
+        modules = [
+          hostModule
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          {
+            networking.hostName = hostName;
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {inherit inputs profile store repo;};
+            home-manager.backupFileExtension = "backup";
+            home-manager.users.lbc.imports =
+              [nvf.homeManagerModules.default homeModule] ++ extraHomeImports;
+          }
+        ];
+      };
+  in {
     nixosConfigurations = {
-
-      lbcw = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        specialArgs = {
-          inherit inputs;
-        };
-
-        modules = [
-          ./hosts/work.nix
-
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-
-          {
-            networking.hostName = "lbcw";
-
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            home-manager.users.lbc = {
-	      imports = [
-                nvf.homeManagerModules.default
-                ./home/lbc/work.nix
-              ];
-            };
-
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
+      lbcw = mkHost {
+        hostName = "lbcw";
+        hostModule = ./hosts/work;
+        homeModule = ./home/lbc/work;
+        profile = "work";
       };
 
-      lbch = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        specialArgs = {
-          inherit inputs;
-        };
-
-        modules = [
-          ./hosts/home.nix
-
-          sops-nix.nixosModules.sops
-          home-manager.nixosModules.home-manager
-
-          {
-            networking.hostName = "lbch";
-
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-
-            home-manager.users.lbc = {
-	      imports = [
-                nvf.homeManagerModules.default
-                ./home/lbc/home.nix
-              ];
-            };
-
-            home-manager.backupFileExtension = "backup";
-          }
-        ];
+      lbch = mkHost {
+        hostName = "lbch";
+        hostModule = ./hosts/home;
+        homeModule = ./home/lbc/home;
+        profile = "home";
       };
-
     };
   };
 }

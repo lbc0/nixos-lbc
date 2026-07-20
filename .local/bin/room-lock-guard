@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+is_focused_on_room() {
+  niri msg --json windows 2>/dev/null | python3 -c "
+import json, sys
+ROOM_KEYWORD='General'
+keyword = ROOM_KEYWORD.lower()
+wins = json.load(sys.stdin)
+for w in wins:
+    if w.get('is_focused') and 'element' in w.get('app_id','').lower():
+        title = w.get('title','').lower()
+        if keyword in title:
+            print('yes')
+        break
+"
+}
+
+libinput debug-events 2>/dev/null | while IFS= read -r line; do
+  TRIGGER=0
+  if echo "$line" | grep -q "KEYBOARD_KEY.*pressed"; then
+    TRIGGER=1
+  fi
+  if echo "$line" | grep -q "POINTER_BUTTON.*pressed"; then
+    TRIGGER=1
+  fi
+  if [ "$TRIGGER" = "1" ]; then
+    BEFORE=$(is_focused_on_room)
+    sleep 0.3
+    AFTER=$(is_focused_on_room)
+    if [ "$BEFORE" = "yes" ] && [ "$AFTER" = "yes" ]; then
+      pkill -f element-desktop
+      swaylock-png
+    fi
+  fi
+done

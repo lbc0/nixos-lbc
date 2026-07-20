@@ -1,0 +1,1 @@
+7z a -v2000m -p$(cat /run/secrets/p7zip/password) -mhe=on folder.7z folder/
