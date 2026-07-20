@@ -79,8 +79,8 @@
   programs.thunar = {
     enable = true;
     plugins = with pkgs; [
-      xfce.thunar-archive-plugin # right-click → extract/compress
-      xfce.thunar-volman # auto-mount removable drives
+      thunar-archive-plugin # right-click → extract/compress
+      thunar-volman # auto-mount removable drives
     ];
   };
   programs.xfconf.enable = true; # persists Thunar preferences

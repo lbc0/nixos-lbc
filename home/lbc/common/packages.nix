@@ -22,7 +22,8 @@
     localsend
     libinput
     zathura
-    xfce.mousepad
+    xournalpp
+    mousepad
     wdisplays # Monitors arrangement
 
     # Programming languages
