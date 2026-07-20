@@ -19,7 +19,7 @@
 in {
   # Basic Home Manager setup
   home.username = "lbc";
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
   home.sessionVariables = {
     EDITOR = "nvim";
     DOTFILES_STORE = "${store}";
