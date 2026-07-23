@@ -30,16 +30,26 @@ in {
     # Github
     git = {
       enable = true;
+
       settings = {
         user = {
           name = "lbc0";
           email = "lbc0@gmail.com";
         };
+
         credential.helper = lib.getExe (pkgs.writeShellScriptBin "git-credential-sops" ''
           printf "username=%s\npassword=%s\n" \
             "$(cat /run/secrets/github/username)" \
             "$(cat /run/secrets/github/pass)"
         '');
+
+        gpg = {
+          format = "x509";
+          x509.program = lib.getExe pkgs.gitsign;
+        };
+
+        commit.gpgsign = true;
+        tag.gpgsign = true;
       };
     };
 
@@ -49,6 +59,7 @@ in {
       initExtra = ''
         export PS1="\[\e[38;5;75m\]\u@\h \[\e[38;5;113m\]\w \[\e[38;5;189m\]\$ \[\e[0m\]"
         export SOPS_AGE_KEY_FILE="${repo}/.ignore/.keys.txt"
+        export GITSIGN_CONNECTOR_ID="https://github.com/login/oauth"
       '';
     };
 

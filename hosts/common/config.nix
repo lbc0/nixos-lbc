@@ -101,6 +101,7 @@
     vim
     wget
     git
+    gitsign
     gnome-keyring
     libsecret # for gnome-keyring CLI access
     brightnessctl # keyboard backlight / screen brightness
