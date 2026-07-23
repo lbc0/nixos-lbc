@@ -1,4 +1,4 @@
-# nixos-lbc
+# NixOS-lbc
 
 Personal NixOS + Home Manager flake configuration, managed via [Nix flakes](https://nixos.wiki/wiki/Flakes) and [sops-nix](https://github.com/Mic92/sops-nix) for secrets.
 
