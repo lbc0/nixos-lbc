@@ -30,16 +30,26 @@ in {
     # Github
     git = {
       enable = true;
+
       settings = {
         user = {
           name = "lbc0";
           email = "lbc0@gmail.com";
         };
+
         credential.helper = lib.getExe (pkgs.writeShellScriptBin "git-credential-sops" ''
           printf "username=%s\npassword=%s\n" \
             "$(cat /run/secrets/github/username)" \
             "$(cat /run/secrets/github/pass)"
         '');
+
+        gpg = {
+          format = "x509";
+          x509.program = lib.getExe pkgs.gitsign;
+        };
+
+        commit.gpgsign = true;
+        tag.gpgsign = true;
       };
     };
 
