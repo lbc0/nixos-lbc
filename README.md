@@ -4,7 +4,7 @@ Personal NixOS + Home Manager flake configuration, managed via [Nix flakes](http
 
 ## Setup checklist for a new machine / new user
 
-Before running `nixos-rebuild switch` (aliased as `nrs`) on a fresh clone of this repo, you need to change a few machine- and user-specific things.
+Before running `nixos-rebuild switch` (aliased as `nrs`) on a fresh clone of this repo, you need to change a few machine- and user-specific things. 
 
 ### 1. Clone the repo to the expected path
 
