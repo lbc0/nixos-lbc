@@ -36,7 +36,7 @@ Replace the placeholder file at `./hosts/work/hardware.nix` or `./hosts/home/har
 
 Secrets (`hosts/common/secrets/secrets.yaml`) are encrypted with [sops](https://github.com/getsops/sops) using an [age](https://github.com/FiloSottile/age) key. You need your own key — you cannot use mine, since the secrets file is encrypted specifically for my public key.
 
-1. Generate a new age key:
+1. Generate a new age key: 
    ```bash
    mkdir -p ~/nixos-lbc/.ignore
    age-keygen -o ~/nixos-lbc/.ignore/.keys.txt
