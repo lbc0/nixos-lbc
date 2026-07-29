@@ -1,2 +1,0 @@
-sudo nmcli device wifi hotspot ifname wlp0s20f3 ssid ASTRA password helloFROMastra00
-nmcli connection up Hotspot
