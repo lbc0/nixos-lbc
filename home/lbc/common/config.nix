@@ -52,6 +52,7 @@ in {
         tag.gpgsign = true;
       };
     };
+    gh.enable = true;
 
     bash = {
       enable = true;
