@@ -96,7 +96,7 @@
   # ── User ─────────────────────────────────────────────────────────────────
   users.users.lbc = {
     isNormalUser = true;
-    extraGroups = ["wheel" "libvirtd" "kvm" "input" "i2c"];
+    extraGroups = ["wheel" "libvirtd" "kvm" "input" "i2c" "docker"];
   };
 
   # ── System Packages ──────────────────────────────────────────────────────
