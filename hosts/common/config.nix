@@ -5,14 +5,17 @@
   boot.kernelModules = ["kvm-intel" "i2c-dev"];
 
   # ── Virtualisation (KVM / QEMU / virt-manager) ───────────────────────────
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      package = pkgs.qemu_kvm;
-      swtpm.enable = true; # TPM support (needed for Windows 11 guests)
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        swtpm.enable = true; # TPM support (needed for Windows 11 guests)
+      };
     };
+    spiceUSBRedirection.enable = true;
+    docker.enable = true;
   };
-  virtualisation.spiceUSBRedirection.enable = true;
   programs.virt-manager.enable = true;
   programs.dconf.enable = true; # required by virt-manager
 

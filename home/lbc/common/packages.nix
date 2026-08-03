@@ -25,7 +25,6 @@
     xournalpp
     mousepad
     wdisplays # Monitors arrangement
-    docker
 
     # Programming languages
     python3
