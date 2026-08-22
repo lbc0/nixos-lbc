@@ -69,6 +69,12 @@ in {
 
     neovim.defaultEditor = true;
     onlyoffice.enable = true;
+
+    # btop
+    btop = {
+      enable = true;
+      settings.color_theme = "nordic";
+    };
   };
 
   # Dotfiles symlinks
