@@ -25,6 +25,7 @@
     xournalpp
     mousepad
     wdisplays # Monitors arrangement
+    btop
 
     # Programming languages
     python3

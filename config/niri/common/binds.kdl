@@ -332,4 +332,7 @@ binds {
 
     // Re-arrange monitors
     Mod+Alt+D { spawn "wdisplays"; }
+
+    // Run btop
+    Mod+Shift+B { spawn "alacritty" "--class" "floatbtop" "-e" "btop"; }
 }
