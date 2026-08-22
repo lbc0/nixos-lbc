@@ -52,7 +52,10 @@ in {
         tag.gpgsign = true;
       };
     };
-    gh.enable = true;
+    gh = {
+      enable = true;
+      gitCredentialHelper.enable = false;
+    };
 
     bash = {
       enable = true;
