@@ -48,6 +48,9 @@ binds {
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
 
+    // Kill element
+    Alt+Q { spawn "pkill" "-f" "element-desktop"; }
+
     // --- Focus movement (arrows + vim-style hjkl) -----------------------------
 
     Mod+Left  { focus-column-left; }

@@ -4,3 +4,5 @@
 # timeout 300 'swaylockPNG'
 timeout 300 'screen-on-off off' resume 'screen-on-off on'
 timeout 310 'swaylock-png'
+# Lock when closing the led
+before-sleep 'swaylock-png'
