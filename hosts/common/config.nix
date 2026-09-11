@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   # ── Bootloader ───────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -122,5 +126,9 @@
 
   # ── Nix ──────────────────────────────────────────────────────────────────
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "obsidian"
+    ];
   system.stateVersion = "26.05";
 }

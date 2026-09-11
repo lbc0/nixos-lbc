@@ -68,40 +68,40 @@
   # Rofi-based passphrase prompt for gocryptfs's -extpass, themed to match
   # the rest of the system via rofi.nix. No args with spaces (gocryptfs
   # splits -extpass on whitespace), so this wraps the -p flag safely.
-  rofi-passphrase = pkgs.writeShellApplication {
-    name = "rofi-passphrase";
-    runtimeInputs = [pkgs.rofi];
-    text = builtins.readFile "${store}/.local/bin/rofi-passphrase";
-  };
+  # rofi-passphrase = pkgs.writeShellApplication {
+  #   name = "rofi-passphrase";
+  #   runtimeInputs = [pkgs.rofi];
+  #   text = builtins.readFile "${store}/.local/bin/rofi-passphrase";
+  # };
 
   # Mounts an encrypted (gocryptfs) profile directory for Element via a
   # themed rofi passphrase prompt, launches Element against it, and
   # unmounts on exit. Wrong passphrase = mount fails = no plaintext data
   # ever exists on disk. No terminal needed anywhere in this flow.
-  element-locked = pkgs.writeShellApplication {
-    name = "element-locked";
-    runtimeInputs = [
-      pkgs.gocryptfs
-      pkgs.fuse
-      pkgs.util-linux
-      pkgs.libnotify
-      pkgs.element-desktop
-      rofi-passphrase
-    ];
-    text = builtins.readFile "${store}/.local/bin/element-locked";
-  };
+  # element-locked = pkgs.writeShellApplication {
+  #   name = "element-locked";
+  #   runtimeInputs = [
+  #     pkgs.gocryptfs
+  #     pkgs.fuse
+  #     pkgs.util-linux
+  #     pkgs.libnotify
+  #     pkgs.element-desktop
+  #     rofi-passphrase
+  #   ];
+  #   text = builtins.readFile "${store}/.local/bin/element-locked";
+  # };
 
   # Repoints the element-desktop binary name at element-locked. No .desktop
   # Exec rewrite needed anymore — rofi handles the prompt, no terminal
   # wrapper required.
-  element-desktop-locked = pkgs.symlinkJoin {
-    name = "element-desktop";
-    paths = [pkgs.element-desktop];
-    postBuild = ''
-      rm -f $out/bin/element-desktop
-      ln -s ${element-locked}/bin/element-locked $out/bin/element-desktop
-    '';
-  };
+  # element-desktop-locked = pkgs.symlinkJoin {
+  #   name = "element-desktop";
+  #   paths = [pkgs.element-desktop];
+  #   postBuild = ''
+  #     rm -f $out/bin/element-desktop
+  #     ln -s ${element-locked}/bin/element-locked $out/bin/element-desktop
+  #   '';
+  # };
 
   # Walks a directory tree and dumps a `tree` listing plus every file's
   # contents into a single note file, subdirectory by subdirectory. Redacts
@@ -120,8 +120,8 @@ in {
     hotspot-up
     gitup
     room-lock-guard
-    rofi-passphrase
-    element-desktop-locked
+    # rofi-passphrase
+    # element-desktop-locked
     discover
   ];
 }
