@@ -14,6 +14,6 @@ QtObject {
     readonly property color cyan: "#0db9d7"
     readonly property color blue: "#7aa2f7"
     readonly property color purple: "#bb9af7"
-    readonly property string fontFamily: "New York Nerd Font"
+    readonly property string fontFamily: "JetBrainsMono Nerd Font"
     readonly property int fontSize: 14
 }

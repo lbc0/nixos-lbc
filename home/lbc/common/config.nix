@@ -43,13 +43,13 @@ in {
             "$(cat /run/secrets/github/pass)"
         '');
 
-        gpg = {
-          format = "x509";
-          x509.program = lib.getExe pkgs.gitsign;
-        };
+        # gpg = {
+        #   format = "x509";
+        #   x509.program = lib.getExe pkgs.gitsign;
+        # };
 
-        commit.gpgsign = true;
-        tag.gpgsign = true;
+        # commit.gpgsign = true;
+        # tag.gpgsign = true;
       };
     };
     gh = {
