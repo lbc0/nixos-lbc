@@ -126,6 +126,7 @@
     ny-nerd
     noto-fonts
     amiri
+    scheherazade-new
   ];
 
   fonts.fontconfig.defaultFonts = {
