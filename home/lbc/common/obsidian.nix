@@ -8,17 +8,16 @@
         attachmentFolderPath = "./x";
       };
       appearance = {
-        cssTheme = "AnuPpuccin";
+        cssTheme = "Soft Paper";
         theme = "moonstone";
       };
       themes = with pkgs.obsidianThemes; [
-        anuppuccin
+        soft-paper
       ];
     };
 
     vaults = {
-      "Documents/Obsidian".enable = true;
-      "Documents/Ideaverse".enable = true;
+      "Documents/Start".enable = true;
     };
   };
 }
