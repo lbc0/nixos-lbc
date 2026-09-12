@@ -17,7 +17,7 @@
     };
 
     vaults = {
-      "Documents/Start".enable = true;
+      "Documents/soft".enable = true;
     };
   };
 }
