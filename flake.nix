@@ -29,6 +29,12 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    # Obsidian Extensions
+    obsidian-extensions = {
+      url = "github:karaolidis/nix-obsidian-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -38,6 +44,7 @@
     home-manager,
     quickshell,
     nvf,
+    obsidian-extensions,
     ...
   }: let
     store = self; # flake source as copied into /nix/store

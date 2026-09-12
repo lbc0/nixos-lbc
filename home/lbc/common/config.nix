@@ -75,8 +75,6 @@ in {
       enable = true;
       settings.color_theme = "nordic";
     };
-
-    obsidian.enable = true;
   };
 
   # Dotfiles symlinks
