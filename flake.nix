@@ -30,6 +30,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # Apple Fonts
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Obsidian Extensions
     obsidian-extensions = {
       url = "github:karaolidis/nix-obsidian-extensions";
@@ -44,6 +50,7 @@
     home-manager,
     quickshell,
     nvf,
+    apple-fonts,
     obsidian-extensions,
     ...
   }: let

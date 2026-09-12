@@ -15,6 +15,6 @@
   blue = "7aa2f7";
   purple = "bb9af7";
 
-  font = "JetBrainsMono Nerd Font";
+  font = "New York Nerd Font";
   fontSize = 14;
 }
