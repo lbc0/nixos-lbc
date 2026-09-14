@@ -4,12 +4,30 @@
 # stop it. Session details (Wayland socket, niri socket) are discovered
 # once at startup, since they don't change while the session is alive.
 set -euo pipefail
+shopt -s nullglob
 
 USER_NAME="lbc"
 USER_UID="$(id -u "$USER_NAME")"
 export XDG_RUNTIME_DIR="/run/user/$USER_UID"
-WAYLAND_DISPLAY="$(basename "$(find "$XDG_RUNTIME_DIR" -maxdepth 1 -name 'wayland-*' ! -name '*.lock' | head -n1)")"
-NIRI_SOCKET="$(find "$XDG_RUNTIME_DIR" -maxdepth 1 -name 'niri.*.sock' | head -n1)"
+
+WAYLAND_DISPLAY=""
+for f in "$XDG_RUNTIME_DIR"/wayland-*; do
+  b="$(basename "$f")"
+  [[ "$b" == *.lock ]] && continue
+  WAYLAND_DISPLAY="$b"
+  break
+done
+
+NIRI_SOCKET=""
+for f in "$XDG_RUNTIME_DIR"/niri.*.sock; do
+  [ -S "$f" ] && NIRI_SOCKET="$f" && break
+done
+
+if [ -z "$WAYLAND_DISPLAY" ] || [ -z "$NIRI_SOCKET" ]; then
+  echo "room-lock-guard: could not find wayland/niri socket for $USER_NAME, retrying in 5s" >&2
+  sleep 5
+  exit 1
+fi
 
 as_user() {
   runuser -u "$USER_NAME" -- env \
