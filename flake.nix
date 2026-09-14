@@ -44,7 +44,6 @@
     home-manager,
     quickshell,
     nvf,
-    apple-fonts,
     obsidian-extensions,
     ...
   }: let
