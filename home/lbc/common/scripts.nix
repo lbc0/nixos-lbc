@@ -59,11 +59,11 @@
   # is focused; if input is detected while that room stays focused, kills
   # element-desktop and locks the screen. A privacy guard against accidental
   # screen-shares/screenshots of a sensitive chat room.
-  room-lock-guard = pkgs.writeShellApplication {
-    name = "room-lock-guard";
-    runtimeInputs = [pkgs.libinput pkgs.python3 pkgs.gnugrep pkgs.procps swaylock-png];
-    text = builtins.readFile "${store}/.local/bin/room-lock-guard";
-  };
+  # room-lock-guard = pkgs.writeShellApplication {
+  #   name = "room-lock-guard";
+  #   runtimeInputs = [pkgs.libinput pkgs.python3 pkgs.gnugrep pkgs.procps swaylock-png];
+  #   text = builtins.readFile "${store}/.local/bin/room-lock-guard";
+  # };
 
   # Rofi-based passphrase prompt for gocryptfs's -extpass, themed to match
   # the rest of the system via rofi.nix. No args with spaces (gocryptfs
@@ -119,7 +119,7 @@ in {
     swaylock-png
     hotspot-up
     gitup
-    room-lock-guard
+    # room-lock-guard
     # rofi-passphrase
     # element-desktop-locked
     discover

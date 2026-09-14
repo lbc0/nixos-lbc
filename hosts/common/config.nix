@@ -123,21 +123,19 @@
   # ── Fonts ────────────────────────────────────────────────────────────────
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
-    ny-nerd
     noto-fonts
     amiri
     scheherazade-new
   ];
 
   fonts.fontconfig.defaultFonts = {
-    serif = ["Amiri" "Noto Serif" "New York Nerd Font"];
-    sansSerif = ["Noto Sans" "New York Nerd Font"];
+    serif = ["Amiri" "Noto Serif"];
+    sansSerif = ["Noto Sans"];
   };
 
   # ── Overlays ─────────────────────────────────────────────────────────────
   nixpkgs.overlays = [
     inputs.obsidian-extensions.overlays.default
-    inputs.apple-fonts.overlays.default
   ];
 
   # ── Nix ──────────────────────────────────────────────────────────────────
