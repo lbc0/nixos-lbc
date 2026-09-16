@@ -1,36 +1,77 @@
 #!/usr/bin/env bash
+# Runs as root via a systemd service (hosts/common/room-lock-guard.nix), so
+# `kill <pid>` from the lbc session fails with EPERM — only root/sudo can
+# stop it. Session details (Wayland socket, niri socket) are discovered
+# once at startup, since they don't change while the session is alive.
 set -euo pipefail
+shopt -s nullglob
 
-is_focused_on_room() {
-  niri msg --json windows 2>/dev/null | python3 -c "
+USER_NAME="lbc"
+USER_UID="$(id -u "$USER_NAME")"
+export XDG_RUNTIME_DIR="/run/user/$USER_UID"
+
+WAYLAND_DISPLAY=""
+for f in "$XDG_RUNTIME_DIR"/wayland-*; do
+  b="$(basename "$f")"
+  [[ "$b" == *.lock ]] && continue
+  WAYLAND_DISPLAY="$b"
+  break
+done
+
+NIRI_SOCKET=""
+for f in "$XDG_RUNTIME_DIR"/niri.*.sock; do
+  [ -S "$f" ] && NIRI_SOCKET="$f" && break
+done
+
+if [ -z "$WAYLAND_DISPLAY" ] || [ -z "$NIRI_SOCKET" ]; then
+  echo "room-lock-guard: could not find wayland/niri socket for $USER_NAME, retrying in 5s" >&2
+  sleep 5
+  exit 1
+fi
+
+as_user() {
+  runuser -u "$USER_NAME" -- env \
+    XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
+    WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
+    NIRI_SOCKET="$NIRI_SOCKET" \
+    "$@"
+}
+
+is_focused_state() {
+  as_user niri msg --json windows | python3 -c "
 import json, sys
 ROOM_KEYWORD='General'
 keyword = ROOM_KEYWORD.lower()
 wins = json.load(sys.stdin)
+result = 'no'
 for w in wins:
-    if w.get('is_focused') and 'element' in w.get('app_id','').lower():
-        title = w.get('title','').lower()
-        if keyword in title:
-            print('yes')
-        break
+    if not w.get('is_focused'):
+        continue
+    app_id = w.get('app_id','')
+    title = w.get('title','')
+    if 'element' in app_id.lower() and keyword in title.lower():
+        result = 'kill'
+    elif app_id == 'brave-browser' and ( title == 'Element - Brave' or title == 'Continue to your account - Brave' ) :
+        result = 'nokill'
+    break
+print(result)
 "
 }
 
 libinput debug-events 2>/dev/null | while IFS= read -r line; do
   TRIGGER=0
-  if echo "$line" | grep -q "KEYBOARD_KEY.*pressed"; then
-    TRIGGER=1
-  fi
-  if echo "$line" | grep -q "POINTER_BUTTON.*pressed"; then
-    TRIGGER=1
-  fi
+  if echo "$line" | grep -q "KEYBOARD_KEY.*pressed"; then TRIGGER=1; fi
+  if echo "$line" | grep -q "POINTER_BUTTON.*pressed"; then TRIGGER=1; fi
+
   if [ "$TRIGGER" = "1" ]; then
-    BEFORE=$(is_focused_on_room)
+    BEFORE=$(is_focused_state)
     sleep 0.3
-    AFTER=$(is_focused_on_room)
-    if [ "$BEFORE" = "yes" ] && [ "$AFTER" = "yes" ]; then
-      pkill -f element-desktop
-      swaylock-png
+    AFTER=$(is_focused_state)
+    if [ "$BEFORE" = "$AFTER" ] && [ "$BEFORE" != "no" ]; then
+      if [ "$BEFORE" = "kill" ]; then
+        pkill -u "$USER_UID" -f element-desktop
+      fi
+      as_user swaylock-png
     fi
   fi
 done

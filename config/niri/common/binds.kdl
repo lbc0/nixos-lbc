@@ -37,8 +37,8 @@ binds {
     // Example brightness key mappings for brightnessctl.
     // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
     // but you need to manually put each argument in separate "" quotes.
-    XF86MonBrightnessUp allow-when-locked=true { spawn "brightness-all" "up" "5"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn  "brightness-all" "down" "5"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightness-all" "up" "2"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn  "brightness-all" "down" "2"; }
 
     // --- Overview / window close ---------------------------------------------
 
@@ -47,6 +47,9 @@ binds {
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
+
+    // Kill element
+    Alt+Q { spawn "pkill" "-f" "element-desktop"; }
 
     // --- Focus movement (arrows + vim-style hjkl) -----------------------------
 
@@ -332,4 +335,7 @@ binds {
 
     // Re-arrange monitors
     Mod+Alt+D { spawn "wdisplays"; }
+
+    // Run btop
+    Mod+Shift+B { spawn "alacritty" "--class" "floatbtop" "-e" "btop"; }
 }

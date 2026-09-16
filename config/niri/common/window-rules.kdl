@@ -30,6 +30,12 @@ window-rule {
     open-maximized true
 }
 
+// Make the btop window floating
+window-rule {
+    match app-id="^floatbtop$"
+    open-floating true
+}
+    
 // Disabled example: hide password manager windows from screen captures.
 // The leading "/-" comments out this whole rule (niri-specific syntax) —
 // remove it to enable. Useful if you ever run KeePassXC or GNOME Secrets.

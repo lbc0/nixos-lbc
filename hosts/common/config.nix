@@ -1,18 +1,26 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   # ── Bootloader ───────────────────────────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = ["kvm-intel" "i2c-dev"];
 
   # ── Virtualisation (KVM / QEMU / virt-manager) ───────────────────────────
-  virtualisation.libvirtd = {
-    enable = true;
-    qemu = {
-      package = pkgs.qemu_kvm;
-      swtpm.enable = true; # TPM support (needed for Windows 11 guests)
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        swtpm.enable = true; # TPM support (needed for Windows 11 guests)
+      };
     };
+    spiceUSBRedirection.enable = true;
+    docker.enable = true;
   };
-  virtualisation.spiceUSBRedirection.enable = true;
   programs.virt-manager.enable = true;
   programs.dconf.enable = true; # required by virt-manager
 
@@ -93,7 +101,7 @@
   # ── User ─────────────────────────────────────────────────────────────────
   users.users.lbc = {
     isNormalUser = true;
-    extraGroups = ["wheel" "libvirtd" "kvm" "input" "i2c"];
+    extraGroups = ["wheel" "libvirtd" "kvm" "input" "i2c" "docker"];
   };
 
   # ── System Packages ──────────────────────────────────────────────────────
@@ -115,9 +123,26 @@
   # ── Fonts ────────────────────────────────────────────────────────────────
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
+    noto-fonts
+    amiri
+    scheherazade-new
+  ];
+
+  fonts.fontconfig.defaultFonts = {
+    serif = ["Amiri" "Noto Serif"];
+    sansSerif = ["Noto Sans"];
+  };
+
+  # ── Overlays ─────────────────────────────────────────────────────────────
+  nixpkgs.overlays = [
+    inputs.obsidian-extensions.overlays.default
   ];
 
   # ── Nix ──────────────────────────────────────────────────────────────────
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "obsidian"
+    ];
   system.stateVersion = "26.05";
 }
