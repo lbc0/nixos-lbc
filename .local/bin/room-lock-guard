@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 # Runs as root via a systemd service (hosts/common/room-lock-guard.nix), so
 # `kill <pid>` from the lbc session fails with EPERM — only root/sudo can
@@ -38,6 +39,9 @@ as_user() {
     "$@"
 }
 
+# Returns "yes" if the sensitive room is currently focused (either the
+# Element desktop app itself, or the Brave web-app window for Element),
+# otherwise "no".
 is_focused_state() {
   as_user niri msg --json windows | python3 -c "
 import json, sys
@@ -51,9 +55,9 @@ for w in wins:
     app_id = w.get('app_id','')
     title = w.get('title','')
     if 'element' in app_id.lower() and keyword in title.lower():
-        result = 'kill'
+        result = 'yes'
     elif app_id == 'brave-browser' and ( title == 'Element - Brave' or title == 'Continue to your account - Brave' ) :
-        result = 'nokill'
+        result = 'yes'
     break
 print(result)
 "
@@ -65,13 +69,17 @@ libinput debug-events 2>/dev/null | while IFS= read -r line; do
   if echo "$line" | grep -q "POINTER_BUTTON.*pressed"; then TRIGGER=1; fi
 
   if [ "$TRIGGER" = "1" ]; then
+    # Debounce: drain any events still arriving (e.g. mid-typing) until
+    # there's been a real pause, instead of evaluating focus once per
+    # keystroke. Without this, a burst of typing queues up many delayed
+    # checks that each run against whatever is focused *later*, once
+    # their turn finally comes up — causing locks with no real trigger.
+    while IFS= read -r -t 0.4 _; do :; done
+
     BEFORE=$(is_focused_state)
     sleep 0.3
     AFTER=$(is_focused_state)
-    if [ "$BEFORE" = "$AFTER" ] && [ "$BEFORE" != "no" ]; then
-      if [ "$BEFORE" = "kill" ]; then
-        pkill -u "$USER_UID" -f element-desktop
-      fi
+    if [ "$BEFORE" = "$AFTER" ] && [ "$BEFORE" = "yes" ]; then
       as_user swaylock-png
     fi
   fi
