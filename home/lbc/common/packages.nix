@@ -14,7 +14,6 @@
     swayidle
     brave
     telegram-desktop
-    element-desktop
     playerctl
     quickshell
     sops

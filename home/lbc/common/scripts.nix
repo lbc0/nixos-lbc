@@ -55,6 +55,18 @@
     text = builtins.readFile "${store}/.local/bin/gitup";
   };
 
+  # Forces the gnome-libsecret backend so Element doesn't show the
+  # "unsupported keyring" prompt under niri.
+  element-desktop-wrapped = pkgs.symlinkJoin {
+    name = "element-desktop";
+    paths = [pkgs.element-desktop];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    postBuild = ''
+      wrapProgram $out/bin/element-desktop \
+        --add-flags "--password-store=gnome-libsecret"
+    '';
+  };
+
   # Watches for keyboard/mouse input while an Element "Element | General" room
   # is focused; if input is detected while that room stays focused, kills
   # element-desktop and locks the screen. A privacy guard against accidental
@@ -119,6 +131,7 @@ in {
     swaylock-png
     hotspot-up
     gitup
+    element-desktop-wrapped
     # room-lock-guard
     # rofi-passphrase
     # element-desktop-locked
