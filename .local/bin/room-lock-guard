@@ -34,7 +34,7 @@ as_user() {
     XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
     WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
     NIRI_SOCKET="$NIRI_SOCKET" \
-    PATH="/run/current-system/sw/bin:${PATH:-}" \
+    PATH="/etc/profiles/per-user/$USER_NAME/bin:/run/current-system/sw/bin:${PATH:-}" \
     "$@"
 }
 
