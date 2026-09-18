@@ -62,24 +62,31 @@ print(result)
 "
 }
 
+LAST_UNLOCK_TS=0
+UNLOCK_COOLDOWN_SECS=3
+
 libinput debug-events 2>/dev/null | while IFS= read -r line; do
   TRIGGER=0
   if echo "$line" | grep -q "KEYBOARD_KEY.*pressed"; then TRIGGER=1; fi
   if echo "$line" | grep -q "POINTER_BUTTON.*pressed"; then TRIGGER=1; fi
 
   if [ "$TRIGGER" = "1" ]; then
-    # Debounce: drain any events still arriving (e.g. mid-typing) until
-    # there's been a real pause, instead of evaluating focus once per
-    # keystroke. Without this, a burst of typing queues up many delayed
-    # checks that each run against whatever is focused *later*, once
-    # their turn finally comes up — causing locks with no real trigger.
-    while IFS= read -r -t 0.4 _; do :; done
+    NOW=$(date +%s)
+    # Grace period after a real unlock: swaylock-png only returns once the
+    # correct password has been entered, so reaching this state requires
+    # actually unlocking — unlike the old pre-check cooldown that was
+    # removed for being gameable, this one can't be triggered for free.
+    # It exists purely so you can move off the room / switch focus after
+    # unlocking, without getting caught in an immediate re-lock loop.
+    if [ $(( NOW - LAST_UNLOCK_TS )) -lt "$UNLOCK_COOLDOWN_SECS" ]; then
+      continue
+    fi
 
-    BEFORE=$(is_focused_state)
-    sleep 0.1
-    AFTER=$(is_focused_state)
-    if [ "$BEFORE" = "$AFTER" ] && [ "$BEFORE" = "yes" ]; then
+    # Single check, no BEFORE/AFTER re-check (that was gameable — see
+    # history).
+    if [ "$(is_focused_state)" = "yes" ]; then
       as_user swaylock-png
+      LAST_UNLOCK_TS=$(date +%s)
     fi
   fi
 done
