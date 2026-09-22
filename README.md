@@ -96,4 +96,5 @@ config/                    # live dotfiles (niri, quickshell, swayidle, ...) —
 - replace hardware config: "./hosts/work/hardware.nix".
 - add sops key at "./.ignore/.keys.txt" (AGE-SECRET-...).
 - update the swap-luks.nix file with correct UUID if swap is encrypted (lsblk -f)
+- setup lanzaboot (./notes/lnzaboot)
 - set TPM pin (./notes/tpm2)
