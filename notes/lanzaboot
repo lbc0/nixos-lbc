@@ -1,3 +1,10 @@
 sudo sbctl create-keys                      # generates PK/KEK/db into /var/lib/sbctl
 sudo sbctl status                           # sanity check
 sudo sbctl enroll-keys -m -i                # enroll the keys
+
+
+// do the following if you were already setup tpm
+sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p2
+sudo systemd-cryptenroll --tpm2-device=auto --tpm2-with-pin=yes /dev/nvme0n1p2
+sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p3
+sudo systemd-cryptenroll --tpm2-device=auto --tpm2-with-pin=yes /dev/nvme0n1p3
