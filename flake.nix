@@ -35,6 +35,12 @@
       url = "github:karaolidis/nix-obsidian-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Lanzaboot for Secure Boot
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.1.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -45,6 +51,7 @@
     quickshell,
     nvf,
     obsidian-extensions,
+    lanzaboote,
     ...
   }: let
     store = self; # flake source as copied into /nix/store
@@ -64,6 +71,7 @@
         modules = [
           hostModule
           sops-nix.nixosModules.sops
+          lanzaboote.nixosModules.lanzaboote
           home-manager.nixosModules.home-manager
           {
             networking.hostName = hostName;

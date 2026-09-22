@@ -5,9 +5,15 @@
   ...
 }: {
   # ── Bootloader ───────────────────────────────────────────────────────────
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = ["kvm-intel" "i2c-dev"];
+
+  # ── Lanzaboot ────────────────────────────────────────────────────────────
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   # ── TPM ──────────────────────────────────────────────────────────────────
   boot.initrd.systemd.enable = true; # required for TPM2 unlock in initrd
@@ -121,6 +127,7 @@
     brightnessctl # keyboard backlight / screen brightness
     ddcutil # monitors
     wl-clipboard # wl-copy / wl-paste
+    sbctl # lanzaboot
   ];
 
   # ── Global Editor ────────────────────────────────────────────────────────
