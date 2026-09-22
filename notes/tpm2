@@ -1,0 +1,2 @@
+sudo systemd-cryptenroll --tpm2-device=auto --tpm2-with-pin=yes /dev/nvme0n1p2
+sudo systemd-cryptenroll --tpm2-device=auto --tpm2-with-pin=yes /dev/nvme0n1p3
