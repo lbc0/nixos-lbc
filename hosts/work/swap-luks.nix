@@ -26,4 +26,10 @@
 #   the `swapDevices` entry in hardware.nix.
 {...}: {
   boot.initrd.luks.devices."luks-c4a9a07a-3be2-467d-b632-ba8670b22c79".device = "/dev/disk/by-uuid/c4a9a07a-3be2-467d-b632-ba8670b22c79";
+
+  # Enabling TPM
+  boot.initrd.systemd.enable = true; # required for TPM2 unlock in initrd
+  security.tpm2.enable = true;
+  security.tpm2.pkcs11.enable = true;
+  security.tpm2.tctiEnvironment.enable = true;
 }

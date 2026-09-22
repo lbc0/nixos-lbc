@@ -70,7 +70,7 @@
   services.dbus.enable = true;
 
   # ── Time ─────────────────────────────────────────────────────────────────
-  time.timeZone = "Africa/Casablanca";
+  time.timeZone = "UTC";
   services.chrony = {
     enable = true;
     servers = [
