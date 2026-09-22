@@ -1,0 +1,3 @@
+sudo sbctl create-keys                      # generates PK/KEK/db into /var/lib/sbctl
+sudo sbctl status                           # sanity check
+sudo sbctl enroll-keys -m -i                # enroll the keys
