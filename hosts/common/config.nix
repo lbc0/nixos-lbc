@@ -9,6 +9,12 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = ["kvm-intel" "i2c-dev"];
 
+  # ── TPM ──────────────────────────────────────────────────────────────────
+  boot.initrd.systemd.enable = true; # required for TPM2 unlock in initrd
+  security.tpm2.enable = true;
+  security.tpm2.pkcs11.enable = true;
+  security.tpm2.tctiEnvironment.enable = true;
+
   # ── Virtualisation (KVM / QEMU / virt-manager) ───────────────────────────
   virtualisation = {
     libvirtd = {
