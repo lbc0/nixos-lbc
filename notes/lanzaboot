@@ -1,6 +1,10 @@
+# Note: generate keys before applying lanzaboot nix config (it needs the keys)
 sudo sbctl create-keys                      # generates PK/KEK/db into /var/lib/sbctl
 sudo sbctl status                           # sanity check
+
+# Go to bios and make secure boot in setup/audit mode
 sudo sbctl enroll-keys -m -i                # enroll the keys
+# Now you can enable secure boot
 
 
 // do the following if you were already setup tpm
