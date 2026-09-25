@@ -17,7 +17,7 @@
     };
 
     vaults = {
-      "Documents/soft".enable = true;
+      "Obsidian/platformSec".enable = true;
     };
   };
 }
