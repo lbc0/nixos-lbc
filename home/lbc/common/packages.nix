@@ -24,6 +24,7 @@
     zathura
     xournalpp
     mousepad
+    virt-viewer
     wdisplays # Monitors arrangement
 
     # Programming languages
