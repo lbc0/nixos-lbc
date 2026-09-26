@@ -6,6 +6,7 @@
       app = {
         alwaysUpdateLinks = true;
         attachmentFolderPath = "./x";
+        newFileLocation = "current";
       };
       appearance = {
         cssTheme = "Soft Paper";
