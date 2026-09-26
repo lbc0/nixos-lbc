@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push -u origin nix-work
+git add . && read -rp "Commit message: " msg && git commit -m "$msg" && git push
