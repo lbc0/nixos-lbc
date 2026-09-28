@@ -66,6 +66,12 @@ in {
         export GITSIGN_CONNECTOR_ID="https://github.com/login/oauth"
         export LIBVIRT_DEFAULT_URI="qemu:///system"
       '';
+
+      shellAliases = {
+        master = "ssh lbc@192.168.122.10";
+        worker1 = "ssh lbc@192.168.122.11";
+        worker2 = "ssh lbc@192.168.122.12";
+      };
     };
 
     neovim.defaultEditor = true;

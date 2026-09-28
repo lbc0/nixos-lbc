@@ -2,7 +2,7 @@
 # On resume (any input): turn them back on.
 # Alternative: lock the screen instead — uncomment the line below:
 # timeout 300 'swaylockPNG'
-# timeout 300 'screen-on-off off' resume 'screen-on-off on'
-# timeout 310 'swaylock-png'
+timeout 300 'screen-on-off off' resume 'screen-on-off on'
+timeout 310 'swaylock-png'
 # Lock when closing the led
 before-sleep 'swaylock-png'
