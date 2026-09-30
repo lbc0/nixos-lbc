@@ -153,7 +153,24 @@
   ];
 
   # ── Nix ──────────────────────────────────────────────────────────────────
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix = {
+    settings.experimental-features = ["nix-command" "flakes"];
+
+    # Garbage Collection
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
+    # Nix Ooptimise
+    optimise = {
+      automatic = true;
+      dates = ["weekly"];
+    };
+  };
+  # Avoid gc & optimise overlap
+  systemd.services.nix-optimise.after = ["nix-gc.service"];
+
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "obsidian"
