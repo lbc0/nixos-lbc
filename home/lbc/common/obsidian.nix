@@ -18,8 +18,7 @@
     };
 
     vaults = {
-      "Obsidian/platformSec".enable = true;
-      "Obsidian/theme".enable = true;
+      "Documents/obsidian-theme".enable = true;
     };
   };
 }
