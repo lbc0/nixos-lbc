@@ -2,20 +2,24 @@
   programs.obsidian = {
     enable = true;
 
-    vaults."platformSec" = {
-      target = "Obsidian/platformSec";
-
-      settings = {
-        appearance.cssTheme = "Soft Paper";
-
-        app = {
-          alwaysUpdateLinks = true;
-          attachmentFolderPath = "./x";
-          newFileLocation = "current";
-        };
+    defaultSettings = {
+      app = {
+        alwaysUpdateLinks = true;
+        attachmentFolderPath = "./x";
+        newFileLocation = "current";
       };
+      appearance = {
+        cssTheme = "Soft Paper";
+        theme = "moonstone";
+      };
+      themes = with pkgs.obsidianThemes; [
+        soft-paper
+      ];
     };
 
-    defaultSettings.themes = with pkgs.obsidianThemes; [soft-paper];
+    vaults = {
+      "Obsidian/platformSec".enable = true;
+      "Obsidian/theme".enable = true;
+    };
   };
 }
