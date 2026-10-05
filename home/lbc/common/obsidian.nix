@@ -2,23 +2,12 @@
   programs.obsidian = {
     enable = true;
 
-    defaultSettings = {
-      app = {
-        alwaysUpdateLinks = true;
-        attachmentFolderPath = "./x";
-        newFileLocation = "current";
-      };
-      appearance = {
-        cssTheme = "Soft Paper";
-        theme = "moonstone";
-      };
-      themes = with pkgs.obsidianThemes; [
-        soft-paper
-      ];
+    vaults."platformSec" = {
+      target = "Obsidian/platformSec";
+
+      settings.appearance.cssTheme = "Catppuccin";
     };
 
-    vaults = {
-      "Obsidian/platformSec".enable = true;
-    };
+    defaultSettings.themes = with pkgs.obsidianThemes; [catppuccin];
   };
 }
