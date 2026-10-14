@@ -94,7 +94,7 @@ config/                    # live dotfiles (niri, quickshell, swayidle, ...) —
 # Sammury
 - define repo path at "./flake.nix": repo = "/home/lbc/nixos-lbc".
 - replace hardware config: "./hosts/work/hardware.nix".
-- add sops key at "./.ignore/.keys.txt" (AGE-SECRET-...).
+- add sops key at "./.ignore/.keys.txt" (AGE-SECRET-KEY-...).
 - update the swap-luks.nix file with correct UUID if swap is encrypted (lsblk -f)
 - setup lanzaboot (./notes/lnzaboot)
 - set TPM pin (./notes/tpm2)
