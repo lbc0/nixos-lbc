@@ -63,6 +63,7 @@
       config.allowUnfreePredicate = pkg:
         builtins.elem (nixpkgs.lib.getName pkg) ["terraform"];
     };
+    # we can enter the shell with nix develop ~/nixos-lbc#k8s-lab
 
     mkHost = {
       hostName,
