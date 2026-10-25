@@ -90,5 +90,19 @@
         end,
       })
     '';
+
+    # Create missing parent directories when saving
+    auto-mkdir = ''
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = vim.api.nvim_create_augroup("AutoMkdir", { clear = true }),
+        callback = function(ev)
+          -- skip special buffers and URLs (scp://, fugitive://, etc.)
+          if vim.bo[ev.buf].buftype ~= "" or ev.match:match("^%w+://") then
+            return
+          end
+          vim.fn.mkdir(vim.fn.fnamemodify(ev.match, ":p:h"), "p")
+        end,
+      })
+    '';
   };
 }
