@@ -4,6 +4,7 @@
     ./swap-luks.nix
     ./drive.nix
     ./sops.nix
+    ./glpi.nix
     ../common
   ];
 }
