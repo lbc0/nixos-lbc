@@ -50,10 +50,11 @@
 
     vaults = {
       "Documents/obsidian-theme".enable = true;
+      "Obsidian/platformSec".enable = true;
     };
   };
 
-  home.file."Documents/obsidian-theme/.obsidian/hotkeys.json".text = ''
+  home.file."Obsidian/platformSec/.obsidian/hotkeys.json".text = ''
     {
       "app:toggle-left-sidebar": [{ "modifiers": ["Alt"], "key": "E" }],
       "app:toggle-right-sidebar": [{ "modifiers": ["Alt"], "key": "R" }],
@@ -69,7 +70,7 @@
     }
   '';
 
-  home.file."Documents/obsidian-theme/.obsidian.vimrc".text = ''
+  home.file."Obsidian/platformSec/.obsidian.vimrc".text = ''
     " ── Commands ──
     exmap togglefold obcommand editor:toggle-fold
     exmap foldall obcommand editor:fold-all
