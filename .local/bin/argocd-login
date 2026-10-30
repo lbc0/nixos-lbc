@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+argocd login "$(cat /run/secrets/argocd/server)" \
+  --username "$(cat /run/secrets/argocd/username)" \
+  --password "$(cat /run/secrets/argocd/password)" \
+  --grpc-web

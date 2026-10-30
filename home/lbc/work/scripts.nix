@@ -18,9 +18,16 @@
     runtimeInputs = [pkgs.openbao];
     text = builtins.readFile "${store}/.local/bin/bao-login";
   };
+
+  argocd-login = pkgs.writeShellApplication {
+    name = "argocd-login";
+    runtimeInputs = [pkgs.argocd];
+    text = builtins.readFile "${store}/.local/bin/argocd-login";
+  };
 in {
   home.packages = [
     nac
     bao-login
+    argocd-login
   ];
 }
