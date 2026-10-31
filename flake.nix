@@ -57,14 +57,6 @@
     store = self; # flake source as copied into /nix/store
     repo = "/home/lbc/nixos-lbc"; # live checkout on disk
 
-    # For the k8s-lab
-    devPkgs = import nixpkgs {
-      system = "x86_64-linux";
-      config.allowUnfreePredicate = pkg:
-        builtins.elem (nixpkgs.lib.getName pkg) ["terraform"];
-    };
-    # we can enter the shell with nix develop ~/nixos-lbc#k8s-lab
-
     mkHost = {
       hostName,
       hostModule,
@@ -107,25 +99,6 @@
         homeModule = ./home/lbc/home;
         profile = "home";
       };
-    };
-
-    # For the k8s-lab
-    devShells.x86_64-linux.k8s-lab = devPkgs.mkShell {
-      packages = with devPkgs; [
-        terraform # unfree (BSL). For OpenTofu use: opentofu
-        ansible
-        kubectl
-        kubernetes-helm
-        cosign
-        trivy
-        jq
-        yq-go
-        git
-        gnumake
-        openssh
-        xorriso
-        libvirt # provides virsh
-      ];
     };
   };
 }
