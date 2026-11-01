@@ -9,6 +9,7 @@
     services.lab = {
       executor = "docker";
       dockerImage = "alpine:3";
+      dockerExtraHosts = ["harbor.lab.test:192.168.150.20"];
       authenticationTokenConfigFile = config.sops.templates."gitlab-runner-lab.env".path;
     };
   };
