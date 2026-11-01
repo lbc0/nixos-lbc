@@ -14,4 +14,9 @@
       registrationFlags = ["--docker-security-opt=seccomp:unconfined"];
     };
   };
+
+  networking.hosts."192.168.150.20" = ["harbor.lab.test"];
+
+  # Copy pki/lab-ca.crt next to your NixOS config first (flakes can't read absolute paths outside the store)
+  security.pki.certificateFiles = [./lab-ca.crt];
 }
