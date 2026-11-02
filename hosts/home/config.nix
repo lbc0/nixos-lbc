@@ -1,4 +1,5 @@
 {config, ...}: {
+  sops.secrets."gitlab/token" = {};
   sops.templates."gitlab-runner-lab.env".content = ''
     CI_SERVER_URL=https://gitlab.com
     CI_SERVER_TOKEN=${config.sops.placeholder."gitlab/token"}
