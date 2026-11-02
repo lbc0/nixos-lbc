@@ -3,6 +3,7 @@
     krb5
     kubectl
     kubectx
+    fzf # interactive picker
     argocd
     kubernetes-helm
     davfs2
