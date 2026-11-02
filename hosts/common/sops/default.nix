@@ -23,7 +23,4 @@
 
   # p7zip
   sops.secrets."p7zip/password".owner = "lbc";
-
-  # p7zip
-  sops.secrets."gitlab/token".owner = "lbc";
 }
