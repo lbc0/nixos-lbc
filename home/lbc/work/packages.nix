@@ -3,6 +3,7 @@
     krb5
     kubectl
     kubectx
+    kubeseal
     fzf # interactive picker
     argocd
     kubernetes-helm
